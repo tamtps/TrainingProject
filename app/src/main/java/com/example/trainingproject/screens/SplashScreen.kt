@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.Window
 import com.example.trainingproject.MainActivity
 import com.example.trainingproject.R
 
@@ -13,7 +14,9 @@ class SplashScreen : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_splash_screen)
+
         handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
             val intent = Intent(this, MainActivity::class.java)
