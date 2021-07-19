@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/kanoo_gradient_bg"
-    tools:context=".screens.LoginScreen">
+    tools:context=".screens.LogInActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

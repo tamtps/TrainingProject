@@ -9,7 +9,7 @@ import android.view.Window
 import com.example.trainingproject.MainActivity
 import com.example.trainingproject.R
 
-class SplashScreen : AppCompatActivity() {
+class SplashActivity : AppCompatActivity() {
     lateinit var handler : Handler
 
     override fun onCreate(savedInstanceState: Bundle?) {
