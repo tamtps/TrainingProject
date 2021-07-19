@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WalkThroughActivity"
+    tools:context=".screens.WalkThroughActivity"
     android:background="@drawable/opening_walk_1">
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/WalkThroughViewPaper"
@@ -19,6 +19,7 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnGetStart"
             android:layout_width="220dp"
             android:layout_height="60dp"
             android:background="@drawable/get_start" />`
@@ -32,6 +33,7 @@
             android:textSize="13sp" />
 
         <TextView
+            android:id="@+id/btnSignIn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginBottom="20dp"
