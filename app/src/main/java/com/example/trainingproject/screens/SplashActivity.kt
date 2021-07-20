@@ -1,7 +1,6 @@
 package com.example.trainingproject.screens
 
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -17,9 +16,6 @@ class SplashScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         this.requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_splash_screen)
-
-        var prefs : SharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE)
-        var firstStart : Boolean =  prefs.getBoolean("firstStart", true)
 
         handler = Handler(Looper.getMainLooper())
         handler.postDelayed({

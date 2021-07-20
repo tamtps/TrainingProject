@@ -11,8 +11,10 @@
         android:theme="@style/Theme.TrainingProject">
         <activity android:name=".screens.WalkThroughActivity"></activity>
         <activity android:name=".screens.LoginScreen" />
+        <activity android:name=".screens.ForgotPasswordActivity"></activity>
+        <activity android:name=".screens.LogInActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".screens.SplashScreen">
+        <activity android:name=".screens.SplashActivity">
             <intent-filter>
                 <action
                     android:name="android.intent.action.MAIN"
