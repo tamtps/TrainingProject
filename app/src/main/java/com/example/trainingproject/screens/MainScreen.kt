@@ -8,8 +8,10 @@ import android.view.View
 import android.widget.GridView
 import android.widget.Toast
 import android.widget.Toolbar
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import com.example.trainingproject.R
 import com.example.trainingproject.mainGridViewAdapter
 import com.example.trainingproject.models.Menu
@@ -28,11 +30,11 @@ class MainScreen : AppCompatActivity() {
         setContentView(R.layout.activity_main_screen)
         anhxa()
         actionToolbar()
-        menuItem()
         list = ArrayList()
         list = menuItem()
         mainGridView?.adapter = mainGridViewAdapter(applicationContext, list!!)
     }
+
 
     fun anhxa(){
         mainToolbar = findViewById(R.id.mainToolbar)
@@ -50,7 +52,7 @@ class MainScreen : AppCompatActivity() {
         })
     }
 
-    private    fun menuItem() : ArrayList<Menu>{
+    private fun menuItem() : ArrayList<Menu>{
         var list : ArrayList <Menu> = ArrayList()
         list!!.add(Menu("Market", R.drawable.icon_market))
         list!!.add(Menu("Top Up", R.drawable.icon_topup))
