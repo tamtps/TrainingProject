@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">TrainingProject</string>
+    <string-array name="method">
+        <item>Use phone number</item>
+        <item>Use email</item>
+    </string-array>
 </resources>

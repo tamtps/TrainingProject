@@ -45,6 +45,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="30dp"
                 android:layout_marginBottom="5dp"
+                android:background="#FFFFFF"
                 android:fontFamily="@font/gilroy_medium"
                 android:hint="Enter your email here" />
 
@@ -57,7 +58,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/txtMethodInput"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -68,7 +69,7 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/txtForgot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -94,6 +95,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="30dp"
                 android:layout_marginBottom="5dp"
+                android:background="#FFFFFF"
                 android:fontFamily="@font/gilroy_medium"
                 android:hint="Enter your password here"
                 android:inputType="textPassword" />
