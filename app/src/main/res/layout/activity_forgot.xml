@@ -39,7 +39,7 @@
             android:layout_height="60dp">
 
             <AutoCompleteTextView
-                android:id="@+id/txtMethod"
+                android:id="@+id/txtMethodForgot"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -97,7 +97,7 @@
                 android:orientation="horizontal">
 
                 <AutoCompleteTextView
-                    android:id="@+id/inputTxt"
+                    android:id="@+id/inputTxtForgot"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginStart="30dp"
@@ -112,7 +112,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.hbb20.CountryCodePicker
-                android:id="@+id/ccp"
+                android:id="@+id/countryPicker"
                 android:layout_width="120dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentBottom="true"
@@ -150,7 +150,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/btnContinue"
                 android:layout_width="231dp"
                 android:layout_height="60dp"
                 android:layout_marginBottom="16dp"

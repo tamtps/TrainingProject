@@ -4,4 +4,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="has_account">Already have an account?</string>
     <string name="sign_in">Sign In</string>
+    <string-array name="method">
+        <item>
+            Use phone number
+        </item>
+        <item>
+            Use email
+        </item>
+    </string-array>
 </resources>

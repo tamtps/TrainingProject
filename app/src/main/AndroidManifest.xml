@@ -10,7 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TrainingProject">
         <activity android:name=".screens.WalkThroughActivity"></activity>
-        <activity android:name=".screens.LoginScreen" />
         <activity android:name=".screens.ForgotPasswordActivity"></activity>
         <activity android:name=".screens.LogInActivity" />
         <activity android:name=".MainActivity" />

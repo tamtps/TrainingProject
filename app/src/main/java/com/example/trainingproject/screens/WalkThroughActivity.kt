@@ -14,16 +14,16 @@ class WalkThroughActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_walk_through)
-        var viewPaper : ViewPager = findViewById(R.id.WalkThroughViewPaper)
+        val viewPaper : ViewPager = findViewById(R.id.WalkThroughViewPaper)
         viewPaper.adapter = WalkThroughAdapter(supportFragmentManager)
 
-        var btnGetStart : Button = findViewById(R.id.btnGetStart)
+        val btnGetStart : Button = findViewById(R.id.btnGetStart)
         btnGetStart.setOnClickListener(View.OnClickListener {
             onGetStart()
             finish()
         })
 
-        var btnSignIn : TextView = findViewById(R.id.btnSignIn)
+        val btnSignIn : TextView = findViewById(R.id.btnSignIn)
         btnSignIn.setOnClickListener(View.OnClickListener {
             onSignIn()
             finish()
@@ -31,13 +31,13 @@ class WalkThroughActivity : AppCompatActivity() {
     }
     fun onGetStart(){
         startActivity(Intent(this, MainActivity::class.java))
-        var prefs : SharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE)
-        var editPrefs : SharedPreferences.Editor = prefs.edit();
+        val prefs : SharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE)
+        val editPrefs : SharedPreferences.Editor = prefs.edit();
         editPrefs.putBoolean("firstStart", false)
         editPrefs.apply()
     }
 
     fun onSignIn(){
-        startActivity(Intent(this, MainActivity::class.java))
+        startActivity(Intent(this, LogInActivity::class.java))
     }
 }

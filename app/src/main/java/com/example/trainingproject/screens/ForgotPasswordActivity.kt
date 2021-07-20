@@ -1,5 +1,6 @@
 package com.example.trainingproject.screens
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputType
@@ -21,9 +22,14 @@ class ForgotPasswordActivity : AppCompatActivity() {
 
         val methods = resources.getStringArray(R.array.method)
         val arrayAdapter = ArrayAdapter(applicationContext, R.layout.dropdown_item, methods)
-        binding.txtMethod.setAdapter(arrayAdapter)
+        binding.txtMethodForgot.setAdapter(arrayAdapter)
 
-        binding.txtMethod.setOnItemClickListener(object : AdapterView.OnItemClickListener{
+        binding.btnContinue.setOnClickListener(View.OnClickListener {
+            val intent = Intent(applicationContext, LogInActivity::class.java)
+            startActivity(intent)
+        })
+
+        binding.txtMethodForgot.setOnItemClickListener(object : AdapterView.OnItemClickListener{
             override fun onItemClick(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -32,15 +38,15 @@ class ForgotPasswordActivity : AppCompatActivity() {
             ) {
                 when(position){
                     0 -> {
-                        binding.ccp.isVisible=true
-                        binding.inputTxt.setPadding(350,0,0,5)
-                        binding.inputTxt.inputType = InputType.TYPE_NUMBER_FLAG_DECIMAL
+                        binding.countryPicker.isVisible=true
+                        binding.inputTxtForgot.setPadding(350,0,0,5)
+                        binding.inputTxtForgot.inputType = InputType.TYPE_NUMBER_FLAG_DECIMAL
                         binding.txtMethodInput.setText("Phone number")
                     }
                     1 -> {
-                        binding.ccp.isVisible=false
-                        binding.inputTxt.setPadding(100,0,0,5)
-                        binding.inputTxt.inputType = InputType.TYPE_CLASS_TEXT
+                        binding.countryPicker.isVisible=false
+                        binding.inputTxtForgot.setPadding(100,0,0,5)
+                        binding.inputTxtForgot.inputType = InputType.TYPE_CLASS_TEXT
                         binding.txtMethodInput.setText("Email")
                     }
 
