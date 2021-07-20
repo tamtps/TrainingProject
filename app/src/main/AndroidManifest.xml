@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TrainingProject">
-        <activity android:name=".screens.WalkThroughActivity"></activity>
+        <activity android:name=".screens.MainScreen"></activity>
+        <activity android:name=".screens.WalkThroughActivity" />
         <activity android:name=".screens.LoginScreen" />
         <activity android:name=".MainActivity" />
         <activity android:name=".screens.SplashScreen">
