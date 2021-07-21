@@ -72,18 +72,6 @@
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/txtForgot"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:cursorVisible="false"
-                android:fontFamily="@font/gilroy_light"
-                android:gravity="right"
-                android:paddingEnd="30dp"
-                android:text="I forgot my password"
-                android:textColor="#FFFFFF" />
         </LinearLayout>
 
         <RelativeLayout
