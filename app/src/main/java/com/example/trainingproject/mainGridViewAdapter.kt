@@ -8,6 +8,7 @@ import android.widget.BaseAdapter
 import android.widget.GridView
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.isVisible
 import com.example.trainingproject.models.Menu
 
 class mainGridViewAdapter (var context: Context, var arrayList: ArrayList<Menu>): BaseAdapter() {
@@ -27,11 +28,15 @@ class mainGridViewAdapter (var context: Context, var arrayList: ArrayList<Menu>)
         var view:View = View.inflate(context, R.layout.item_gridview_menu_main, null)
         var icons : ImageView = view.findViewById(R.id.img_grid_icon)
         var names : TextView = view.findViewById(R.id.txt_grid_name)
+        var notification : TextView = view.findViewById(R.id.txt_notification)
 
         var menu : Menu = arrayList.get(p0)
         icons.setImageResource(menu.icon!!)
         names.text = menu.name!!
-
+        notification.text = menu.notification.toString()!!
+        if(menu.notification == 0) {
+             notification.isVisible = false
+        }
         return view
     }
 
