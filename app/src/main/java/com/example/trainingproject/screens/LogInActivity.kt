@@ -27,7 +27,8 @@ class LogInActivity : AppCompatActivity() {
     }
 
     private fun LogIn(){
-        //DO SOMETHING
-        val intent = Intent(this, MainActivity::class.java)
+        //TODO: AUTHORIZATION
+        val intent = Intent(this, MainScreen::class.java)
+        startActivity(intent)
     }
 }

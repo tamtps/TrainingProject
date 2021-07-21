@@ -12,6 +12,7 @@
         <activity android:name=".screens.WalkThroughActivity"></activity>
         <activity android:name=".screens.ForgotPasswordActivity"></activity>
         <activity android:name=".screens.LogInActivity" />
+        <activity android:name=".screens.MainScreen" />
         <activity android:name=".MainActivity" />
         <activity android:name=".screens.SplashActivity">
             <intent-filter>
