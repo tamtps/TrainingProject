@@ -33,10 +33,12 @@ class mainGridViewAdapter (var context: Context, var arrayList: ArrayList<Menu>)
         var menu : Menu = arrayList.get(p0)
         icons.setImageResource(menu.icon!!)
         names.text = menu.name!!
+
         notification.text = menu.notification.toString()!!
         if(menu.notification == 0) {
-             notification.isVisible = false
+            notification.isVisible = false
         }
+
         return view
     }
 

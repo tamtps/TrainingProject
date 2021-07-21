@@ -11,17 +11,21 @@ class Menu {
         this.icon = icon
     }
 
-    constructor(name: String, icon: Int, notification: Int) {
-        this.name = name
-        this.icon = icon
-        this.notification = notification
-    }
+
 
     constructor(name: String, icon: Int, notification: Int, list: List<String>) {
         this.name = name
         this.icon = icon
         this.notification = notification
         this.list = list
+    }
+
+
+
+    constructor(name: String, icon: Int, notification: Int) {
+        this.name = name
+        this.icon = icon
+        this.notification = notification
     }
 
     constructor(name: String, icon: Int, list: List<String>) {

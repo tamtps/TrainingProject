@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="@dimen/padding_size_small">
-
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="wrap_content"
@@ -19,7 +18,6 @@
             android:src="@drawable/icon_market"
             android:padding="@dimen/padding_size_very_small"/>
     </androidx.cardview.widget.CardView>
-
     <ListView
         android:id="@+id/list_view_drawer"
         android:layout_width="match_parent"
@@ -27,7 +25,6 @@
         app:layout_constraintTop_toBottomOf="@id/cardView"
         app:layout_constraintBottom_toTopOf="@id/item_about"
         app:layout_constraintLeft_toLeftOf="parent"/>
-
     <TextView
         android:id="@+id/item_about"
         android:text="@string/item_about"
@@ -39,7 +36,6 @@
         app:layout_constraintTop_toBottomOf="@id/list_view_drawer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"/>
-
     <TextView
         android:id="@+id/item_log_out"
         android:text="@string/item_log_out"
@@ -49,5 +45,4 @@
         app:layout_constraintTop_toBottomOf="@id/item_about"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
