@@ -1,119 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".screens.MainScreen">
-
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/mainDrawerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
             <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/mainToolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    app:contentInsetStart="50dp"
-                    app:contentInsetLeft="50dp"
-                    app:contentInsetRight="50dp"
-                    app:contentInsetStartWithNavigation="50dp"
-                    android:background="@drawable/bg_header"
-                    android:minHeight="?attr/actionBarSize"
-                    android:gravity="center_vertical|center_horizontal|center"
-                    app:navigationIcon="@drawable/btn_hamburger_white">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        >
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginVertical="15dp"
-                            android:src="@drawable/kanoo_white_icon"
-                            />
-
-                    </LinearLayout>
-
-
+                    android:background="@drawable/bg_header">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/kanoo_white_icon"
+                        android:layout_marginVertical="15dp" />
                 </androidx.appcompat.widget.Toolbar>
-
             </com.google.android.material.appbar.AppBarLayout>
-
-            <RelativeLayout
+            <ImageView
+                android:id="@+id/img_wallet"
                 android:layout_width="match_parent"
-                android:layout_height="243dp">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/my_wallet_icon" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/textView2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:fontFamily="@font/gilroy_medium"
-                        android:gravity="center"
-                        android:text="My Wallet"
-                        android:textColor="@color/white"
-                        android:textSize="24sp" />
-
-                    <TextView
-                        android:id="@+id/textView3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:gravity="bottom|center"
-                        android:paddingBottom="30dp"
-                        android:text="Tips For Your Cards, Coupons, Punch Cards and Points"
-                        android:textColor="@color/white"
-                        android:textSize="10sp" />
-                </RelativeLayout>
-
-            </RelativeLayout>
-
+                android:layout_height="wrap_content"
+                android:src="@drawable/my_wallet_icon"/>
             <GridView
                 android:id="@+id/mainGridView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:horizontalSpacing="@dimen/padding_size_tiny"
                 android:numColumns="4"
-                android:padding="5dp"
-                android:verticalSpacing="@dimen/padding_size_tiny" />
-
+                android:horizontalSpacing="@dimen/padding_size_tiny"
+                android:verticalSpacing="@dimen/padding_size_tiny"
+                />
         </LinearLayout>
-
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/mainNavitionView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:fitsSystemWindows="true">
-
+            <include
+                android:layout_marginVertical="40dp"
+                layout="@layout/menu_drawer_mainscreen"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"/>
         </com.google.android.material.navigation.NavigationView>
     </androidx.drawerlayout.widget.DrawerLayout>
-
-
 </LinearLayout>
