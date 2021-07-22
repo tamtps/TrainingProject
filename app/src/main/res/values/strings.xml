@@ -15,4 +15,11 @@
             Use email
         </item>
     </string-array>
+
+    <string name="title_activity_cards">CardsActivity</string>
+    <string name="tab_text_1">Cards</string>
+    <string name="tab_text_2">Gift Cards</string>
+    <string name="tab_text_3">Coupons</string>
+    <string name="tab_text_4">Punch Card</string>
+    <string name="tab_text_5">Points</string>
 </resources>
