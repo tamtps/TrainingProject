@@ -1,18 +1,15 @@
 package com.example.trainingproject.models
 
-import com.example.trainingproject.models.User
-import com.google.gson.JsonObject
-import java.util.*
-
 data class LoginResponse(
     val clientMessage: String,
     val countRecord: Int,
     val statusCode: String,
     val status: Int,
     val message: String,
-    val result: Result
+    val result: LoginResult
 )
-data class Result(
+
+data class LoginResult(
     val accountInfo: AccountInfo,
     val loginInformation: LoginInformation
 )

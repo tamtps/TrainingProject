@@ -1,9 +1,11 @@
 package com.example.trainingproject.api
 
+import com.example.trainingproject.models.CountryResponse
 import com.example.trainingproject.models.LoginResponse
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface Api {
@@ -19,4 +21,7 @@ interface Api {
         //@Field("osversion") osversion: String,
         //@Field("appVersion") appVersion: String,
     ) : Call<LoginResponse>
+
+    @GET("countries")
+    fun getCountries() : Call<CountryResponse>
 }
