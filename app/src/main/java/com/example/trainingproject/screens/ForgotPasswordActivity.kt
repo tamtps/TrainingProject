@@ -1,73 +1,118 @@
 package com.example.trainingproject.screens
 
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.service.autofill.RegexValidator
 import android.text.InputType
+import android.text.TextUtils
 import android.util.Log
+import android.view.Gravity
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Toast
+import android.view.Window
+import android.view.WindowManager
+import android.widget.*
 import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.trainingproject.R
 import com.example.trainingproject.api.RetrofitClient
+import com.example.trainingproject.components.CountryPickerAdapter
 import com.example.trainingproject.databinding.ActivityForgotBinding
 import com.example.trainingproject.models.CountryResponse
 import com.example.trainingproject.models.CountryResult
+import com.example.trainingproject.viewmodels.ForgotPasswordViewModel
 import com.google.gson.Gson
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.squareup.picasso.Picasso
+import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.lang.Exception
 
 class ForgotPasswordActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityForgotBinding
-    private lateinit var countries : ArrayList<CountryResult>
+    private lateinit var binding: ActivityForgotBinding
+    private lateinit var dialog : Dialog
+    private lateinit var countryPickerAdapter : CountryPickerAdapter
+    private var methodType : Int = 0
+    private lateinit var regex : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityForgotBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        getCountries()
+        initViewModel()
+
         //TODO: Set methods dropdown
         val methods = resources.getStringArray(R.array.method)
         val arrayAdapter = ArrayAdapter(applicationContext, R.layout.dropdown_item, methods)
         binding.txtMethodForgot.setAdapter(arrayAdapter)
 
-        //TODO: Set countries dropdown
+        //TODO: Set country picker dialog
         //DO SOMETHING HERE
-
-
-        binding.btnContinue.setOnClickListener(View.OnClickListener {
-            val intent = Intent(applicationContext, LogInActivity::class.java)
-            startActivity(intent)
+        binding.selectCountry.setOnClickListener(View.OnClickListener {
+            dialog.show()
+            Toast.makeText(applicationContext, "Getting data, please wait...", Toast.LENGTH_LONG).show()
         })
 
-        binding.txtMethodForgot.setOnItemClickListener(object : AdapterView.OnItemClickListener{
+        binding.btnContinue.setOnClickListener(View.OnClickListener {
+            var valid = true
+            when(methodType){
+                0 -> {
+                    val phone = "${binding.txtCountryCodeSelect.text}${binding.inputTxtForgot.text}"
+                    if(!isValidPhone(phone)){
+                        Toast.makeText(applicationContext, "Wrong phone format! Please try again", Toast.LENGTH_LONG).show()
+                        valid = false
+                    }
+                    else {
+                        valid = true
+                    }
+                }
+                1 -> {
+                    if(!isValidEmail(binding.inputTxtForgot.text.toString())){
+                        Toast.makeText(applicationContext, "Wrong emmail format! Please try again", Toast.LENGTH_LONG).show()
+                        valid = false
+                    }
+                    else {
+                        valid = true
+                    }
+                }
+
+            }
+            if(valid)
+            startActivity(Intent(applicationContext, LogInActivity::class.java))
+            else
+                binding.inputTxtForgot.requestFocus()
+        })
+
+        binding.txtMethodForgot.setOnItemClickListener(object : AdapterView.OnItemClickListener {
             override fun onItemClick(
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
                 id: Long
             ) {
-                when(position){
+                when (position) {
                     0 -> {
-                        binding.countryPicker.isVisible=true
-                        binding.inputTxtForgot.setPadding(350,0,0,5)
+                        binding.selectCountry.isVisible = true
+                        binding.inputTxtForgot.setPadding(350, 0, 0, 5)
                         binding.inputTxtForgot.inputType = InputType.TYPE_NUMBER_FLAG_DECIMAL
                         binding.txtMethodInput.setText("Phone number")
+                        methodType = 0
                     }
                     1 -> {
-                        binding.countryPicker.isVisible=false
-                        binding.inputTxtForgot.setPadding(100,0,0,5)
+                        binding.selectCountry.isVisible = false
+                        binding.inputTxtForgot.setPadding(50, 0, 0, 5)
                         binding.inputTxtForgot.inputType = InputType.TYPE_CLASS_TEXT
                         binding.txtMethodInput.setText("Email")
+                        methodType = 1
                     }
 
                 }
@@ -75,34 +120,71 @@ class ForgotPasswordActivity : AppCompatActivity() {
         })
     }
 
-    private fun getCountries(){
-        GlobalScope.launch(Dispatchers.IO){
-            try{
-                RetrofitClient().instance.getCountries()
-                    .enqueue(object : Callback<CountryResponse>{
-                        override fun onResponse(
-                            call: Call<CountryResponse>,
-                            response: Response<CountryResponse>
-                        ) {
-                            if(!response.body()?.result.isNullOrEmpty()){
-                                countries = response.body()?.result!!
-                            }
 
-                            Log.d("Countries",countries.toString())
+    private fun initViewModel(dialog: Dialog){
+        val recView = dialog.findViewById<RecyclerView>(R.id.recViewCountry)
+            recView.layoutManager = LinearLayoutManager(applicationContext)
+            recView.adapter = countryPickerAdapter
+            val decoration =
+                DividerItemDecoration(applicationContext, DividerItemDecoration.VERTICAL)
+            recView.addItemDecoration(decoration)
 
-                        }
 
-                        override fun onFailure(call: Call<CountryResponse>, t: Throwable) {
-                            Toast.makeText(applicationContext, t.message, Toast.LENGTH_LONG).show()
-                        }
+    }
 
-                    })
+    private fun initDialog(){
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.country_picker_dialog)
+        dialog.setCancelable(true)
+        val window: Window? = dialog.window
+
+        window?.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+    }
+    private fun initViewModel(){
+        dialog = Dialog(this)
+        initDialog()
+        countryPickerAdapter = CountryPickerAdapter(binding ,dialog)
+
+        val attributes: WindowManager.LayoutParams? = window?.attributes
+        attributes?.gravity = Gravity.CENTER
+        window?.attributes = attributes
+        initViewModel(dialog)
+        dialog.findViewById<ImageButton>(R.id.btnCloseDialog)
+            .setOnClickListener(View.OnClickListener {
+                dialog.dismiss()
+            })
+
+        val viewModel = ViewModelProvider(this).get(ForgotPasswordViewModel::class.java)
+        //Observer Live Data
+        viewModel.getCountryListObserver().observe(this, {
+            if(it.isNotEmpty()){
+                countryPickerAdapter.setUpdatedData(it)
+                it.forEach { country ->
+                    if (country.favorite) {
+                        Picasso.get().load(country.flag).into(binding.imgFlagSelect)
+                        binding.txtCountryCodeSelect.text = country.callingCodes
+                        regex = country.regex
+                    }
+                }
             }
-            catch (e: Exception){
-                Log.e("MAIN", "ERROR: ${e.message}")
+            else {
+                Toast.makeText(this, "ERROR IN GETTING DATA", Toast.LENGTH_LONG).show()
             }
+        })
 
-        }
 
+
+        viewModel.makeApiCall()
+    }
+
+    fun isValidEmail(email: String)  : Boolean {
+        return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    fun isValidPhone(phone: String) : Boolean {
+        return !TextUtils.isEmpty(phone) && phone.matches(regex.toRegex())
     }
 }

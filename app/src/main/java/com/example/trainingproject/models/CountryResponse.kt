@@ -13,5 +13,5 @@ data class CountryResult(
     val callingCodes: String,
     val flag: String,
     val regex: String,
-    val favorite: Boolean,
+    var favorite: Boolean,
 )
