@@ -1,5 +1,6 @@
 package com.example.trainingproject.screens
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,9 +14,18 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import com.example.trainingproject.DrawerMenuAdapter
 import com.example.trainingproject.R
+import com.example.trainingproject.api.RetrofitClient
 import com.example.trainingproject.mainGridViewAdapter
 import com.example.trainingproject.models.Menu
+import com.example.trainingproject.models.Point
 import com.google.android.material.navigation.NavigationView
+import org.w3c.dom.Text
+import retrofit2.Call
+import retrofit2.Response
+import java.text.NumberFormat
+import java.util.*
+import javax.security.auth.callback.Callback
+import kotlin.collections.ArrayList
 
 class MainScreen : AppCompatActivity() {
     lateinit var mainToolbar: androidx.appcompat.widget.Toolbar
@@ -26,7 +36,16 @@ class MainScreen : AppCompatActivity() {
     var listViewDrawer : ListView?= null
     var itemAbout : TextView ?= null
     var itemLogOut : TextView ?=null
+    var itemHowToVideo : TextView ?=null
+    var txtLevel : TextView ? = null
     var imgWallet : ImageView ?= null
+    var txtPoint : TextView ?= null
+    var txtDrawerPoint : TextView ?= null
+
+
+    val token = "d42ab9f3-9c11-4f8e-b259-b0fb5d55061a"
+//    TODO: Token shared Preferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_screen)
@@ -38,7 +57,10 @@ class MainScreen : AppCompatActivity() {
         listViewDrawer?.adapter = DrawerMenuAdapter(applicationContext, list!!)
         onAboutDrawer()
         onLogOut()
+        onHowToVideo()
+        getPointAPI()
     }
+
     fun init(){
         mainToolbar = findViewById(R.id.mainToolbar)
         mainDrawerLayout  = findViewById(R.id.mainDrawerLayout)
@@ -47,8 +69,13 @@ class MainScreen : AppCompatActivity() {
         listViewDrawer = findViewById(R.id.list_view_drawer)
         itemAbout = findViewById(R.id.item_about)
         itemLogOut =findViewById(R.id.item_log_out)
+        itemHowToVideo = findViewById(R.id.item_how_to_videos)
         imgWallet = findViewById(R.id.img_wallet)
+        txtPoint = findViewById(R.id.txt_point)
+        txtLevel = findViewById(R.id.txt_level)
+        txtDrawerPoint = findViewById(R.id.txt_drawer_point)
     }
+
     fun actionToolbar(){
         setSupportActionBar(mainToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -60,7 +87,13 @@ class MainScreen : AppCompatActivity() {
 
     private fun menuItem() : ArrayList<Menu>{
         var list : ArrayList <Menu> = ArrayList()
-        list!!.add(Menu("Market", R.drawable.icon_market, listOf("Browse", "Your Connection", "Your Order")))
+        list!!.add(Menu(
+            "Market",
+            R.drawable.icon_market,
+            2,
+            listOf("Browse", "Your Connection", "Your Order"),
+            HowToVideoActivity::class.java
+        ))
         list!!.add(Menu("Top Up", R.drawable.icon_topup))
         list!!.add(Menu("Connections", R.drawable.icon_connect))
         list!!.add(Menu("Cart", R.drawable.ic_my_cart, 4))
@@ -68,15 +101,18 @@ class MainScreen : AppCompatActivity() {
         list!!.add(Menu("Pay bills", R.drawable.icon_bills))
         return list
     }
-    fun onAboutDrawer(){
+
+    private fun onAboutDrawer(){
         itemAbout!!.setOnClickListener(View.OnClickListener {
             mainDrawerLayout.closeDrawer(GravityCompat.START)
             var dialog = Dialog(MainScreen@this)
             dialog.setContentView(R.layout.dialog_simple)
+
             var title: TextView = dialog.findViewById(R.id.dialog_title)
             var content : TextView = dialog.findViewById(R.id.dialog_content)
             var btn_yes  : Button = dialog.findViewById(R.id.btn_yes)
             var btn_no : Button = dialog.findViewById(R.id.btn_no)
+
             title.text = getString(R.string.item_about)
             btn_no.isVisible = false
             btn_yes.setOnClickListener(View.OnClickListener {
@@ -87,7 +123,7 @@ class MainScreen : AppCompatActivity() {
             dialog.show()
         })
     }
-    fun onLogOut(){
+    private fun onLogOut(){
         itemLogOut!!.setOnClickListener(View.OnClickListener {
             mainDrawerLayout.closeDrawer(GravityCompat.START)
             var dialog = Dialog(MainScreen@this)
@@ -106,5 +142,27 @@ class MainScreen : AppCompatActivity() {
             })
             dialog.show()
         })
+    }
+    private fun onHowToVideo() {
+        itemHowToVideo!!.setOnClickListener(View.OnClickListener {
+            startActivity(Intent(applicationContext, HowToVideoActivity::class.java))
+        })
+    }
+
+    fun getPointAPI(){
+        RetrofitClient().videoInstance.getPoint(token)
+            .enqueue(object : retrofit2.Callback<Point> {
+                override fun onResponse(call: Call<Point>, response: Response<Point>) {
+                    var point : String = NumberFormat.getNumberInstance(Locale.US).format(response.body()!!.result[0].currentPoint)
+                    txtPoint!!.text = point
+                    txtDrawerPoint!!.text = point + " Points"
+                    txtLevel!!.text = "Level "+response.body()!!.result[0].levelUser.toString()+" Verified"
+                }
+
+                override fun onFailure(call: Call<Point>, t: Throwable) {
+                    Toast.makeText(applicationContext, "Error" +t.message, Toast.LENGTH_LONG).show()
+                }
+
+            })
     }
 }
