@@ -21,4 +21,7 @@
     <string name="tab_text_3">Coupons</string>
     <string name="tab_text_4">Punch Card</string>
     <string name="tab_text_5">Points</string>
+    <string name="link">
+        <a href="">AAAAAAA</a>
+    </string>
 </resources>

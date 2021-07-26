@@ -14,10 +14,11 @@ class RetrofitClient {
         val requestBuilder = original.newBuilder()
             .method(original.method, original.body)
             .addHeader("deviceId", "ffffffff-bf45-43ae-ffff-ffffef05ac4a")
-            .addHeader("appVersion", "1.3.0.20")
+            .addHeader("appVersion", "1.3.0.17")
             .addHeader("app-platform", "Kanoo-Android")
             .addHeader("X-TENANT", "kanoo")
             .addHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8")
+            .addHeader("token","8914cb78-7348-4129-ae0e-e4acf9a4d4d4")
 
         val request = requestBuilder.build()
         chain.proceed(request)
@@ -34,5 +35,15 @@ class RetrofitClient {
             .build()
 
         retrofit.create(Api::class.java)
+    }
+
+    val videoInstance : ApiVideo by lazy{
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+
+        retrofit.create(ApiVideo::class.java)
     }
 }

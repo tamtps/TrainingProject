@@ -27,5 +27,6 @@
     <dimen name="appbar_padding_top">8dp</dimen>
     <dimen name="search_bar_height">40dp</dimen>
     <dimen name="imageview_appbar">30dp</dimen>
+    <dimen name="wallet_card_height">250dp</dimen>
 
 </resources>

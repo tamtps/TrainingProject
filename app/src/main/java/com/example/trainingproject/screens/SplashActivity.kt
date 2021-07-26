@@ -28,7 +28,7 @@ class SplashActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             else {
-                val intent = Intent(this, CardsActivity::class.java)
+                val intent = Intent(this, HowToVideoActivity::class.java)
                 startActivity(intent)
             }
             finish()

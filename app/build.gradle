@@ -13,6 +13,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -72,4 +73,7 @@ dependencies {
 
     //Picasso giúp chuyển URL image sang resource để có thể bind vào ImageView
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
+    implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
+    implementation 'androidx.multidex:multidex:2.0.1'
 }

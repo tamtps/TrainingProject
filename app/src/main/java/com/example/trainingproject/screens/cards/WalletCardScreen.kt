@@ -7,17 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.trainingproject.R
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class WalletCardScreen : Fragment() {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CardsScreen.newInstance] factory method to
- * create an instance of this fragment.
- */
-class CardsScreen : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -25,9 +16,8 @@ class CardsScreen : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-        ): View? {
+    ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cards_screen, container, false)
+        return inflater.inflate(R.layout.fragment_wallet_card_screen, container, false)
     }
-
 }
