@@ -1,5 +1,6 @@
 package com.example.trainingproject.screens
 
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -22,8 +23,11 @@ class HowToVideoActivity : AppCompatActivity() {
     var list : ArrayList<Videos> = ArrayList()
 
     lateinit var binding : ActivityHowToVideoBinding
-
     var string : String = "ggg"
+//    val prefs : SharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE)
+//    val token: String? = prefs.getString("token", null)
+    val token= "8914cb78-7348-4129-ae0e-e4acf9a4d4d4"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +35,13 @@ class HowToVideoActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        RetrofitClient().videoInstance.getVideo()
+        onAppBarBack()
+        onHomeBack()
+        getVideoAPI()
+    }
+
+    fun getVideoAPI(){
+        RetrofitClient().videoInstance.getVideo(token!!)
             .enqueue(object : Callback<VideoResponse>{
                 override fun onResponse(
                     call: Call<VideoResponse>,
@@ -47,5 +57,13 @@ class HowToVideoActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext, "Error" +t.message, Toast.LENGTH_LONG).show()
                 }
             })
+    }
+
+    private fun onAppBarBack() {
+//        TODO: Back APPBAR press
+    }
+
+    private fun onHomeBack() {
+//        TODO: home appbar press
     }
 }

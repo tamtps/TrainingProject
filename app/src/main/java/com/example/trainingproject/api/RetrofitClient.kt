@@ -8,6 +8,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RetrofitClient {
     val interceptor = HttpLoggingInterceptor()
 
+
+
     private val BASE_URL = "https://kanoo-gateway-staging.kardsys.com/visikard/"
     private val okHttpClient = OkHttpClient.Builder().addInterceptor { chain ->
         val original = chain.request()
@@ -18,7 +20,6 @@ class RetrofitClient {
             .addHeader("app-platform", "Kanoo-Android")
             .addHeader("X-TENANT", "kanoo")
             .addHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8")
-            .addHeader("token","8914cb78-7348-4129-ae0e-e4acf9a4d4d4")
 
         val request = requestBuilder.build()
         chain.proceed(request)
