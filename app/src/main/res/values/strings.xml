@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">TrainingProject</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="has_account">Already have an account?</string>
     <string name="sign_in">Sign In</string>
@@ -22,4 +21,8 @@
     <string name="tab_text_3">Coupons</string>
     <string name="tab_text_4">Punch Card</string>
     <string name="tab_text_5">Points</string>
+    <string name="link">
+        <a href="">AAAAAAA</a>
+    </string>
+    <string name="appbar_how_to_video">How-To Videos</string>
 </resources>

@@ -1,19 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".screens.CardsActivity">
-
-    <data>
-        <import type="android.view.View"/>
-        <variable
-            name="PageViewModel"
-            type="com.example.trainingproject.components.PageViewModel" />
-    </data>
-
-
-<androidx.constraintlayout.widget.ConstraintLayout
+    tools:context=".screens.CardsActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -21,18 +11,31 @@
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/Theme.TrainingProject.AppBarOverlay">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:minHeight="?actionBarSize"
-            android:padding="@dimen/appbar_padding"
-            android:text="@string/app_name"
-            android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/mainToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@drawable/bg_header">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/imageview_appbar"
+                android:layout_weight="1"
+                android:src="@drawable/kanoo_white_icon"/>
+
+            <ImageView
+                android:layout_width="@dimen/imageview_appbar"
+                android:layout_height="@dimen/imageview_appbar"
+                android:src="@drawable/btn_home_white"
+                android:layout_marginRight="@dimen/padding_size_small"/>
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
@@ -45,6 +48,7 @@
         android:background="@drawable/bg_search_bar">
 
         <ImageView
+            android:id="@+id/icon_search"
             android:layout_width="@dimen/search_bar_height"
             android:layout_height="@dimen/search_bar_height"
             android:src="@drawable/icon_search"
@@ -52,7 +56,7 @@
 
         <EditText
             android:id="@+id/search_bar"
-            android:hint="@={PageViewM  odel._search}"
+            android:hint="Search Cards"
             android:layout_width="match_parent"
             android:layout_height="@dimen/search_bar_height"
             android:background="@null"/>
@@ -61,7 +65,7 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toTopOf="@id/tabs"
         app:layout_constraintTop_toBottomOf="@id/linearLayout"/>
@@ -79,4 +83,3 @@
         app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
         app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
