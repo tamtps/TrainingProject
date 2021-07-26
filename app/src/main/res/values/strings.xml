@@ -25,4 +25,6 @@
         <a href="">AAAAAAA</a>
     </string>
     <string name="appbar_how_to_video">How-To Videos</string>
+    <string name="txt_my_kanoo_point">My Kanoo Points Balance</string>
+    <string name="txt_view_detail">VIEW DETAILS</string>
 </resources>

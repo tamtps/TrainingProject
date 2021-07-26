@@ -2,14 +2,16 @@ package com.example.trainingproject
 
 import android.app.ActionBar
 import android.content.Context
+import android.content.Intent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.GridView
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.isVisible
 import com.example.trainingproject.models.Menu
+import com.example.trainingproject.screens.HowToVideoActivity
+import com.example.trainingproject.screens.MainScreen
+import com.example.trainingproject.screens.WalkThroughActivity
 
 class mainGridViewAdapter (var context: Context, var arrayList: ArrayList<Menu>): BaseAdapter() {
     override fun getCount(): Int {
@@ -39,7 +41,14 @@ class mainGridViewAdapter (var context: Context, var arrayList: ArrayList<Menu>)
             notification.isVisible = false
         }
 
+        view.setOnClickListener(View.OnClickListener {
+            if (menu.activity!=MainScreen::class.java){
+                val intent = Intent(context, menu.activity)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(context, intent, null)
+            }
+        })
+
         return view
     }
-
 }

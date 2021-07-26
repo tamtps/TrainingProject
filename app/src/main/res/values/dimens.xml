@@ -18,7 +18,7 @@
     <dimen name="imageview_size">50dp</dimen>
     <dimen name="imageview_tiny">7dp</dimen>
     <dimen name="imageview_nofi">22dp</dimen>
-    <dimen name="imageview_medium">100dp</dimen>
+    <dimen name="imageview_medium">80dp</dimen>
 
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
@@ -28,5 +28,6 @@
     <dimen name="search_bar_height">40dp</dimen>
     <dimen name="imageview_appbar">30dp</dimen>
     <dimen name="wallet_card_height">250dp</dimen>
+    <dimen name="background_item_height">80dp</dimen>
 
 </resources>

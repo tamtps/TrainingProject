@@ -3,6 +3,7 @@ package com.example.trainingproject.screens
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,7 +27,8 @@ class HowToVideoActivity : AppCompatActivity() {
     var string : String = "ggg"
 //    val prefs : SharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE)
 //    val token: String? = prefs.getString("token", null)
-    val token= "8914cb78-7348-4129-ae0e-e4acf9a4d4d4"
+    val token= "d42ab9f3-9c11-4f8e-b259-b0fb5d55061a"
+    //TODO: Token shared Preferences
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,10 +62,10 @@ class HowToVideoActivity : AppCompatActivity() {
     }
 
     private fun onAppBarBack() {
-//        TODO: Back APPBAR press
+        binding.iconAppbarBack.setOnClickListener(View.OnClickListener {
+            finish()
+        })
     }
 
-    private fun onHomeBack() {
-//        TODO: home appbar press
-    }
+    private fun onHomeBack() {}
 }
