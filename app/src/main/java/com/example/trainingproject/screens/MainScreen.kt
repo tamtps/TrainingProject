@@ -18,15 +18,15 @@ import com.example.trainingproject.models.Menu
 import com.google.android.material.navigation.NavigationView
 
 class MainScreen : AppCompatActivity() {
-    lateinit var mainToolbar: androidx.appcompat.widget.Toolbar
-    lateinit var mainDrawerLayout : DrawerLayout
-    lateinit var mainNavigationView : NavigationView
-    var mainGridView : GridView ?= null
-    var list :ArrayList<Menu> ?= null
+    private lateinit var mainToolbar: androidx.appcompat.widget.Toolbar
+    private lateinit var mainDrawerLayout : DrawerLayout
+    private lateinit var mainNavigationView : NavigationView
+    private var mainGridView : GridView ?= null
+    private var list :ArrayList<Menu> ?= null
     var listViewDrawer : ListView?= null
-    var itemAbout : TextView ?= null
-    var itemLogOut : TextView ?=null
-    var imgWallet : ImageView ?= null
+    private var itemAbout : TextView ?= null
+    private var itemLogOut : TextView ?=null
+    private var imgWallet : ImageView ?= null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_screen)
@@ -71,12 +71,12 @@ class MainScreen : AppCompatActivity() {
     fun onAboutDrawer(){
         itemAbout!!.setOnClickListener(View.OnClickListener {
             mainDrawerLayout.closeDrawer(GravityCompat.START)
-            var dialog = Dialog(MainScreen@this)
+            val dialog = Dialog(MainScreen@this)
             dialog.setContentView(R.layout.dialog_simple)
-            var title: TextView = dialog.findViewById(R.id.dialog_title)
+            val title: TextView = dialog.findViewById(R.id.dialog_title)
             var content : TextView = dialog.findViewById(R.id.dialog_content)
-            var btn_yes  : Button = dialog.findViewById(R.id.btn_yes)
-            var btn_no : Button = dialog.findViewById(R.id.btn_no)
+            val btn_yes  : Button = dialog.findViewById(R.id.btn_yes)
+            val btn_no : Button = dialog.findViewById(R.id.btn_no)
             title.text = getString(R.string.item_about)
             btn_no.isVisible = false
             btn_yes.setOnClickListener(View.OnClickListener {
@@ -90,12 +90,12 @@ class MainScreen : AppCompatActivity() {
     fun onLogOut(){
         itemLogOut!!.setOnClickListener(View.OnClickListener {
             mainDrawerLayout.closeDrawer(GravityCompat.START)
-            var dialog = Dialog(MainScreen@this)
+            val dialog = Dialog(MainScreen@this)
             dialog.setContentView(R.layout.dialog_simple)
-            var title: TextView = dialog.findViewById(R.id.dialog_title)
-            var content : TextView = dialog.findViewById(R.id.dialog_content)
-            var btn_yes  : Button = dialog.findViewById(R.id.btn_yes)
-            var btn_no : Button = dialog.findViewById(R.id.btn_no)
+            val title: TextView = dialog.findViewById(R.id.dialog_title)
+            val content : TextView = dialog.findViewById(R.id.dialog_content)
+            val btn_yes  : Button = dialog.findViewById(R.id.btn_yes)
+            val btn_no : Button = dialog.findViewById(R.id.btn_no)
             title.text = getString(R.string.item_log_out)
             content.text  = getString(R.string.log_out_content)
             btn_no.setOnClickListener(View.OnClickListener {

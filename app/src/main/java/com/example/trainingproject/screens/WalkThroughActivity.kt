@@ -45,7 +45,7 @@ class WalkThroughActivity : AppCompatActivity() {
         val logged = prefs.getBoolean("logged", false)
         editPrefs.apply()
         if(logged && !token.isNullOrEmpty()){
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, MainScreen::class.java))
         }
         else {
             startActivity(Intent(this, LogInActivity::class.java))

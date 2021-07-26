@@ -21,8 +21,10 @@ data class AccountInfo(
     val idUsers: String,
     val fname: String,
     val lname: String,
+    val flag: String,
     val username: String,
     val email: String,
+    val numberPoint: Int,
 )
 
 data class LoginInformation(

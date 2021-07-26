@@ -66,10 +66,14 @@ class LogInActivity : AppCompatActivity() {
                     val prefs : SharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE)
                     val editPref : SharedPreferences.Editor = prefs.edit()
                     editPref.putString("token", response.body()?.result?.loginInformation?.token)
+                    editPref.putString("fname", response.body()?.result?.accountInfo?.fname)
+                    editPref.putString("lname", response.body()?.result?.accountInfo?.lname)
+                    editPref.putString("avatar", response.body()?.result?.accountInfo?.flag)
+
                     editPref.putBoolean("logged", true)
                     editPref.apply()
                     Toast.makeText(applicationContext, "Đăng nhập thành công", Toast.LENGTH_LONG,).show()
-                    val intent = Intent(applicationContext, MainActivity::class.java)
+                    val intent = Intent(applicationContext, MainScreen::class.java)
                     startActivity(intent)
                     finish()
                 }
