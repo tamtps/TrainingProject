@@ -5,6 +5,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -13,15 +15,18 @@ import com.example.trainingproject.databinding.ActivityForgotBinding
 import com.example.trainingproject.models.CountryResult
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
-import java.util.ArrayList
+import java.util.*
+import kotlin.collections.ArrayList
 
-class CountryPickerAdapter(binding: ActivityForgotBinding, dialog : Dialog) : RecyclerView.Adapter<CountryPickerAdapter.MyView>() {
+class CountryPickerAdapter(binding: ActivityForgotBinding, dialog : Dialog) : RecyclerView.Adapter<CountryPickerAdapter.MyView>(), Filterable {
     private var dataSet = ArrayList<CountryResult>()
+    private lateinit var dataSetAll : ArrayList<CountryResult>
     private var dia = dialog
     private var bind = binding
 
     fun setUpdatedData(items: ArrayList<CountryResult>) {
         this.dataSet = items
+        this.dataSetAll = ArrayList(dataSet)
         notifyDataSetChanged()
     }
 
@@ -60,6 +65,44 @@ class CountryPickerAdapter(binding: ActivityForgotBinding, dialog : Dialog) : Re
 
     override fun getItemCount(): Int {
         return dataSet.size
+    }
+
+    override fun getFilter(): Filter {
+        return countryFilter
+    }
+
+    private var countryFilter = object : Filter() {
+        override fun performFiltering(constraint: CharSequence?): FilterResults {
+            var list =  ArrayList<CountryResult>()
+            if(constraint.toString().isEmpty()){
+                list.addAll(dataSet)
+            }
+            else {
+                for(country : CountryResult in dataSetAll){
+                    if(country.name.toLowerCase(Locale.ROOT)
+                            .contains(constraint.toString().toLowerCase(Locale.ROOT))
+                        || country.alpha2Code.toLowerCase(Locale.ROOT)
+                            .contains(constraint.toString().toLowerCase(Locale.ROOT))
+                        || country.callingCodes.toLowerCase(Locale.ROOT)
+                            .contains(constraint.toString().toLowerCase(Locale.ROOT))
+                    ){
+                        list.add(country)
+                    }
+                }
+            }
+
+            var result : FilterResults = FilterResults()
+            result.values = list
+
+            return result
+        }
+
+        override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+            dataSet.clear()
+            dataSet.addAll(results?.values as ArrayList<CountryResult>)
+            notifyDataSetChanged()
+        }
+
     }
 
 }

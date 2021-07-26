@@ -118,6 +118,8 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 }
             }
         })
+
+
     }
 
 
@@ -129,13 +131,28 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 DividerItemDecoration(applicationContext, DividerItemDecoration.VERTICAL)
             recView.addItemDecoration(decoration)
 
+        dialog.findViewById<ImageButton>(R.id.btnCloseDialog)
+            .setOnClickListener(View.OnClickListener {
+                dialog.dismiss()
+            })
+
+        dialog.findViewById<SearchView>(R.id.searchCountry).setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                countryPickerAdapter.filter.filter(newText)
+                return false
+            }
+        })
 
     }
 
     private fun initDialog(){
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.country_picker_dialog)
-        dialog.setCancelable(true)
+        dialog.setCancelable(false)
         val window: Window? = dialog.window
 
         window?.setLayout(
@@ -152,10 +169,6 @@ class ForgotPasswordActivity : AppCompatActivity() {
         attributes?.gravity = Gravity.CENTER
         window?.attributes = attributes
         initViewModel(dialog)
-        dialog.findViewById<ImageButton>(R.id.btnCloseDialog)
-            .setOnClickListener(View.OnClickListener {
-                dialog.dismiss()
-            })
 
         val viewModel = ViewModelProvider(this).get(ForgotPasswordViewModel::class.java)
         //Observer Live Data

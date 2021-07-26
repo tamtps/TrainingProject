@@ -1,7 +1,7 @@
 package com.example.trainingproject.models
 
 class Menu {
-    lateinit var name: String
+    var name: String
     var icon: Int = 0
     var notification: Int = 0
     var list: List<String> = listOf()
