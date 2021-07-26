@@ -25,7 +25,7 @@
                     android:background="@drawable/bg_header">
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="@dimen/imageview_appbar"
                         android:src="@drawable/kanoo_white_icon"
                         android:layout_marginVertical="15dp"
                         android:layout_marginRight="50dp"/>

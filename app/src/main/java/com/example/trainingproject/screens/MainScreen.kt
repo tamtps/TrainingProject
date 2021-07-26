@@ -55,6 +55,7 @@ class MainScreen : AppCompatActivity() {
         list = menuItem()
         mainGridView?.adapter = mainGridViewAdapter(applicationContext, list!!)
         listViewDrawer?.adapter = DrawerMenuAdapter(applicationContext, list!!)
+        onMyWallet()
         onAboutDrawer()
         onLogOut()
         onHowToVideo()
@@ -91,12 +92,11 @@ class MainScreen : AppCompatActivity() {
             "Market",
             R.drawable.icon_market,
             2,
-            listOf("Browse", "Your Connection", "Your Order"),
-            HowToVideoActivity::class.java
+            listOf("Browse", "Your Connection", "Your Order")
         ))
         list!!.add(Menu("Top Up", R.drawable.icon_topup))
         list!!.add(Menu("Connections", R.drawable.icon_connect))
-        list!!.add(Menu("Cart", R.drawable.ic_my_cart, 4))
+        list!!.add(Menu("Cart", R.drawable.ic_my_cart, 4, listOf()))
         list!!.add(Menu("Public services", R.drawable.ic_public_services,1))
         list!!.add(Menu("Pay bills", R.drawable.icon_bills))
         return list
@@ -146,6 +146,11 @@ class MainScreen : AppCompatActivity() {
     private fun onHowToVideo() {
         itemHowToVideo!!.setOnClickListener(View.OnClickListener {
             startActivity(Intent(applicationContext, HowToVideoActivity::class.java))
+        })
+    }
+    private fun onMyWallet() {
+        imgWallet!!.setOnClickListener(View.OnClickListener {
+            startActivity(Intent(applicationContext, CardsActivity::class.java))
         })
     }
 
