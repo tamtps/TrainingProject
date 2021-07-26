@@ -27,7 +27,7 @@ class HowToVideoActivity : AppCompatActivity() {
     var string : String = "ggg"
 //    val prefs : SharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE)
 //    val token: String? = prefs.getString("token", null)
-    val token= "d42ab9f3-9c11-4f8e-b259-b0fb5d55061a"
+    val token= "1dc8e6b9-e21c-410a-becc-bbb923f4c22a"
     //TODO: Token shared Preferences
 
 
