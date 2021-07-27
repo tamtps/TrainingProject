@@ -6,7 +6,8 @@ data class LoginResponse(
     val statusCode: String,
     val status: Int,
     val message: String,
-    val result: LoginResult
+    val result: LoginResult,
+    val trace : Trace
 )
 
 data class LoginResult(
@@ -26,4 +27,8 @@ data class AccountInfo(
 
 data class LoginInformation(
     val token: String,
+)
+
+data class Trace(
+    val appVersion : String
 )

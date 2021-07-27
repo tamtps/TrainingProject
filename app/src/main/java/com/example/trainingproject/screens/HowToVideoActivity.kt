@@ -25,9 +25,6 @@ class HowToVideoActivity : AppCompatActivity() {
 
     lateinit var binding : ActivityHowToVideoBinding
     var string : String = "ggg"
-//    val prefs : SharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE)
-//    val token: String? = prefs.getString("token", null)
-    val token= "1dc8e6b9-e21c-410a-becc-bbb923f4c22a"
     //TODO: Token shared Preferences
 
 
@@ -37,12 +34,15 @@ class HowToVideoActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        val prefs : SharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE)
+        val token: String? = prefs.getString("token", null)
+
         onAppBarBack()
         onHomeBack()
-        getVideoAPI()
+        getVideoAPI(token!!)
     }
 
-    fun getVideoAPI(){
+    fun getVideoAPI(token:String){
         RetrofitClient().videoInstance.getVideo(token)
             .enqueue(object : Callback<VideoResponse>{
                 override fun onResponse(

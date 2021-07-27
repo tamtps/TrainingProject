@@ -1,9 +1,12 @@
 package com.example.trainingproject.screens
+import android.app.Application
 import android.app.Dialog
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.drawable.GradientDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.Gravity
 import android.view.View
 import android.widget.*
@@ -16,9 +19,11 @@ import com.example.trainingproject.DrawerMenuAdapter
 import com.example.trainingproject.R
 import com.example.trainingproject.api.RetrofitClient
 import com.example.trainingproject.mainGridViewAdapter
+import com.example.trainingproject.models.LoginInformation
 import com.example.trainingproject.models.Menu
 import com.example.trainingproject.models.Point
 import com.google.android.material.navigation.NavigationView
+import com.squareup.picasso.Picasso
 import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Response
@@ -38,28 +43,37 @@ class MainScreen : AppCompatActivity() {
     var itemLogOut : TextView ?=null
     var itemHowToVideo : TextView ?=null
     var txtLevel : TextView ? = null
-    var imgWallet : ImageView ?= null
     var txtPoint : TextView ?= null
     var txtDrawerPoint : TextView ?= null
-
-
-    val token = "1dc8e6b9-e21c-410a-becc-bbb923f4c22a"
-//    TODO: Token shared Preferences
+    var txtName : TextView ?= null
+    var imgWallet : ImageView ?= null
+    var imgAvatar  : ImageView ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_screen)
+        var prefs : SharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE)
+        var token = prefs.getString("token","")
+        var version = prefs.getString("version", "")
+        var name = prefs.getString("fname","") + " " + prefs.getString("lname","")
+        var avatar = prefs.getString("avatar","")
+
         init()
         actionToolbar()
+
+        txtName!!.text = name
+        Picasso.get().load(avatar).into(imgAvatar)
+
         list = ArrayList()
         list = menuItem()
         mainGridView?.adapter = mainGridViewAdapter(applicationContext, list!!)
         listViewDrawer?.adapter = DrawerMenuAdapter(applicationContext, list!!)
+
         onMyWallet()
-        onAboutDrawer()
-        onLogOut()
+        onAboutDrawer(version!!)
+        onLogOut(prefs)
         onHowToVideo()
-        getPointAPI()
+        getPointAPI(token!!)
     }
 
     fun init(){
@@ -71,10 +85,12 @@ class MainScreen : AppCompatActivity() {
         itemAbout = findViewById(R.id.item_about)
         itemLogOut =findViewById(R.id.item_log_out)
         itemHowToVideo = findViewById(R.id.item_how_to_videos)
-        imgWallet = findViewById(R.id.img_wallet)
         txtPoint = findViewById(R.id.txt_point)
         txtLevel = findViewById(R.id.txt_level)
         txtDrawerPoint = findViewById(R.id.txt_drawer_point)
+        txtName = findViewById(R.id.txt_name)
+        imgWallet = findViewById(R.id.img_wallet)
+        imgAvatar = findViewById(R.id.img_avatar_menu)
     }
 
     fun actionToolbar(){
@@ -102,7 +118,7 @@ class MainScreen : AppCompatActivity() {
         return list
     }
 
-    private fun onAboutDrawer(){
+    private fun onAboutDrawer(version : String){
         itemAbout!!.setOnClickListener(View.OnClickListener {
             mainDrawerLayout.closeDrawer(GravityCompat.START)
             var dialog = Dialog(MainScreen@this)
@@ -118,12 +134,14 @@ class MainScreen : AppCompatActivity() {
             btn_yes.setOnClickListener(View.OnClickListener {
                 dialog.dismiss()
             })
-            //            content.text =
-            //                TODO: ABOUT BETA VERSION & DATE
+
+            var date : Date = Calendar.getInstance().time
+            content.text = "Beta Version: "+ version + "\nDate: "+ date
+//                            TODO: ABOUT DATE VERSION
             dialog.show()
         })
     }
-    private fun onLogOut(){
+    private fun onLogOut(prefs : SharedPreferences){
         itemLogOut!!.setOnClickListener(View.OnClickListener {
             mainDrawerLayout.closeDrawer(GravityCompat.START)
             var dialog = Dialog(MainScreen@this)
@@ -138,7 +156,10 @@ class MainScreen : AppCompatActivity() {
                 dialog.dismiss()
             })
             btn_yes.setOnClickListener(View.OnClickListener {
-                //TODO: LOG OUT
+                startActivity ( Intent(applicationContext, LogInActivity::class.java))
+                prefs.edit().clear().commit()
+                prefs.edit().putBoolean("firstStart", false).apply()
+                finish()
             })
             dialog.show()
         })
@@ -154,8 +175,8 @@ class MainScreen : AppCompatActivity() {
         })
     }
 
-    fun getPointAPI(){
-        RetrofitClient().videoInstance.getPoint(token)
+    fun getPointAPI(token : String){
+        RetrofitClient().videoInstance.getPoint(token!!)
             .enqueue(object : retrofit2.Callback<Point> {
                 override fun onResponse(call: Call<Point>, response: Response<Point>) {
                     var point : String = NumberFormat.getNumberInstance(Locale.US).format(response.body()!!.result[0].currentPoint)

@@ -69,6 +69,7 @@ class LogInActivity : AppCompatActivity() {
                     editPref.putString("fname", response.body()?.result?.accountInfo?.fname)
                     editPref.putString("lname", response.body()?.result?.accountInfo?.lname)
                     editPref.putString("avatar", response.body()?.result?.accountInfo?.flag)
+                    editPref.putString("version", response.body()?.trace?.appVersion)
 
                     editPref.putBoolean("logged", true)
                     editPref.apply()

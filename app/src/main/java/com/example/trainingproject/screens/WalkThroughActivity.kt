@@ -32,8 +32,7 @@ class WalkThroughActivity : AppCompatActivity() {
         })
     }
     fun onGetStart(){
-        startActivity(Intent(this, MainActivity::class.java))
-
+        startActivity(Intent(this, LogInActivity::class.java))
         editPrefs = prefs.edit();
         editPrefs.putBoolean("firstStart", false)
         editPrefs.apply()
