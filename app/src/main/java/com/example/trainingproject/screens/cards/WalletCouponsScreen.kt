@@ -36,9 +36,8 @@ class WalletCouponsScreen : Fragment() {
         _binding = FragmentWalletCouponsScreenBinding.inflate(inflater, container, false)
         val view = binding.root
 
-//        var prefs : SharedPreferences = requireActivity().getSharedPreferences("prefs", MODE_PRIVATE)
-//        var token = prefs.getString("token",null)
-        val token = "aaaaa"
+        var prefs : SharedPreferences = requireActivity().getSharedPreferences("prefs", MODE_PRIVATE)
+        var token = prefs.getString("token",null)
         getCouponAPI(token!!)
 
         return view
