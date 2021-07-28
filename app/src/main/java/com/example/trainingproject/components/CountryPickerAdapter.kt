@@ -75,7 +75,7 @@ class CountryPickerAdapter(binding: ActivityForgotBinding, dialog : Dialog) : Re
         override fun performFiltering(constraint: CharSequence?): FilterResults {
             var list =  ArrayList<CountryResult>()
             if(constraint.toString().isEmpty()){
-                list.addAll(dataSet)
+                list.addAll(dataSetAll)
             }
             else {
                 for(country : CountryResult in dataSetAll){

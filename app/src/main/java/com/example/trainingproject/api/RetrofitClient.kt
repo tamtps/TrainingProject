@@ -8,9 +8,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RetrofitClient {
     val interceptor = HttpLoggingInterceptor()
 
-
-
     private val BASE_URL = "https://kanoo-gateway-staging.kardsys.com/visikard/"
+    private val BASE_URL2 = "https://kanoo-gateway-staging.kardsys.com/visipay/"
+
     private val okHttpClient = OkHttpClient.Builder().addInterceptor { chain ->
         val original = chain.request()
         val requestBuilder = original.newBuilder()
@@ -46,5 +46,25 @@ class RetrofitClient {
             .build()
 
         retrofit.create(ApiVideo::class.java)
+    }
+
+    val walletCardInstance : ApiCard by lazy {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL2)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+
+        retrofit.create(ApiCard::class.java)
+    }
+
+    val giftCardInstance : ApiCard by lazy {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+
+        retrofit.create(ApiCard::class.java)
     }
 }

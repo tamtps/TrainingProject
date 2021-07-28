@@ -38,37 +38,15 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/search_bar_height"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/app_bar"
-        android:layout_margin="@dimen/padding_size_very_small"
-        android:background="@drawable/bg_search_bar">
-
-        <ImageView
-            android:id="@+id/icon_search"
-            android:layout_width="@dimen/search_bar_height"
-            android:layout_height="@dimen/search_bar_height"
-            android:src="@drawable/icon_search"
-            android:padding="@dimen/padding_size_very_small"/>
-
-        <EditText
-            android:id="@+id/search_bar"
-            android:hint="Search Cards"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/search_bar_height"
-            android:background="@null"/>
-    </LinearLayout>
-
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toTopOf="@id/tabs"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_bar" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
