@@ -8,8 +8,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RetrofitClient {
     val interceptor = HttpLoggingInterceptor()
 
-
-
     private val BASE_URL = "https://kanoo-gateway-staging.kardsys.com/visikard/"
     private val okHttpClient = OkHttpClient.Builder().addInterceptor { chain ->
         val original = chain.request()

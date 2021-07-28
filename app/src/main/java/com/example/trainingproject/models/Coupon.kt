@@ -8,7 +8,6 @@ data class Coupon(
     )
 
 data class CouponResponse(
-    val statusCode : String,
     val status : Int,
     val result: List<Coupon>
 )
