@@ -1,12 +1,8 @@
 package com.example.trainingproject.api
 
-import com.example.trainingproject.models.CountryResponse
-import com.example.trainingproject.models.LoginResponse
+import com.example.trainingproject.models.*
 import retrofit2.Call
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface Api {
     @FormUrlEncoded
@@ -24,4 +20,46 @@ interface Api {
 
     @GET("countries")
     fun getCountries() : Call<CountryResponse>
+
+    @FormUrlEncoded
+    @POST("api/27/getAccounts")
+    fun getWalletCard(
+        @Header("token") token: String,
+        @Field("accountSpecification") accountSpecification: String,
+        @Field("action") action: String,
+        @Field("storeId") storeId: String,
+        @Field("excludeCards") excludeCards: String,
+    ) : Call<WalletCardResponse>
+
+    @FormUrlEncoded
+    @POST("deals/getWalletDisplayByReceiverUserId")
+    fun getGiftCard(
+        @Header("token") token: String,
+        @Field("receiverUserId") receiverUserId: String,
+        @Field("keyword") keyword: String,
+        @Field("pageIndex") pageIndex: String,
+        @Field("pageSize") pageSize: String,
+        @Field("filter") filter: String,
+    ) : Call<GiftCardResponse>
+
+    @GET("api/support?category=1")
+    fun getVideo(
+        @Header("token") token: String
+    ): Call<VideoResponse>
+
+    @GET("point/get/point/level/167")
+    fun getPoint(
+        @Header("token") token: String
+    ): Call<Point>
+
+    @FormUrlEncoded
+    @POST("special/campaign/coupon/wallet/user/all")
+    fun getCoupon(
+        @Header("token") token: String,
+        @Field("fkUser") fkUser: String,
+        @Field("keyword") keyword: String?,
+        @Field("filter") filter: String,
+        @Field("pageIndex") pageIndex: String,
+        @Field("pageSize") pageSize: String,
+    ): Call<CouponResponse>
 }

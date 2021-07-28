@@ -60,6 +60,7 @@ class WalletCardFragment : Fragment() {
         viewModel.getAccountListObserver().observe(viewLifecycleOwner, {
             if(it.accounts.isNotEmpty()){
                 walletCardAdapter.setUpdatedData(it.accounts)
+                binding.progressCircularWalletCard.visibility = View.INVISIBLE
             }
             else {
                 Toast.makeText(this.context, "ERROR IN GETTING DATA", Toast.LENGTH_LONG).show()

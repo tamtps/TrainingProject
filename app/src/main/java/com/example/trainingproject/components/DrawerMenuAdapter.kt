@@ -1,4 +1,4 @@
-package com.example.trainingproject
+package com.example.trainingproject.components
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
@@ -6,6 +6,7 @@ import android.widget.ArrayAdapter
 import android.widget.BaseAdapter
 import android.widget.ListView
 import android.widget.TextView
+import com.example.trainingproject.R
 import com.example.trainingproject.models.Menu
 class DrawerMenuAdapter(var context: Context, var arrayList: ArrayList<Menu>) : BaseAdapter() {
     override fun getCount(): Int {

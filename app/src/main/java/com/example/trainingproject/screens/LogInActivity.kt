@@ -65,7 +65,7 @@ class LogInActivity : AppCompatActivity() {
                 if(response.body()?.status == HttpURLConnection.HTTP_OK){
                     val prefs : SharedPreferences = applicationContext.getSharedPreferences("prefs", MODE_PRIVATE)
                     val editPref : SharedPreferences.Editor = prefs.edit()
-                    editPref.putString("token", response.body()?.result?.loginInformation?.token)
+                    editPref.putString("token", response.body()!!.result.loginInformation.token)
                     editPref.putString("fname", response.body()?.result?.accountInfo?.fname)
                     editPref.putString("lname", response.body()?.result?.accountInfo?.lname)
                     editPref.putString("avatar", response.body()?.result?.accountInfo?.flag)

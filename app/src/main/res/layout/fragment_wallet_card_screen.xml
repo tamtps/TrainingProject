@@ -33,7 +33,8 @@
                 android:layout_height="@dimen/search_bar_height"
                 android:autofillHints="Search Cards"
                 android:background="@null"
-                android:hint="Search for owner name, last 4 digits, etc..."
+                android:fontFamily="@font/gilroy_medium"
+                android:hint="Search"
                 android:inputType="textFilter|text" />
         </LinearLayout>
 
@@ -43,5 +44,12 @@
             android:layout_height="match_parent" />
 
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progress_circular_wallet_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/app_color" />
 
 </FrameLayout>

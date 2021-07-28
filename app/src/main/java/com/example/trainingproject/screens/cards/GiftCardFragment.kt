@@ -63,6 +63,7 @@ class GiftCardFragment : Fragment() {
         viewModel.getTransListObserver().observe(viewLifecycleOwner, {
             if(it.transDisplay.isNotEmpty()){
                 giftCardAdapter.setUpdatedData(it.transDisplay)
+                binding.progressCircularGiftCard.visibility = View.INVISIBLE
             }
             else {
                 Toast.makeText(this.context, "ERROR IN GETTING DATA", Toast.LENGTH_LONG).show()

@@ -50,6 +50,7 @@ class WalletCouponsFragment : Fragment() {
                     call: Call<CouponResponse>,
                     response: Response<CouponResponse>
                 ) {
+                    binding.progressCircularCoupon.visibility = View.INVISIBLE
                     listCoupon.addAll(response.body()!!.result)
                     binding!!.listCoupon.adapter =  WalletCouponAdapter(requireContext(), listCoupon)
                     binding!!.listCoupon.layoutManager = LinearLayoutManager(requireContext())

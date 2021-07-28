@@ -1,35 +1,26 @@
 package com.example.trainingproject.screens
-import android.app.Application
 import android.app.Dialog
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.drawable.GradientDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.preference.PreferenceManager
-import android.view.Gravity
 import android.view.View
 import android.widget.*
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
-import com.example.trainingproject.DrawerMenuAdapter
 import com.example.trainingproject.R
 import com.example.trainingproject.api.RetrofitClient
-import com.example.trainingproject.mainGridViewAdapter
-import com.example.trainingproject.models.LoginInformation
+import com.example.trainingproject.components.DrawerMenuAdapter
+import com.example.trainingproject.components.mainGridViewAdapter
 import com.example.trainingproject.models.Menu
 import com.example.trainingproject.models.Point
 import com.google.android.material.navigation.NavigationView
 import com.squareup.picasso.Picasso
-import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Response
 import java.text.NumberFormat
 import java.util.*
-import javax.security.auth.callback.Callback
 import kotlin.collections.ArrayList
 
 class MainScreen : AppCompatActivity() {

@@ -7,8 +7,10 @@ import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.service.autofill.RegexValidator
+import android.text.Editable
 import android.text.InputType
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -136,15 +138,20 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 dialog.dismiss()
             })
 
-        dialog.findViewById<SearchView>(R.id.searchCountry).setOnQueryTextListener(object: SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
+        dialog.findViewById<EditText>(R.id.searchCountry).addTextChangedListener(object:
+            TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
             }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                countryPickerAdapter.filter.filter(newText)
-                return false
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                countryPickerAdapter.filter.filter(s)
             }
+
+            override fun afterTextChanged(s: Editable?) {
+                countryPickerAdapter.filter.filter(s)
+            }
+
         })
 
     }
@@ -174,6 +181,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
         //Observer Live Data
         viewModel.getCountryListObserver().observe(this, {
             if(it.isNotEmpty()){
+                dialog.findViewById<ProgressBar>(R.id.progress_circular_country_picker).visibility = View.INVISIBLE
                 countryPickerAdapter.setUpdatedData(it)
                 it.forEach { country ->
                     if (country.favorite) {

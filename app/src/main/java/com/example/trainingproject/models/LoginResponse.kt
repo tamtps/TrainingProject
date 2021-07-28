@@ -1,5 +1,7 @@
 package com.example.trainingproject.models
 
+import java.time.format.DateTimeFormatter
+
 data class LoginResponse(
     val clientMessage: String,
     val countRecord: Int,
@@ -27,6 +29,7 @@ data class AccountInfo(
 
 data class LoginInformation(
     val token: String,
+    val loginExpiry: String
 )
 
 data class Trace(
