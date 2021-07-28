@@ -1,12 +1,10 @@
 package com.example.trainingproject.api
 
+import com.example.trainingproject.models.CouponResponse
 import com.example.trainingproject.models.Point
 import com.example.trainingproject.models.VideoResponse
 import retrofit2.Call
-import retrofit2.http.Field
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Headers
+import retrofit2.http.*
 
 interface ApiVideo {
     @GET("api/support?category=1")
@@ -18,4 +16,15 @@ interface ApiVideo {
     fun getPoint(
         @Header("token") token: String
     ): Call<Point>
+
+    @FormUrlEncoded
+    @POST("special/campaign/coupon/wallet/user/all")
+    fun getCoupon(
+        @Header("token") token: String,
+        @Field("fkUser") fkUser: String,
+        @Field("keyword") keyword: String?,
+        @Field("filter") filter: String,
+        @Field("pageIndex") pageIndex: String,
+        @Field("pageSize") pageSize: String,
+        ): Call<CouponResponse>
 }

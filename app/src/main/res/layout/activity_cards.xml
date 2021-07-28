@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -11,7 +11,8 @@
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/mainToolbar"
@@ -45,7 +46,8 @@
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/app_bar"
         android:layout_margin="@dimen/padding_size_very_small"
-        android:background="@drawable/bg_search_bar">
+        android:background="@drawable/bg_search_bar"
+        android:layout_below="@id/app_bar">
 
         <ImageView
             android:id="@+id/icon_search"
@@ -65,10 +67,12 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:layout_constraintBottom_toTopOf="@id/tabs"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout"/>
+        android:layout_height="match_parent"
+        android:layout_below="@id/linearLayout"
+        android:layout_above="@id/tabs"
+        app:layout_constraintVertical_weight="1"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout"
+        app:layout_constraintBottom_toTopOf="@id/tabs"/>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
@@ -81,5 +85,6 @@
         app:tabGravity="fill"
         app:tabMode="scrollable"
         app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>

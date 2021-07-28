@@ -29,5 +29,7 @@
     <dimen name="imageview_appbar">30dp</dimen>
     <dimen name="wallet_card_height">250dp</dimen>
     <dimen name="background_item_height">80dp</dimen>
+    <dimen name="imageview_coupon">200dp</dimen>
+    <dimen name="coupon_wh">250dp</dimen>
 
 </resources>
