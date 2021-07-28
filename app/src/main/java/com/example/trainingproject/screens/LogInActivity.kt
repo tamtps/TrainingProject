@@ -63,7 +63,7 @@ class LogInActivity : AppCompatActivity() {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 //TODO: IF STATUS OK SAVE TOKEN
                 if(response.body()?.status == HttpURLConnection.HTTP_OK){
-                    val prefs : SharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE)
+                    val prefs : SharedPreferences = applicationContext.getSharedPreferences("prefs", MODE_PRIVATE)
                     val editPref : SharedPreferences.Editor = prefs.edit()
                     editPref.putString("token", response.body()?.result?.loginInformation?.token)
                     editPref.putString("fname", response.body()?.result?.accountInfo?.fname)

@@ -77,7 +77,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 }
                 1 -> {
                     if(!isValidEmail(binding.inputTxtForgot.text.toString())){
-                        Toast.makeText(applicationContext, "Wrong emmail format! Please try again", Toast.LENGTH_LONG).show()
+                        Toast.makeText(applicationContext, "Wrong email format! Please try again", Toast.LENGTH_LONG).show()
                         valid = false
                     }
                     else {

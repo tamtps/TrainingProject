@@ -5,47 +5,41 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.trainingproject.R
 import com.example.trainingproject.models.Account
+import com.example.trainingproject.models.TransactionDetail
+import com.squareup.picasso.Picasso
 import java.util.*
 import kotlin.collections.ArrayList
 
-class WalletCardAdapter() :
-    RecyclerView.Adapter<WalletCardAdapter.ViewHolder>(), Filterable {
-    private var dataSet = ArrayList<Account>()
-    private var dataSetAll = ArrayList<Account>()
+class GiftCardAdapter() :
+    RecyclerView.Adapter<GiftCardAdapter.ViewHolder>(), Filterable {
+    private var dataSet = ArrayList<TransactionDetail>()
+    private var dataSetAll = ArrayList<TransactionDetail>()
 
-    fun setUpdatedData(items: ArrayList<Account>) {
+    fun setUpdatedData(items: ArrayList<TransactionDetail>) {
         this.dataSet = items
         this.dataSetAll = ArrayList(dataSet)
         notifyDataSetChanged()
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(data: Account) {
-            if (data.tokens.accountType
-                    .equals("KK")
-            ){
-                itemView.findViewById<TextView>(R.id.txtCardType).text =
-                    "kanoo Kash Kard"
+        fun bind(data: TransactionDetail) {
+            Picasso.get().load(data.imgCard).into(itemView.findViewById<ImageView>(R.id.imgGifCard))
+            itemView.findViewById<TextView>(R.id.txtCardNum).text =
+                data.cardNum
+            itemView.findViewById<TextView>(R.id.txtGiftBalance).text = getCurrency(data) + data.cert_value
 
-            }
-             else "The Sand Dollar Card"
-            itemView.findViewById<TextView>(R.id.txtCardOwner).text =
-                "${data.tokens.firstName} ${data.tokens.lastName}"
-            itemView.findViewById<TextView>(R.id.txtLast4).text = data.tokens.last4
-            itemView.findViewById<TextView>(R.id.txtGiftBalance).text =
-                "Level ${data.tokens.accountStatus + 1} Verified"
-            itemView.findViewById<TextView>(R.id.txtBalance).text = getCurrency(data) + "${data.tokens.balance}"
         }
 
-        fun getCurrency(account : Account) : String {
-            var currency = "B$"
-            when(account.tokens.currency){
-                "BSD" -> {
-                    currency = "B$"
+        fun getCurrency(transaction : TransactionDetail) : String {
+            var currency = "$"
+            when(transaction.currency){
+                "12" -> {
+                    currency = "$"
                 }
                 //TODO: OTHER CURRENCY
             }
@@ -56,7 +50,7 @@ class WalletCardAdapter() :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.wallet_card_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.gift_card_item, parent, false)
 
         return ViewHolder(view)
     }
@@ -75,20 +69,18 @@ class WalletCardAdapter() :
 
     private var cardFilter = object : Filter() {
         override fun performFiltering(constraint: CharSequence?): FilterResults {
-            var list =  ArrayList<Account>()
+            var list =  ArrayList<TransactionDetail>()
             if(constraint.toString().isEmpty()){
                 list.addAll(dataSetAll)
             }
             else {
-                for(account : Account in dataSetAll){
-                    if(account.tokens.firstName.toLowerCase(Locale.ROOT)
+                for(transaction : TransactionDetail in dataSetAll){
+                    if(transaction.cardNum.toLowerCase(Locale.ROOT)
                             .contains(constraint.toString().toLowerCase(Locale.ROOT))
-                        || account.tokens.last4.toLowerCase(Locale.ROOT)
-                            .contains(constraint.toString().toLowerCase(Locale.ROOT))
-                        || account.tokens.lastName.toLowerCase(Locale.ROOT)
+                        || transaction.cert_value.toLowerCase(Locale.ROOT)
                             .contains(constraint.toString().toLowerCase(Locale.ROOT))
                     ){
-                        list.add(account)
+                        list.add(transaction)
                     }
                 }
             }
@@ -101,7 +93,7 @@ class WalletCardAdapter() :
 
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
             dataSet.clear()
-            dataSet.addAll(results?.values as ArrayList<Account>)
+            dataSet.addAll(results?.values as ArrayList<TransactionDetail>)
             notifyDataSetChanged()
         }
 
