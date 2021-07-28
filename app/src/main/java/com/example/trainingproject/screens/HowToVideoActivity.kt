@@ -22,11 +22,7 @@ import retrofit2.Retrofit
 
 class HowToVideoActivity : AppCompatActivity() {
     var list : ArrayList<Videos> = ArrayList()
-
     lateinit var binding : ActivityHowToVideoBinding
-    var string : String = "ggg"
-    //TODO: Token shared Preferences
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +45,7 @@ class HowToVideoActivity : AppCompatActivity() {
                     call: Call<VideoResponse>,
                     response: Response<VideoResponse>
                 ) {
+                    binding.progressCircular.visibility = View.INVISIBLE
                     list.addAll(response.body()!!.result.content)
                     binding.listHowToVideos.adapter = HowToVideoAdapter(applicationContext, list)
                     binding.listHowToVideos.layoutManager = LinearLayoutManager(applicationContext)
