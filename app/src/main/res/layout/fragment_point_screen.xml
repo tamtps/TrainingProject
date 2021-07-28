@@ -21,24 +21,24 @@
             app:layout_constraintTop_toBottomOf="@id/app_bar">
 
             <ImageView
-                android:id="@+id/icon_search_coupons"
+                android:id="@+id/icon_search_point"
                 android:layout_width="@dimen/search_bar_height"
                 android:layout_height="@dimen/search_bar_height"
                 android:padding="@dimen/padding_size_very_small"
                 android:src="@drawable/icon_search" />
 
             <EditText
-                android:id="@+id/searchBar"
+                android:id="@+id/searchBarPoint"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/search_bar_height"
                 android:autofillHints="Search Cards"
                 android:background="@null"
-                android:hint="Search for owner name, last 4 digits, etc..."
+                android:hint="Search for point"
                 android:inputType="textFilter|text" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recWalletCard"
+            android:id="@+id/recPointCard"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

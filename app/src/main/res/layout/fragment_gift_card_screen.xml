@@ -33,6 +33,7 @@
                 android:layout_height="@dimen/search_bar_height"
                 android:autofillHints="Search Cards"
                 android:background="@null"
+                android:hint="Search for card number, value, etc..."
                 android:inputType="textFilter|text" />
         </LinearLayout>
 
