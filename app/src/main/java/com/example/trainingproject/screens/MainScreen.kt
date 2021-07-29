@@ -1,5 +1,4 @@
 package com.example.trainingproject.screens
-import android.app.Dialog
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
@@ -7,8 +6,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.core.view.GravityCompat
-import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
+import com.example.trainingproject.bases.BaseDialog
 import com.example.trainingproject.R
 import com.example.trainingproject.api.RetrofitClient
 import com.example.trainingproject.components.DrawerMenuAdapter
@@ -113,41 +112,27 @@ class MainScreen : AppCompatActivity() {
     private fun onAboutDrawer(version : String){
         itemAbout!!.setOnClickListener(View.OnClickListener {
             mainDrawerLayout.closeDrawer(GravityCompat.START)
-            var dialog = Dialog(MainScreen@this)
-            dialog.setContentView(R.layout.dialog_simple)
-
-            var title: TextView = dialog.findViewById(R.id.dialog_title)
-            var content : TextView = dialog.findViewById(R.id.dialog_content)
-            var btn_yes  : Button = dialog.findViewById(R.id.btn_yes)
-            var btn_no : Button = dialog.findViewById(R.id.btn_no)
-
-            title.text = getString(R.string.item_about)
-            btn_no.isVisible = false
-            btn_yes.setOnClickListener(View.OnClickListener {
+            var date : Date = Calendar.getInstance().time
+            var dialog = BaseDialog(MainScreen@this)
+            dialog.setContentView()
+            dialog.title.text = getString(R.string.item_about)
+            dialog.content.text = "Beta Version: "+ version + "\nDate: "+ date
+            dialog.showCancelButton(false)
+            dialog.buttonOK.setOnClickListener(View.OnClickListener {
                 dialog.dismiss()
             })
-
-            var date : Date = Calendar.getInstance().time
-            content.text = "Beta Version: "+ version + "\nDate: "+ date
-//                            TODO: ABOUT DATE VERSION
             dialog.show()
         })
     }
     private fun onLogOut(prefs : SharedPreferences){
         itemLogOut!!.setOnClickListener(View.OnClickListener {
             mainDrawerLayout.closeDrawer(GravityCompat.START)
-            var dialog = Dialog(MainScreen@this)
-            dialog.setContentView(R.layout.dialog_simple)
-            var title: TextView = dialog.findViewById(R.id.dialog_title)
-            var content : TextView = dialog.findViewById(R.id.dialog_content)
-            var btn_yes  : Button = dialog.findViewById(R.id.btn_yes)
-            var btn_no : Button = dialog.findViewById(R.id.btn_no)
-            title.text = getString(R.string.item_log_out)
-            content.text  = getString(R.string.log_out_content)
-            btn_no.setOnClickListener(View.OnClickListener {
-                dialog.dismiss()
-            })
-            btn_yes.setOnClickListener(View.OnClickListener {
+            var dialog = BaseDialog(MainScreen@this)
+            dialog.setContentView()
+            dialog.title.text = getString(R.string.item_log_out)
+            dialog.content.text  = getString(R.string.log_out_content)
+            dialog.onCancelDismiss()
+            dialog.buttonOK.setOnClickListener(View.OnClickListener {
                 startActivity ( Intent(applicationContext, LogInActivity::class.java))
                 prefs.edit().clear().commit()
                 prefs.edit().putBoolean("firstStart", false).apply()
@@ -178,8 +163,16 @@ class MainScreen : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<Point>, t: Throwable) {
-                    onLogOut(prefs)
-                    Toast.makeText(applicationContext, "Error" +t.message, Toast.LENGTH_LONG).show()
+//                    onLogOut(prefs)
+//                    Toast.makeText(applicationContext, "Error" +t.message, Toast.LENGTH_LONG).show()
+
+                    var dialog = BaseDialog(this@MainScreen)
+                    dialog.setContentView()
+                    dialog.title.text = getString(R.string.error)
+                    dialog.content.text = t.message
+                    dialog.showCancelButton(false)
+                    dialog.onOKDismiss()
+                    dialog.show()
                 }
 
             })
