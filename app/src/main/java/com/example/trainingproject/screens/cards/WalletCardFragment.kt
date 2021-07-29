@@ -14,7 +14,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.trainingproject.R
-import com.example.trainingproject.components.BaseFragment
+import com.example.trainingproject.bases.BaseFragment
 import com.example.trainingproject.components.WalletCardAdapter
 import com.example.trainingproject.databinding.FragmentWalletCardScreenBinding
 import com.example.trainingproject.viewmodels.WalletCardViewModel

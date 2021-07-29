@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.trainingproject.components.BaseFragment
+import com.example.trainingproject.bases.BaseFragment
 import com.example.trainingproject.components.WalletCouponAdapter
 import com.example.trainingproject.databinding.FragmentWalletCouponsScreenBinding
 import com.example.trainingproject.viewmodels.CouponCardViewModel

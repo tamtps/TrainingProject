@@ -1,4 +1,4 @@
-package com.example.trainingproject.components
+package com.example.trainingproject.bases
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 
 typealias Inflate<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
+
 abstract class BaseFragment<VB: ViewBinding>(private val inflate: Inflate<VB>) : Fragment(){
     private var _binding: VB? = null
     val binding get() = _binding!!

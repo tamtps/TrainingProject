@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.trainingproject.components.BaseFragment
+import com.example.trainingproject.bases.BaseFragment
 import com.example.trainingproject.components.GiftCardAdapter
 import com.example.trainingproject.databinding.FragmentGiftCardScreenBinding
 import com.example.trainingproject.viewmodels.GiftCardViewModel

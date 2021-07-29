@@ -3,11 +3,9 @@ package com.example.trainingproject.screens
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.GridView
-import android.widget.ImageView
-import android.widget.ListView
-import android.widget.TextView
+import android.widget.*
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.trainingproject.R
@@ -22,6 +20,7 @@ import com.google.android.material.navigation.NavigationView
 import com.squareup.picasso.Picasso
 import retrofit2.Call
 import retrofit2.Response
+import java.net.HttpURLConnection
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -159,16 +158,26 @@ class MainScreen() : BaseActivity() {
         RetrofitClient().instance.getPoint(token!!)
             .enqueue(object : retrofit2.Callback<Point> {
                 override fun onResponse(call: Call<Point>, response: Response<Point>) {
-                    var point : String = NumberFormat.getNumberInstance(Locale.US).format(response.body()!!.result[0].currentPoint)
-                    txtPoint?.text = point
-                    txtDrawerPoint!!.text = point + " Points"
-                    txtLevel!!.text = "Level "+response.body()!!.result[0].levelUser.toString()+" Verified"
+                    if(response.code() == HttpURLConnection.HTTP_FORBIDDEN){
+                        prefs.edit().clear()
+                        prefs.edit().putBoolean("firstStart", false)
+                        prefs.edit().apply()
+                        Toast.makeText(applicationContext, "Token expired, please login again", Toast.LENGTH_LONG).show()
+                        startActivity (Intent(applicationContext, LogInActivity::class.java))
+                        finish()
+                    }
+                    else if(response.isSuccessful){
+                        Log.d("RESPONSE_POINT", response.toString())
+                        var point: String = NumberFormat.getNumberInstance(Locale.US)
+                            .format(response.body()!!.result[0].currentPoint)
+                        txtPoint?.text = point
+                        txtDrawerPoint!!.text = point + " Points"
+                        txtLevel!!.text =
+                            "Level " + response.body()!!.result[0].levelUser.toString() + " Verified"
+                    }
                 }
 
                 override fun onFailure(call: Call<Point>, t: Throwable) {
-//                    onLogOut(prefs)
-//                    Toast.makeText(applicationContext, "Error" +t.message, Toast.LENGTH_LONG).show()
-
                     var dialog = BaseDialog(this@MainScreen)
                     dialog.setContentView()
                     dialog.title.text = getString(R.string.error)
