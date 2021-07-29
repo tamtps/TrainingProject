@@ -20,9 +20,15 @@ class GiftCardViewModel : ViewModel() {
         return transListLiveData
     }
 
-    fun makeApiCall(token: String) {
+    fun makeApiCall(token: String,
+                    receiverUserId: String,
+                    keyword: String,
+                    pageIndex: String,
+                    pageSize: String,
+                    filter: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            RetrofitClient().giftCardInstance.getGiftCard(token, "1368", "", "1", "50","0")
+            RetrofitClient().instance.getGiftCard(token, receiverUserId, keyword,
+                pageIndex, pageSize,filter)
                 .enqueue(object : Callback<GiftCardResponse>{
                     override fun onResponse(
                         call: Call<GiftCardResponse>,
@@ -30,10 +36,6 @@ class GiftCardViewModel : ViewModel() {
                     ) {
                         if (response.isSuccessful ){
                             transListLiveData.postValue(response.body()!!.result)
-                            Log.d("giftCardResponse",response.body()!!.result.toString())
-                        }
-                        else {
-                            Log.d("walletCardFailed",response.body()?.result.toString())
                         }
 
                     }

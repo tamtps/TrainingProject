@@ -1,63 +1,59 @@
 package com.example.trainingproject.screens.cards
 
-import android.app.Dialog
 import android.content.Context.MODE_PRIVATE
-import android.content.SharedPreferences
-import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.trainingproject.R
-import com.example.trainingproject.api.RetrofitClient
+import com.example.trainingproject.components.BaseFragment
 import com.example.trainingproject.components.WalletCouponAdapter
 import com.example.trainingproject.databinding.FragmentWalletCouponsScreenBinding
-import com.example.trainingproject.models.Coupon
-import com.example.trainingproject.models.CouponResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.net.HttpURLConnection
+import com.example.trainingproject.viewmodels.CouponCardViewModel
 
-class WalletCouponsFragment : Fragment() {
-    private var _binding : FragmentWalletCouponsScreenBinding ?= null
-    private val binding get() = _binding!!
 
-    var listCoupon = ArrayList<Coupon>()
+class WalletCouponsFragment : BaseFragment<FragmentWalletCouponsScreenBinding>(FragmentWalletCouponsScreenBinding::inflate){
+    lateinit var couponCardAdapter: WalletCouponAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentWalletCouponsScreenBinding.inflate(inflater, container, false)
-        val view = binding.root
+    override fun initViewModel() {
+        val viewModel = ViewModelProvider(this).get(CouponCardViewModel::class.java)
+        viewModel.getCouponListObserver().observe(viewLifecycleOwner, {
+            if (it.result.isNotEmpty()) {
+                couponCardAdapter.setUpdatedData(it.result)
+                binding.progressCircularCoupon.visibility = View.INVISIBLE
+            } else {
+                Toast.makeText(this.context, "ERROR IN GETTING DATA", Toast.LENGTH_LONG).show()
+            }
+        })
 
-        var prefs : SharedPreferences = requireActivity().getSharedPreferences("prefs", MODE_PRIVATE)
-        var token = prefs.getString("token",null)
-        getCouponAPI(token!!)
-
-        return view
+        val prefs = this.context?.getSharedPreferences("prefs", MODE_PRIVATE)
+        val token: String = prefs?.getString("token", "")!!
+        viewModel.makeApiCall(token, "1368","","-1","1", "100")
     }
 
-    fun getCouponAPI(token : String){
-        RetrofitClient().videoInstance.getCoupon(token,"1368", "", "-1", "1", "100")
-            .enqueue(object : Callback<CouponResponse>{
-                override fun onResponse(
-                    call: Call<CouponResponse>,
-                    response: Response<CouponResponse>
-                ) {
-                    binding.progressCircularCoupon.visibility = View.INVISIBLE
-                    listCoupon.addAll(response.body()!!.result)
-                    binding!!.listCoupon.adapter =  WalletCouponAdapter(requireContext(), listCoupon)
-                    binding!!.listCoupon.layoutManager = LinearLayoutManager(requireContext())
+    override fun initAdapter() {
+        couponCardAdapter = WalletCouponAdapter()
+    }
+
+    override fun bindingComponent() {
+        binding.listCoupon.layoutManager = LinearLayoutManager(binding.root.context)
+        binding.listCoupon.adapter = couponCardAdapter
+    }
+
+    override fun bindingSearchBar() {
+            binding.searchBarCoupon.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 }
-                override fun onFailure(call: Call<CouponResponse>, t: Throwable) {
-                    Toast.makeText(context, t.message, Toast.LENGTH_LONG).show()
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    couponCardAdapter.filter.filter(s)
                 }
+
+                override fun afterTextChanged(s: Editable?) {
+                    couponCardAdapter.filter.filter(s)
+                }
+
             })
     }
 

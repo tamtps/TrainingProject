@@ -2,41 +2,27 @@ package com.example.trainingproject.screens
 
 import android.app.Dialog
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.service.autofill.RegexValidator
 import android.text.Editable
 import android.text.InputType
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.*
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.trainingproject.R
-import com.example.trainingproject.api.RetrofitClient
 import com.example.trainingproject.components.CountryPickerAdapter
 import com.example.trainingproject.databinding.ActivityForgotBinding
-import com.example.trainingproject.models.CountryResponse
-import com.example.trainingproject.models.CountryResult
-import com.example.trainingproject.viewmodels.ForgotPasswordViewModel
-import com.google.gson.Gson
+import com.example.trainingproject.viewmodels.CountryPickerViewModel
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.lang.Exception
 
 class ForgotPasswordActivity : AppCompatActivity() {
     private lateinit var binding: ActivityForgotBinding
@@ -51,7 +37,11 @@ class ForgotPasswordActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         initViewModel()
+        bindingComponent()
 
+    }
+
+    fun bindingComponent(){
         //TODO: Set methods dropdown
         val methods = resources.getStringArray(R.array.method)
         val arrayAdapter = ArrayAdapter(applicationContext, R.layout.dropdown_item, methods)
@@ -89,7 +79,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
 
             }
             if(valid)
-            startActivity(Intent(applicationContext, LogInActivity::class.java))
+                startActivity(Intent(applicationContext, LogInActivity::class.java))
             else
                 binding.inputTxtForgot.requestFocus()
         })
@@ -120,10 +110,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 }
             }
         })
-
-
     }
-
 
     private fun initViewModel(dialog: Dialog){
         val recView = dialog.findViewById<RecyclerView>(R.id.recViewCountry)
@@ -167,6 +154,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
             WindowManager.LayoutParams.WRAP_CONTENT
         )
     }
+
     private fun initViewModel(){
         dialog = Dialog(this)
         initDialog()
@@ -177,7 +165,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
         window?.attributes = attributes
         initViewModel(dialog)
 
-        val viewModel = ViewModelProvider(this).get(ForgotPasswordViewModel::class.java)
+        val viewModel = ViewModelProvider(this).get(CountryPickerViewModel::class.java)
         //Observer Live Data
         viewModel.getCountryListObserver().observe(this, {
             if(it.isNotEmpty()){

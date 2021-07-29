@@ -38,16 +38,6 @@ class RetrofitClient {
         retrofit.create(Api::class.java)
     }
 
-    val videoInstance : Api by lazy{
-        val retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .client(okHttpClient)
-            .build()
-
-        retrofit.create(Api::class.java)
-    }
-
     val walletCardInstance : Api by lazy {
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL2)
@@ -58,13 +48,4 @@ class RetrofitClient {
         retrofit.create(Api::class.java)
     }
 
-    val giftCardInstance : Api by lazy {
-        val retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .client(okHttpClient)
-            .build()
-
-        retrofit.create(Api::class.java)
-    }
 }

@@ -14,32 +14,41 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.trainingproject.R
+import com.example.trainingproject.components.BaseFragment
 import com.example.trainingproject.components.WalletCardAdapter
 import com.example.trainingproject.databinding.FragmentWalletCardScreenBinding
 import com.example.trainingproject.viewmodels.WalletCardViewModel
 
-class WalletCardFragment : Fragment() {
-    private lateinit var binding: FragmentWalletCardScreenBinding
+class WalletCardFragment : BaseFragment<FragmentWalletCardScreenBinding>(FragmentWalletCardScreenBinding::inflate) {
     lateinit var walletCardAdapter: WalletCardAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        // Inflate the layout for this fragment
-        binding = FragmentWalletCardScreenBinding.inflate(inflater, container, false)
-        return binding.root
+    override fun initViewModel() {
+        val viewModel = ViewModelProvider(this).get(WalletCardViewModel::class.java)
+        viewModel.getAccountListObserver().observe(viewLifecycleOwner, {
+            if (it.accounts.isNotEmpty()) {
+                walletCardAdapter.setUpdatedData(it.accounts)
+                binding.progressCircularWalletCard.visibility = View.INVISIBLE
+            } else {
+                Toast.makeText(this.context, "ERROR IN GETTING DATA", Toast.LENGTH_LONG).show()
+            }
+        })
+
+        val prefs = this.context?.getSharedPreferences("prefs", MODE_PRIVATE)
+        val token: String = prefs?.getString("token", "")!!
+        viewModel.makeApiCall(token, "All", "", "", "")
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun initAdapter() {
         walletCardAdapter = WalletCardAdapter()
-        initViewModel()
+    }
+
+    override fun bindingComponent() {
         binding.recWalletCard.layoutManager = LinearLayoutManager(binding.root.context)
         binding.recWalletCard.adapter = walletCardAdapter
+    }
 
-        binding.searchBar.addTextChangedListener(object: TextWatcher {
+    override fun bindingSearchBar() {
+        binding.searchBar.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -53,22 +62,5 @@ class WalletCardFragment : Fragment() {
             }
 
         })
-    }
-
-    private fun initViewModel(){
-        val viewModel = ViewModelProvider(this).get(WalletCardViewModel::class.java)
-        viewModel.getAccountListObserver().observe(viewLifecycleOwner, {
-            if(it.accounts.isNotEmpty()){
-                walletCardAdapter.setUpdatedData(it.accounts)
-                binding.progressCircularWalletCard.visibility = View.INVISIBLE
-            }
-            else {
-                Toast.makeText(this.context, "ERROR IN GETTING DATA", Toast.LENGTH_LONG).show()
-            }
-        })
-
-        val prefs = this.context?.getSharedPreferences("prefs", MODE_PRIVATE)
-        val token : String = prefs?.getString("token","")!!
-        viewModel.makeApiCall(token)
     }
 }

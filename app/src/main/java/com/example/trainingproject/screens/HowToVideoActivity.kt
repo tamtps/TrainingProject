@@ -39,7 +39,7 @@ class HowToVideoActivity : AppCompatActivity() {
     }
 
     fun getVideoAPI(token:String){
-        RetrofitClient().videoInstance.getVideo(token)
+        RetrofitClient().instance.getVideo(token)
             .enqueue(object : Callback<VideoResponse>{
                 override fun onResponse(
                     call: Call<VideoResponse>,

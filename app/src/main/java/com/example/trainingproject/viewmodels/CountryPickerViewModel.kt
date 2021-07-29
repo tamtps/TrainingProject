@@ -14,7 +14,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ForgotPasswordViewModel : ViewModel() {
+class CountryPickerViewModel : ViewModel() {
     private var countryListLiveData : MutableLiveData<ArrayList<CountryResult>> = MutableLiveData()
 
     fun getCountryListObserver() : MutableLiveData<ArrayList<CountryResult>> {

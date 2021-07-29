@@ -22,9 +22,9 @@ class WalletCardViewModel : ViewModel() {
         return accountListLiveData
     }
 
-    fun makeApiCall(token: String) {
+    fun makeApiCall(token: String,accountSpecification : String, action: String, storeId: String,  excludeCards: String,) {
         viewModelScope.launch(Dispatchers.IO) {
-            RetrofitClient().walletCardInstance.getWalletCard(token, "All", "", "", "")
+            RetrofitClient().walletCardInstance.getWalletCard(token, accountSpecification, action, storeId, excludeCards)
                 .enqueue(object : Callback<WalletCardResponse>{
                     override fun onResponse(
                         call: Call<WalletCardResponse>,
@@ -32,10 +32,6 @@ class WalletCardViewModel : ViewModel() {
                     ) {
                         if (response.isSuccessful ){
                             accountListLiveData.postValue(response.body())
-                            Log.d("walletCardSuccessful",response.body().toString())
-                        }
-                        else {
-                            Log.d("walletCardFailed",response.body().toString())
                         }
 
                     }

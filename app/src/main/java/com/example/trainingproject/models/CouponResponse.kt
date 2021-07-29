@@ -9,5 +9,5 @@ data class Coupon(
 
 data class CouponResponse(
     val status : Int,
-    val result: List<Coupon>
+    val result: ArrayList<Coupon>
 )

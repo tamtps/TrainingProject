@@ -24,30 +24,31 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class MainScreen : AppCompatActivity() {
-    lateinit var mainToolbar: androidx.appcompat.widget.Toolbar
-    lateinit var mainDrawerLayout : DrawerLayout
-    lateinit var mainNavigationView : NavigationView
-    var mainGridView : GridView ?= null
+    private lateinit var mainToolbar: androidx.appcompat.widget.Toolbar
+    private lateinit var mainDrawerLayout : DrawerLayout
+    private lateinit var mainNavigationView : NavigationView
+    private lateinit var prefs : SharedPreferences
+    private var mainGridView : GridView ?= null
     var list :ArrayList<Menu> ?= null
     var listViewDrawer : ListView?= null
-    var itemAbout : TextView ?= null
-    var itemLogOut : TextView ?=null
-    var itemHowToVideo : TextView ?=null
+    private var itemAbout : TextView ?= null
+    private var itemLogOut : TextView ?=null
+    private var itemHowToVideo : TextView ?=null
     var txtLevel : TextView ? = null
     var txtPoint : TextView ?= null
     var txtDrawerPoint : TextView ?= null
-    var txtName : TextView ?= null
-    var imgWallet : ImageView ?= null
-    var imgAvatar  : ImageView ?= null
+    private var txtName : TextView ?= null
+    private var imgWallet : ImageView ?= null
+    private var imgAvatar  : ImageView ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_screen)
-        var prefs : SharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE)
-        var token = prefs.getString("token","")
-        var version = prefs.getString("version", "")
-        var name = prefs.getString("fname","") + " " + prefs.getString("lname","")
-        var avatar = prefs.getString("avatar","")
+        prefs = getSharedPreferences("prefs", MODE_PRIVATE)
+        val token = prefs.getString("token","")
+        val version = prefs.getString("version", "")
+        val name = prefs.getString("fname","") + " " + prefs.getString("lname","")
+        val avatar = prefs.getString("avatar","")
 
         init()
         actionToolbar()
@@ -95,17 +96,17 @@ class MainScreen : AppCompatActivity() {
 
     private fun menuItem() : ArrayList<Menu>{
         var list : ArrayList <Menu> = ArrayList()
-        list!!.add(Menu(
+        list.add(Menu(
             "Market",
             R.drawable.icon_market,
             2,
             listOf("Browse", "Your Connection", "Your Order")
         ))
-        list!!.add(Menu("Top Up", R.drawable.icon_topup))
-        list!!.add(Menu("Connections", R.drawable.icon_connect))
-        list!!.add(Menu("Cart", R.drawable.ic_my_cart, 4, listOf()))
-        list!!.add(Menu("Public services", R.drawable.ic_public_services,1))
-        list!!.add(Menu("Pay bills", R.drawable.icon_bills))
+        list.add(Menu("Top Up", R.drawable.icon_topup))
+        list.add(Menu("Connections", R.drawable.icon_connect))
+        list.add(Menu("Cart", R.drawable.ic_my_cart, 4, listOf()))
+        list.add(Menu("Public services", R.drawable.ic_public_services,1))
+        list.add(Menu("Pay bills", R.drawable.icon_bills))
         return list
     }
 
@@ -167,7 +168,7 @@ class MainScreen : AppCompatActivity() {
     }
 
     fun getPointAPI(token : String){
-        RetrofitClient().videoInstance.getPoint(token!!)
+        RetrofitClient().instance.getPoint(token!!)
             .enqueue(object : retrofit2.Callback<Point> {
                 override fun onResponse(call: Call<Point>, response: Response<Point>) {
                     var point : String = NumberFormat.getNumberInstance(Locale.US).format(response.body()!!.result[0].currentPoint)
@@ -177,6 +178,7 @@ class MainScreen : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<Point>, t: Throwable) {
+                    onLogOut(prefs)
                     Toast.makeText(applicationContext, "Error" +t.message, Toast.LENGTH_LONG).show()
                 }
 
