@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.Window
-import com.example.trainingproject.MainActivity
 import com.example.trainingproject.R
 
 class SplashActivity : AppCompatActivity() {

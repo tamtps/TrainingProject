@@ -1,15 +1,18 @@
 package com.example.trainingproject.screens
 
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.trainingproject.R
 import com.example.trainingproject.api.RetrofitClient
+import com.example.trainingproject.bases.BaseActivity
 import com.example.trainingproject.components.HowToVideoAdapter
 import com.example.trainingproject.databinding.ActivityHowToVideoBinding
 import com.example.trainingproject.models.VideoResponse
@@ -20,23 +23,40 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 
-class HowToVideoActivity : AppCompatActivity() {
+class HowToVideoActivity : BaseActivity() {
     var list : ArrayList<Videos> = ArrayList()
-    lateinit var binding : ActivityHowToVideoBinding
+    lateinit var progressCircular : ProgressBar
+    lateinit var listHowToVideos : RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityHowToVideoBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        leftIcon(R.drawable.nav_back)
+        centerText(getString(R.string.appbar_how_to_video))
+        rightIcon(R.drawable.btn_home_white)
 
         val prefs : SharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE)
         val token: String? = prefs.getString("token", null)
 
-        onAppBarBack()
-        onHomeBack()
+        progressCircular = findViewById(R.id.progress_circular)
+        listHowToVideos = findViewById(R.id.list_how_to_videos)
+
+        leftIcon.setOnClickListener(View.OnClickListener {
+            finish()
+        })
+
+        rightIcon.setOnClickListener(View.OnClickListener {
+            startActivity(Intent(this, MainScreen::class.java))
+            finish()
+        })
+
         getVideoAPI(token!!)
     }
+
+    override fun getBodyLayout(): Int {
+        return R.layout.activity_how_to_video
+    }
+
+    override fun hasDrawer(): Boolean {return false }
 
     fun getVideoAPI(token:String){
         RetrofitClient().instance.getVideo(token)
@@ -45,11 +65,11 @@ class HowToVideoActivity : AppCompatActivity() {
                     call: Call<VideoResponse>,
                     response: Response<VideoResponse>
                 ) {
-                    binding.progressCircular.visibility = View.INVISIBLE
+                    progressCircular.visibility = View.INVISIBLE
                     list.addAll(response.body()!!.result.content)
-                    binding.listHowToVideos.adapter = HowToVideoAdapter(applicationContext, list)
-                    binding.listHowToVideos.layoutManager = LinearLayoutManager(applicationContext)
-                    binding.listHowToVideos.addItemDecoration(DividerItemDecoration(applicationContext, LinearLayoutManager.VERTICAL))
+                    listHowToVideos.adapter = HowToVideoAdapter(applicationContext, list)
+                    listHowToVideos.layoutManager = LinearLayoutManager(applicationContext)
+                    listHowToVideos.addItemDecoration(DividerItemDecoration(applicationContext, LinearLayoutManager.VERTICAL))
                 }
 
                 override fun onFailure(call: Call<VideoResponse>, t: Throwable) {
@@ -58,11 +78,4 @@ class HowToVideoActivity : AppCompatActivity() {
             })
     }
 
-    private fun onAppBarBack() {
-        binding.iconAppbarBack.setOnClickListener(View.OnClickListener {
-            finish()
-        })
-    }
-
-    private fun onHomeBack() {}
 }

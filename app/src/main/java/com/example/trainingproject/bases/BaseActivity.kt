@@ -19,21 +19,18 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_base)
-        init()
+
+        leftIcon = findViewById(R.id.img_left)
+        rightIcon = findViewById(R.id.img_right)
+        centerImage = findViewById(R.id.img_center)
+        centerText = findViewById(R.id.txt_center)
+        drawerLayout = findViewById(R.id.drawer_layout)
 
         if (!hasDrawer()) drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
 
         var bodyLayout : ViewStub = findViewById(R.id.body_layout)
         bodyLayout.layoutResource = getBodyLayout()
         bodyLayout.inflate()
-    }
-
-    fun init(){
-        leftIcon = findViewById(R.id.img_left)
-        rightIcon = findViewById(R.id.img_right)
-        centerImage = findViewById(R.id.img_center)
-        centerText = findViewById(R.id.txt_center)
-        drawerLayout = findViewById(R.id.drawer_layout)
     }
 
     abstract fun getBodyLayout() : Int

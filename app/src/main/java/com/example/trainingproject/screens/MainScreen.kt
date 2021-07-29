@@ -26,7 +26,7 @@ import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MainScreen : BaseActivity() {
+class MainScreen() : BaseActivity() {
     private lateinit var prefs : SharedPreferences
     private var mainGridView : GridView?= null
     var list :ArrayList<Menu> ?= null
@@ -53,7 +53,7 @@ class MainScreen : BaseActivity() {
         val name = prefs.getString("fname","") + " " + prefs.getString("lname","")
         val avatar = prefs.getString("avatar","")
 
-        init2()
+        init()
         txtName!!.text = name
         Picasso.get().load(avatar).into(imgAvatar)
         list = ArrayList()
@@ -84,7 +84,7 @@ class MainScreen : BaseActivity() {
         return true
     }
 
-    fun init2(){
+    fun init(){
         mainGridView = findViewById(R.id.mainGridView)
         listViewDrawer = findViewById(R.id.list_view_drawer)
         itemAbout = findViewById(R.id.item_about)
@@ -98,7 +98,7 @@ class MainScreen : BaseActivity() {
         imgAvatar = findViewById(R.id.img_avatar_menu)
     }
 
-    private fun menuItem() : ArrayList<Menu>{
+    public fun menuItem() : ArrayList<Menu>{
         var list : ArrayList <Menu> = ArrayList()
         list.add(Menu(
             "Market",
@@ -114,7 +114,7 @@ class MainScreen : BaseActivity() {
         return list
     }
 
-    private fun onAboutDrawer(version : String){
+    public fun onAboutDrawer(version : String){
         itemAbout!!.setOnClickListener(View.OnClickListener {
             drawerLayout.closeDrawer(GravityCompat.START)
             var date : Date = Calendar.getInstance().time
@@ -127,7 +127,7 @@ class MainScreen : BaseActivity() {
             dialog.show()
         })
     }
-    private fun onLogOut(prefs : SharedPreferences){
+    public fun onLogOut(prefs : SharedPreferences){
         itemLogOut!!.setOnClickListener(View.OnClickListener {
             drawerLayout.closeDrawer(GravityCompat.START)
             var dialog = BaseDialog(MainScreen@this)
@@ -144,7 +144,7 @@ class MainScreen : BaseActivity() {
             dialog.show()
         })
     }
-    private fun onHowToVideo() {
+    public fun onHowToVideo() {
         itemHowToVideo!!.setOnClickListener(View.OnClickListener {
             startActivity(Intent(applicationContext, HowToVideoActivity::class.java))
         })
@@ -160,7 +160,7 @@ class MainScreen : BaseActivity() {
             .enqueue(object : retrofit2.Callback<Point> {
                 override fun onResponse(call: Call<Point>, response: Response<Point>) {
                     var point : String = NumberFormat.getNumberInstance(Locale.US).format(response.body()!!.result[0].currentPoint)
-                    txtPoint!!.text = point
+                    txtPoint?.text = point
                     txtDrawerPoint!!.text = point + " Points"
                     txtLevel!!.text = "Level "+response.body()!!.result[0].levelUser.toString()+" Verified"
                 }

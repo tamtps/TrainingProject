@@ -2,22 +2,18 @@ package com.example.trainingproject.screens
 
 import android.content.Intent
 import android.content.SharedPreferences
-import android.net.DnsResolver
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import com.example.trainingproject.MainActivity
 import com.example.trainingproject.api.RetrofitClient
 import com.example.trainingproject.databinding.ActivityLoginBinding
 import com.example.trainingproject.models.LoginResponse
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.net.HttpURLConnection
-import java.util.logging.Logger
 
 
 class LogInActivity : AppCompatActivity() {
@@ -74,7 +70,7 @@ class LogInActivity : AppCompatActivity() {
                     editPref.putBoolean("logged", true)
                     editPref.apply()
                     Toast.makeText(applicationContext, "Đăng nhập thành công", Toast.LENGTH_LONG,).show()
-                    val intent = Intent(applicationContext, HomeScreen::class.java)
+                    val intent = Intent(applicationContext, MainScreen::class.java)
                     startActivity(intent)
                     finish()
                 }
