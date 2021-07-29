@@ -74,7 +74,7 @@ class LogInActivity : AppCompatActivity() {
                     editPref.putBoolean("logged", true)
                     editPref.apply()
                     Toast.makeText(applicationContext, "Đăng nhập thành công", Toast.LENGTH_LONG,).show()
-                    val intent = Intent(applicationContext, MainScreen::class.java)
+                    val intent = Intent(applicationContext, HomeScreen::class.java)
                     startActivity(intent)
                     finish()
                 }

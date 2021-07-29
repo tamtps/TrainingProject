@@ -26,7 +26,7 @@ import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MainScreen : BaseActivity() {
+class HomeScreen : BaseActivity() {
     private lateinit var prefs : SharedPreferences
     private var mainGridView : GridView?= null
     var list :ArrayList<Menu> ?= null
@@ -169,7 +169,7 @@ class MainScreen : BaseActivity() {
 //                    onLogOut(prefs)
 //                    Toast.makeText(applicationContext, "Error" +t.message, Toast.LENGTH_LONG).show()
 
-                    var dialog = BaseDialog(this@MainScreen)
+                    var dialog = BaseDialog(this@HomeScreen)
                     dialog.setContentView()
                     dialog.title.text = getString(R.string.error)
                     dialog.content.text = t.message

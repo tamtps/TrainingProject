@@ -33,11 +33,4 @@ class BaseDialog(context: Context) : Dialog(context) {
         buttonOK.setOnClickListener(View.OnClickListener { dismiss() })
     }
 
-    override fun show() {
-        super.show()
-    }
-
-    override fun dismiss() {
-        super.dismiss()
-    }
 }
