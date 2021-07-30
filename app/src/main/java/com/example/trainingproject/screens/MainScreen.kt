@@ -102,16 +102,16 @@ class MainScreen() : BaseActivity() {
     public fun menuItem() : ArrayList<Menu>{
         var list : ArrayList <Menu> = ArrayList()
         list.add(Menu(
-            "Market",
+            getString(R.string.menu_market),
             R.drawable.icon_market,
             2,
-            listOf("Browse", "Your Connection", "Your Order")
+            listOf("Your Connection", "Your Order")
         ))
-        list.add(Menu("Top Up", R.drawable.icon_topup))
-        list.add(Menu("Connections", R.drawable.icon_connect))
-        list.add(Menu("Cart", R.drawable.ic_my_cart, 4, listOf()))
-        list.add(Menu("Public services", R.drawable.ic_public_services,1))
-        list.add(Menu("Pay bills", R.drawable.icon_bills))
+        list.add(Menu(getString(R.string.menu_top_up), R.drawable.icon_topup))
+        list.add(Menu(getString(R.string.menu_connections), R.drawable.icon_connect))
+        list.add(Menu(getString(R.string.menu_cart), R.drawable.ic_my_cart, 4, listOf()))
+        list.add(Menu(getString(R.string.menu_public_services), R.drawable.ic_public_services,1))
+        list.add(Menu(getString(R.string.menu_pay_bills), R.drawable.icon_bills))
         return list
     }
 
@@ -173,6 +173,9 @@ class MainScreen() : BaseActivity() {
                     }
                     else if(response.isSuccessful){
                         Log.d("RESPONSE_POINT", response.toString())
+
+                        
+
                         var point: String = NumberFormat.getNumberInstance(Locale.US)
                             .format(response.body()!!.result[0].currentPoint)
                         txtPoint?.text = point

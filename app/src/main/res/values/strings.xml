@@ -28,4 +28,13 @@
     <string name="appbar_how_to_video">How-To Videos</string>
     <string name="txt_my_kanoo_point">My Kanoo Points Balance</string>
     <string name="txt_view_detail">VIEW DETAILS</string>
+
+    <string name="menu_market">Market</string>
+    <string name="menu_top_up">Top Up</string>
+    <string name="menu_connections">Connections</string>
+    <string name="menu_cart">Cart</string>
+    <string name="menu_public_services">Public services</string>
+    <string name="menu_pay_bills">Pay bills</string>
+
+
 </resources>

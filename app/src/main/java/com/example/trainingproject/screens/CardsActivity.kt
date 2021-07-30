@@ -2,25 +2,20 @@ package com.example.trainingproject.screens
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import android.widget.*
-import com.google.android.material.tabs.TabLayout
-import androidx.viewpager.widget.ViewPager
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.core.widget.addTextChangedListener
+import androidx.viewpager.widget.ViewPager
 import com.example.trainingproject.R
 import com.example.trainingproject.api.RetrofitClient
 import com.example.trainingproject.bases.BaseActivity
 import com.example.trainingproject.bases.BaseDialog
 import com.example.trainingproject.components.DrawerMenuAdapter
 import com.example.trainingproject.components.SectionsPagerAdapter
-import com.example.trainingproject.components.mainGridViewAdapter
 import com.example.trainingproject.models.Menu
 import com.example.trainingproject.models.Point
-import com.example.trainingproject.screens.cards.WalletCardFragment
+import com.example.trainingproject.models.PointResponse
+import com.google.android.material.tabs.TabLayout
 import com.squareup.picasso.Picasso
 import retrofit2.Call
 import retrofit2.Response
@@ -72,8 +67,7 @@ class CardsActivity : BaseActivity() {
         onLeftIcon()
         onAboutDrawer(version!!)
 
-        //TODO: Lỗi đăng xuất, dùng FLAG.
-//        onLogOut(prefs)
+        onLogOut(prefs)
 
         onHowToVideo()
         getPointAPI(token!!)
@@ -109,16 +103,16 @@ class CardsActivity : BaseActivity() {
     public fun menuItem() : ArrayList<Menu>{
         var list : ArrayList <Menu> = ArrayList()
         list.add(Menu(
-            "Market",
+            getString(R.string.menu_market),
             R.drawable.icon_market,
             2,
-            listOf("Browse", "Your Connection", "Your Order")
+            listOf("Your Connection", "Your Order")
         ))
-        list.add(Menu("Top Up", R.drawable.icon_topup))
-        list.add(Menu("Connections", R.drawable.icon_connect))
-        list.add(Menu("Cart", R.drawable.ic_my_cart, 4, listOf()))
-        list.add(Menu("Public services", R.drawable.ic_public_services,1))
-        list.add(Menu("Pay bills", R.drawable.icon_bills))
+        list.add(Menu(getString(R.string.menu_top_up), R.drawable.icon_topup))
+        list.add(Menu(getString(R.string.menu_connections), R.drawable.icon_connect))
+        list.add(Menu(getString(R.string.menu_cart), R.drawable.ic_my_cart, 4, listOf()))
+        list.add(Menu(getString(R.string.menu_public_services), R.drawable.ic_public_services,1))
+        list.add(Menu(getString(R.string.menu_pay_bills), R.drawable.icon_bills))
         return list
     }
 
@@ -144,7 +138,9 @@ class CardsActivity : BaseActivity() {
             dialog.content.text  = getString(R.string.log_out_content)
             dialog.onCancelDismiss()
             dialog.buttonOK.setOnClickListener(View.OnClickListener {
-                startActivity ( Intent(applicationContext, LogInActivity::class.java))
+                var intent = Intent(applicationContext, LogInActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
                 prefs.edit().clear().commit()
                 prefs.edit().putBoolean("firstStart", false).apply()
                 finish()
@@ -160,17 +156,14 @@ class CardsActivity : BaseActivity() {
 
     fun getPointAPI(token : String){
         RetrofitClient().instance.getPoint(token!!)
-            .enqueue(object : retrofit2.Callback<Point> {
-                override fun onResponse(call: Call<Point>, response: Response<Point>) {
+            .enqueue(object : retrofit2.Callback<PointResponse> {
+                override fun onResponse(call: Call<PointResponse>, response: Response<PointResponse>) {
                     var point : String = NumberFormat.getNumberInstance(Locale.US).format(response.body()!!.result[0].currentPoint)
                     txtDrawerPoint!!.text = point + " Points"
                     txtLevel!!.text = "Level "+response.body()!!.result[0].levelUser.toString()+" Verified"
                 }
 
-                override fun onFailure(call: Call<Point>, t: Throwable) {
-//                    onLogOut(prefs)
-//                    Toast.makeText(applicationContext, "Error" +t.message, Toast.LENGTH_LONG).show()
-
+                override fun onFailure(call: Call<PointResponse>, t: Throwable) {
                     var dialog = BaseDialog(this@CardsActivity)
                     dialog.setContentView()
                     dialog.title.text = getString(R.string.error)
