@@ -7,6 +7,8 @@
     <string name="error">Error</string>
     <string name="item_log_out">Log Out</string>
     <string name="log_out_content">Are you sure you want to Log Out?</string>
+    <string name="receive_user_id">1368</string>
+
     <string-array name="method">
         <item>
             Use phone number
