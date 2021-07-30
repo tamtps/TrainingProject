@@ -74,13 +74,9 @@ class HowToVideoActivity : BaseActivity() {
                 }
 
                 override fun onFailure(call: Call<VideoResponse>, t: Throwable) {
-                    var dialog = BaseDialog(applicationContext)
+                    var dialog = BaseDialog(this@HowToVideoActivity)
                     dialog.setContentView()
-                    dialog.title.text = getString(R.string.error)
-                    dialog.content.text = t.message
-                    dialog.showCancelButton(false)
-                    dialog.onOKDismiss()
-                    dialog.show()
+                    dialog.errorDialog(t.message)
                 }
             })
     }

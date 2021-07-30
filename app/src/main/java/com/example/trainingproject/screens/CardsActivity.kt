@@ -166,11 +166,7 @@ class CardsActivity : BaseActivity() {
                 override fun onFailure(call: Call<PointResponse>, t: Throwable) {
                     var dialog = BaseDialog(this@CardsActivity)
                     dialog.setContentView()
-                    dialog.title.text = getString(R.string.error)
-                    dialog.content.text = t.message
-                    dialog.showCancelButton(false)
-                    dialog.onOKDismiss()
-                    dialog.show()
+                    dialog.errorDialog(t.message)
                 }
 
             })

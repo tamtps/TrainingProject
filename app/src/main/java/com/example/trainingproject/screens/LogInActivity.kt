@@ -39,12 +39,12 @@ class LogInActivity : AppCompatActivity() {
                 binding.txtEmailLogin.requestFocus()
             }
             else
-            if(password.isEmpty()){
-                binding.txtPwdLogin.setError(getString(R.string.password_required))
-                binding.txtPwdLogin.requestFocus()
-            }
-            else
-            LogIn(email, password)
+                if(password.isEmpty()){
+                    binding.txtPwdLogin.setError(getString(R.string.password_required))
+                    binding.txtPwdLogin.requestFocus()
+                }
+                else
+                    LogIn(email, password)
         })
     }
 
@@ -59,7 +59,6 @@ class LogInActivity : AppCompatActivity() {
             "androidvk",
         ).enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
-                //TODO: IF STATUS OK SAVE TOKEN
                 if(response.body()?.status == HttpURLConnection.HTTP_OK){
                     val prefs : SharedPreferences = applicationContext.getSharedPreferences("prefs", MODE_PRIVATE)
                     val editPref : SharedPreferences.Editor = prefs.edit()
@@ -75,19 +74,19 @@ class LogInActivity : AppCompatActivity() {
                     startActivity(intent)
                     finish()
                 }
-                else Toast.makeText(applicationContext, response.body()?.statusCode, Toast.LENGTH_LONG,).show()
+                else{
+                    var dialog = BaseDialog(this@LogInActivity)
+                    dialog.setContentView()
+                    dialog.errorDialog(response.body()?.statusCode)
+                }
 
                 Log.e("loginResponse", response.body().toString())
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                var dialog = BaseDialog(applicationContext)
+                var dialog = BaseDialog(this@LogInActivity)
                 dialog.setContentView()
-                dialog.title.text = getString(R.string.error)
-                dialog.content.text = t.message
-                dialog.showCancelButton(false)
-                dialog.onOKDismiss()
-                dialog.show()
+                dialog.errorDialog(t.message)
             }
 
         })

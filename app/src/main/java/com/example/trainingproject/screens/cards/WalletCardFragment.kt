@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.trainingproject.R
+import com.example.trainingproject.bases.BaseDialog
 import com.example.trainingproject.bases.BaseFragment
 import com.example.trainingproject.components.WalletCardAdapter
 import com.example.trainingproject.databinding.FragmentWalletCardScreenBinding
@@ -31,8 +32,9 @@ class WalletCardFragment : BaseFragment<FragmentWalletCardScreenBinding, WalletC
                 walletCardAdapter.setUpdatedData(it.accounts)
                 binding.progressCircularWalletCard.visibility = View.INVISIBLE
             } else {
-                Toast.makeText(this.context, "ERROR IN GETTING DATA", Toast.LENGTH_LONG).show()
-                //TODO: SHOW DIALOG MESSAGE
+                var dialog = BaseDialog(requireContext())
+                dialog.setContentView()
+                dialog.errorDialog(getString(R.string.error_getting_data))
             }
         })
 

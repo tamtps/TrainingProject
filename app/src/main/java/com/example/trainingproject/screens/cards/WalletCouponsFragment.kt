@@ -7,6 +7,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.trainingproject.R
+import com.example.trainingproject.bases.BaseDialog
 import com.example.trainingproject.bases.BaseFragment
 import com.example.trainingproject.components.WalletCouponAdapter
 import com.example.trainingproject.databinding.FragmentWalletCouponsScreenBinding
@@ -26,8 +28,9 @@ class WalletCouponsFragment : BaseFragment<FragmentWalletCouponsScreenBinding, C
                 couponCardAdapter.setUpdatedData(it.result)
                 binding.progressCircularCoupon.visibility = View.INVISIBLE
             } else {
-                Toast.makeText(this.context, "ERROR IN GETTING DATA", Toast.LENGTH_LONG).show()
-                //TODO: SHOW DIALOG MESSAGE
+                var dialog = BaseDialog(requireContext())
+                dialog.setContentView()
+                dialog.errorDialog(getString(R.string.error_getting_data))
             }
         })
 

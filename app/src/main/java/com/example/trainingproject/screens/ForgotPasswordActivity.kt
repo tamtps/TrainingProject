@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.trainingproject.R
+import com.example.trainingproject.bases.BaseDialog
 import com.example.trainingproject.components.CountryPickerAdapter
 import com.example.trainingproject.databinding.ActivityForgotBinding
 import com.example.trainingproject.viewmodels.CountryPickerViewModel
@@ -180,12 +181,11 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 }
             }
             else {
-                Toast.makeText(this, "ERROR IN GETTING DATA", Toast.LENGTH_LONG).show()
-                //TODO: SHOW DIALOG MESSAGE
+                var dialog = BaseDialog(this)
+                dialog.setContentView()
+                dialog.errorDialog(getString(R.string.error_getting_data))
             }
         })
-
-
 
         viewModel.makeApiCall()
     }

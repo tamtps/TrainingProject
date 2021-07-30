@@ -1,5 +1,6 @@
 package com.example.trainingproject.screens
 
+import android.app.Dialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -168,19 +169,15 @@ class MainScreen() : BaseActivity() {
                         prefs.edit().putBoolean("firstStart", false)
                         prefs.edit().apply()
 
-                        var dialog  = BaseDialog(this@MainScreen)
+                        var dialog = BaseDialog(this@MainScreen)
                         dialog.setContentView()
-                        dialog.showCancelButton(false)
-                        dialog.title.text = getString(R.string.error)
-                        dialog.content.text = getString(R.string.login_again)
-                        dialog.setCanceledOnTouchOutside(false)
+                        dialog.errorDialog(getString(R.string.login_again))
                         dialog.buttonOK.setOnClickListener(View.OnClickListener {
                             var intent = Intent(applicationContext, LogInActivity::class.java)
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                             startActivity(intent)
                             finish()
                         })
-                        dialog.show()
                     }
                     else if(response.isSuccessful){
                         Log.d("RESPONSE_POINT", response.toString())
@@ -197,11 +194,7 @@ class MainScreen() : BaseActivity() {
                 override fun onFailure(call: Call<PointResponse>, t: Throwable) {
                     var dialog = BaseDialog(this@MainScreen)
                     dialog.setContentView()
-                    dialog.title.text = getString(R.string.error)
-                    dialog.content.text = t.message
-                    dialog.showCancelButton(false)
-                    dialog.onOKDismiss()
-                    dialog.show()
+                    dialog.errorDialog(t.message)
                 }
 
             })

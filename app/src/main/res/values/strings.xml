@@ -47,4 +47,6 @@
     <string name="email_required">Email required!</string>
     <string name="password_required">Password required!</string>
 
+    <string name="error_getting_data">ERROR IN GETTING DATA</string>
+
 </resources>

@@ -24,7 +24,7 @@ class RetrofitClient {
         val request = requestBuilder.build()
         chain.proceed(request)
     }
-        .addInterceptor(interceptor.setLevel(HttpLoggingInterceptor.Level.BODY))
+//        .addInterceptor(interceptor.setLevel(HttpLoggingInterceptor.Level.BODY))
 
     .build()
 

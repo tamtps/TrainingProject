@@ -7,11 +7,13 @@ import android.widget.Button
 import android.widget.TextView
 import com.example.trainingproject.R
 
-class BaseDialog(context: Context) : Dialog(context) {
+open class BaseDialog(context: Context) : Dialog(context) {
     lateinit var title : TextView
     lateinit var content : TextView
     lateinit var buttonOK : Button
     lateinit var buttonCancel : Button
+
+
 
     fun setContentView() {
         super.setContentView(R.layout.dialog_simple)
@@ -21,7 +23,15 @@ class BaseDialog(context: Context) : Dialog(context) {
         buttonCancel = findViewById(R.id.btn_no)
     }
 
-    fun showCancelButton(boolean: Boolean){
+    fun errorDialog(string : String?){
+        title.text = context.getString(R.string.error)
+        content.text = string
+        showCancelButton(false)
+        onOKDismiss()
+        show()
+    }
+
+    open fun showCancelButton(boolean: Boolean){
         if (boolean)   buttonCancel.visibility = View.VISIBLE
         else buttonCancel.visibility = View.INVISIBLE
     }
