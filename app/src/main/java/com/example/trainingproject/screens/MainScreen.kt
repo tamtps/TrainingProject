@@ -167,14 +167,23 @@ class MainScreen() : BaseActivity() {
                         prefs.edit().clear()
                         prefs.edit().putBoolean("firstStart", false)
                         prefs.edit().apply()
-                        Toast.makeText(applicationContext, "Token expired, please login again", Toast.LENGTH_LONG).show()
-                        startActivity (Intent(applicationContext, LogInActivity::class.java))
-                        finish()
+
+                        var dialog  = BaseDialog(this@MainScreen)
+                        dialog.setContentView()
+                        dialog.showCancelButton(false)
+                        dialog.title.text = getString(R.string.error)
+                        dialog.content.text = getString(R.string.login_again)
+                        dialog.setCanceledOnTouchOutside(false)
+                        dialog.buttonOK.setOnClickListener(View.OnClickListener {
+                            var intent = Intent(applicationContext, LogInActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                            startActivity(intent)
+                            finish()
+                        })
+                        dialog.show()
                     }
                     else if(response.isSuccessful){
                         Log.d("RESPONSE_POINT", response.toString())
-
-                        
 
                         var point: String = NumberFormat.getNumberInstance(Locale.US)
                             .format(response.body()!!.result[0].currentPoint)

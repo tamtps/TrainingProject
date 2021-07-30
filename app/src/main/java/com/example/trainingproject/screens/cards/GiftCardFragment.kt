@@ -51,6 +51,7 @@ class GiftCardFragment : BaseFragment<FragmentGiftCardScreenBinding>(FragmentGif
                 binding.progressCircularGiftCard.visibility = View.INVISIBLE
             } else {
                 Toast.makeText(this.context, "ERROR IN GETTING DATA", Toast.LENGTH_LONG).show()
+                //TODO: SHOW DIALOG MESSAGE
             }
         })
 

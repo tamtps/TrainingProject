@@ -22,9 +22,7 @@
     <string name="tab_text_3">Coupons</string>
     <string name="tab_text_4">Punch Card</string>
     <string name="tab_text_5">Points</string>
-    <string name="link">
-        <a href="">AAAAAAA</a>
-    </string>
+
     <string name="appbar_how_to_video">How-To Videos</string>
     <string name="txt_my_kanoo_point">My Kanoo Points Balance</string>
     <string name="txt_view_detail">VIEW DETAILS</string>
@@ -35,6 +33,16 @@
     <string name="menu_cart">Cart</string>
     <string name="menu_public_services">Public services</string>
     <string name="menu_pay_bills">Pay bills</string>
-
+    <string name="login_again">Token expired, please login again</string>
+    <string name="beta_version">Beta version: </string>
+    <string name="date">Date: </string>
+    <string name="points">Points</string>
+    <string name="level">Level</string>
+    <string name="verified">Verified</string>
+    <string name="getting_data">Getting data, please wait...</string>
+    <string name="wrong_phone">Wrong phone format! Please try again</string>
+    <string name="wrong_email">Wrong email format! Please try again</string>
+    <string name="email_required">Email required!</string>
+    <string name="password_required">Password required!</string>
 
 </resources>

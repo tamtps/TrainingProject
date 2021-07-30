@@ -123,7 +123,7 @@ class CardsActivity : BaseActivity() {
             var dialog = BaseDialog(CardsActivity@this)
             dialog.setContentView()
             dialog.title.text = getString(R.string.item_about)
-            dialog.content.text = "Beta Version: "+ version + "\nDate: "+ date
+            dialog.content.text = getString(R.string.beta_version)+ version + "\n" + getString(R.string.date) + date
             dialog.showCancelButton(false)
             dialog.onOKDismiss()
             dialog.show()
@@ -159,8 +159,8 @@ class CardsActivity : BaseActivity() {
             .enqueue(object : retrofit2.Callback<PointResponse> {
                 override fun onResponse(call: Call<PointResponse>, response: Response<PointResponse>) {
                     var point : String = NumberFormat.getNumberInstance(Locale.US).format(response.body()!!.result[0].currentPoint)
-                    txtDrawerPoint!!.text = point + " Points"
-                    txtLevel!!.text = "Level "+response.body()!!.result[0].levelUser.toString()+" Verified"
+                    txtDrawerPoint!!.text = point + getString(R.string.points)
+                    txtLevel!!.text = getString(R.string.level)+response.body()!!.result[0].levelUser.toString()+getString(R.string.verified)
                 }
 
                 override fun onFailure(call: Call<PointResponse>, t: Throwable) {

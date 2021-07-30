@@ -7,7 +7,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.example.trainingproject.R
 import com.example.trainingproject.api.RetrofitClient
+import com.example.trainingproject.bases.BaseDialog
 import com.example.trainingproject.databinding.ActivityLoginBinding
 import com.example.trainingproject.models.LoginResponse
 import retrofit2.Call
@@ -33,12 +35,12 @@ class LogInActivity : AppCompatActivity() {
             val email = "filestringhoang01@gmail.com"
             val password = "qwerty1"
             if(email.isEmpty()){
-                binding.txtEmailLogin.setError("Email required!")
+                binding.txtEmailLogin.setError(getString(R.string.email_required))
                 binding.txtEmailLogin.requestFocus()
             }
             else
             if(password.isEmpty()){
-                binding.txtPwdLogin.setError("Password required!")
+                binding.txtPwdLogin.setError(getString(R.string.password_required))
                 binding.txtPwdLogin.requestFocus()
             }
             else
@@ -69,7 +71,6 @@ class LogInActivity : AppCompatActivity() {
 
                     editPref.putBoolean("logged", true)
                     editPref.apply()
-                    Toast.makeText(applicationContext, "Đăng nhập thành công", Toast.LENGTH_LONG,).show()
                     val intent = Intent(applicationContext, MainScreen::class.java)
                     startActivity(intent)
                     finish()
@@ -80,7 +81,13 @@ class LogInActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                Toast.makeText(applicationContext, t.message, Toast.LENGTH_LONG).show()
+                var dialog = BaseDialog(applicationContext)
+                dialog.setContentView()
+                dialog.title.text = getString(R.string.error)
+                dialog.content.text = t.message
+                dialog.showCancelButton(false)
+                dialog.onOKDismiss()
+                dialog.show()
             }
 
         })
