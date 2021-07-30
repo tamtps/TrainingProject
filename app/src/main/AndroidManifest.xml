@@ -12,14 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TrainingProject">
         <activity android:name=".bases.BaseActivity"></activity>
-        <activity android:name=".screens.HomeScreen"></activity>
         <activity android:name=".screens.HowToVideoActivity" />
         <activity android:name=".screens.WalkThroughActivity" />
         <activity android:name=".screens.ForgotPasswordActivity" />
         <activity android:name=".screens.CardsActivity" />
         <activity android:name=".screens.LogInActivity" />
         <activity android:name=".screens.MainScreen" />
-        <activity android:name=".MainActivity" />
         <activity android:name=".screens.SplashActivity">
             <intent-filter>
                 <action

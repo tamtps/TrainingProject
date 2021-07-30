@@ -16,7 +16,8 @@ import com.example.trainingproject.components.GiftCardAdapter
 import com.example.trainingproject.databinding.FragmentGiftCardScreenBinding
 import com.example.trainingproject.viewmodels.GiftCardViewModel
 
-class GiftCardFragment : BaseFragment<FragmentGiftCardScreenBinding>(FragmentGiftCardScreenBinding::inflate) {
+class GiftCardFragment : BaseFragment<FragmentGiftCardScreenBinding, GiftCardViewModel>() {
+    override var useSharedViewModel: Boolean = true
     lateinit var giftCardAdapter: GiftCardAdapter
 
     override fun initAdapter() {
@@ -45,10 +46,13 @@ class GiftCardFragment : BaseFragment<FragmentGiftCardScreenBinding>(FragmentGif
     }
 
     override fun initViewModel() {
-        val viewModel = ViewModelProvider(this).get(GiftCardViewModel::class.java)
-        viewModel.getTransListObserver().observe(viewLifecycleOwner, {
-            if (it.transDisplay.isNotEmpty()) {
-                giftCardAdapter.setUpdatedData(it.transDisplay)
+        val prefs = this.context?.getSharedPreferences("prefs", MODE_PRIVATE)
+        val token: String = prefs?.getString("token", "")!!
+
+        viewModel.init(token, "1368","","1","50", "0")
+        viewModel.getListObserver().observe(viewLifecycleOwner, {
+            if (it.result.transDisplay.isNotEmpty()) {
+                giftCardAdapter.setUpdatedData(it.result.transDisplay)
                 binding.progressCircularGiftCard.visibility = View.INVISIBLE
             } else {
                 Toast.makeText(this.context, "ERROR IN GETTING DATA", Toast.LENGTH_LONG).show()
@@ -56,10 +60,12 @@ class GiftCardFragment : BaseFragment<FragmentGiftCardScreenBinding>(FragmentGif
             }
         })
 
-        val prefs = this.context?.getSharedPreferences("prefs", MODE_PRIVATE)
-        val token: String = prefs?.getString("token", "")!!
-        viewModel.makeApiCall(token, "1368","","1","50", "0")
+        viewModel.makeApiCall()
     }
+
+    override fun getViewModelClass(): Class<GiftCardViewModel>  = GiftCardViewModel::class.java
+
+    override fun getViewBinding(): FragmentGiftCardScreenBinding = FragmentGiftCardScreenBinding.inflate(layoutInflater)
 
 
 }

@@ -1,46 +1,32 @@
 package com.example.trainingproject.viewmodels
 
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.trainingproject.api.RetrofitClient
-import com.example.trainingproject.models.Account
-import com.example.trainingproject.models.CountryResponse
+import com.example.trainingproject.bases.BaseViewModel
 import com.example.trainingproject.models.WalletCardResponse
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 
-class WalletCardViewModel : ViewModel() {
-    private var accountListLiveData: MutableLiveData<WalletCardResponse> = MutableLiveData()
+class WalletCardViewModel : BaseViewModel<WalletCardResponse, WalletCardViewModel>(WalletCardViewModel::class.java) {
+    lateinit var token: String
+    lateinit var accountSpecification : String
+    lateinit var action: String
+    lateinit var storeId: String
+    lateinit var excludeCards: String
 
-    fun getAccountListObserver() : MutableLiveData<WalletCardResponse> {
-        return accountListLiveData
+    fun init(token: String,
+             accountSpecification : String,
+             action: String, storeId: String,
+             excludeCards: String){
+        this.token = token
+        this.accountSpecification = accountSpecification
+        this.action = action
+        this.storeId = storeId
+        this.excludeCards = excludeCards
     }
 
-    fun makeApiCall(token: String,accountSpecification : String, action: String, storeId: String,  excludeCards: String,) {
-        viewModelScope.launch(Dispatchers.IO) {
-            RetrofitClient().walletCardInstance.getWalletCard(token, accountSpecification, action, storeId, excludeCards)
-                .enqueue(object : Callback<WalletCardResponse>{
-                    override fun onResponse(
-                        call: Call<WalletCardResponse>,
-                        response: Response<WalletCardResponse>
-                    ) {
-                        if (response.isSuccessful ){
-                            accountListLiveData.postValue(response.body())
-                        }
-
-                    }
-
-                    override fun onFailure(call: Call<WalletCardResponse>, t: Throwable) {
-                        t.message?.let { Log.e("View model error", it) }
-                    }
-
-                })
-        }
+    override fun retrofitCall(): Call<WalletCardResponse> {
+        return RetrofitClient().walletCardInstance.getWalletCard(token, accountSpecification, action, storeId, excludeCards)
     }
+
+
 }

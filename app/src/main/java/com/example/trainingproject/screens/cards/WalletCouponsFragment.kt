@@ -13,12 +13,15 @@ import com.example.trainingproject.databinding.FragmentWalletCouponsScreenBindin
 import com.example.trainingproject.viewmodels.CouponCardViewModel
 
 
-class WalletCouponsFragment : BaseFragment<FragmentWalletCouponsScreenBinding>(FragmentWalletCouponsScreenBinding::inflate){
+class WalletCouponsFragment : BaseFragment<FragmentWalletCouponsScreenBinding, CouponCardViewModel>(){
     lateinit var couponCardAdapter: WalletCouponAdapter
 
     override fun initViewModel() {
-        val viewModel = ViewModelProvider(this).get(CouponCardViewModel::class.java)
-        viewModel.getCouponListObserver().observe(viewLifecycleOwner, {
+
+        val prefs = this.context?.getSharedPreferences("prefs", MODE_PRIVATE)
+        val token: String = prefs?.getString("token", "")!!
+        viewModel.init(token, "1368","","-1","1", "100")
+        viewModel.getListObserver().observe(viewLifecycleOwner, {
             if (it.result.isNotEmpty()) {
                 couponCardAdapter.setUpdatedData(it.result)
                 binding.progressCircularCoupon.visibility = View.INVISIBLE
@@ -28,9 +31,7 @@ class WalletCouponsFragment : BaseFragment<FragmentWalletCouponsScreenBinding>(F
             }
         })
 
-        val prefs = this.context?.getSharedPreferences("prefs", MODE_PRIVATE)
-        val token: String = prefs?.getString("token", "")!!
-        viewModel.makeApiCall(token, "1368","","-1","1", "100")
+        viewModel.makeApiCall()
     }
 
     override fun initAdapter() {
@@ -57,5 +58,9 @@ class WalletCouponsFragment : BaseFragment<FragmentWalletCouponsScreenBinding>(F
 
             })
     }
+
+    override fun getViewModelClass(): Class<CouponCardViewModel> = CouponCardViewModel::class.java
+
+    override fun getViewBinding(): FragmentWalletCouponsScreenBinding = FragmentWalletCouponsScreenBinding.inflate(layoutInflater)
 
 }

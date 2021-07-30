@@ -1,10 +1,10 @@
 package com.example.trainingproject.viewmodels
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.trainingproject.api.Api
 import com.example.trainingproject.api.RetrofitClient
 import com.example.trainingproject.models.CountryResponse
 import com.example.trainingproject.models.CountryResult

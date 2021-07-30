@@ -18,19 +18,33 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         val prefs : SharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE)
-        val firstStart : Boolean =  prefs.getBoolean("firstStart", true)
+        val editPrefs = prefs.edit()
+        val logged = prefs.getBoolean("logged", false)
+        val token = prefs.getString("token", "")
+        val firstStart = prefs.getBoolean("firstStart",true)
 
         handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
-            if (firstStart) {
+            if(firstStart){
+                editPrefs.putBoolean("firstStart", false)
+                editPrefs.apply()
                 val intent = Intent(this, WalkThroughActivity::class.java)
                 startActivity(intent)
             }
-            else {
-                val intent = Intent(this, LogInActivity::class.java)
-                startActivity(intent)
+            else{
+                if (logged && !token.isNullOrEmpty()) {
+                    val intent = Intent(this, MainScreen::class.java)
+                    startActivity(intent)
+                }
+                else {
+                    val intent = Intent(this, LogInActivity::class.java)
+                    startActivity(intent)
+                }
             }
+
             finish()
         },2)
     }
+
+
 }

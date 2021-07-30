@@ -19,12 +19,14 @@ import com.example.trainingproject.components.WalletCardAdapter
 import com.example.trainingproject.databinding.FragmentWalletCardScreenBinding
 import com.example.trainingproject.viewmodels.WalletCardViewModel
 
-class WalletCardFragment : BaseFragment<FragmentWalletCardScreenBinding>(FragmentWalletCardScreenBinding::inflate) {
+class WalletCardFragment : BaseFragment<FragmentWalletCardScreenBinding, WalletCardViewModel>() {
     lateinit var walletCardAdapter: WalletCardAdapter
 
     override fun initViewModel() {
-        val viewModel = ViewModelProvider(this).get(WalletCardViewModel::class.java)
-        viewModel.getAccountListObserver().observe(viewLifecycleOwner, {
+        val prefs = this.context?.getSharedPreferences("prefs", MODE_PRIVATE)
+        val token: String = prefs?.getString("token", "")!!
+        viewModel.init(token, "All", "", "", "")
+        viewModel.getListObserver().observe(viewLifecycleOwner, {
             if (it.accounts.isNotEmpty()) {
                 walletCardAdapter.setUpdatedData(it.accounts)
                 binding.progressCircularWalletCard.visibility = View.INVISIBLE
@@ -34,9 +36,7 @@ class WalletCardFragment : BaseFragment<FragmentWalletCardScreenBinding>(Fragmen
             }
         })
 
-        val prefs = this.context?.getSharedPreferences("prefs", MODE_PRIVATE)
-        val token: String = prefs?.getString("token", "")!!
-        viewModel.makeApiCall(token, "All", "", "", "")
+        viewModel.makeApiCall()
     }
 
     override fun initAdapter() {
@@ -64,4 +64,8 @@ class WalletCardFragment : BaseFragment<FragmentWalletCardScreenBinding>(Fragmen
 
         })
     }
+
+    override fun getViewModelClass(): Class<WalletCardViewModel> = WalletCardViewModel::class.java
+
+    override fun getViewBinding(): FragmentWalletCardScreenBinding = FragmentWalletCardScreenBinding.inflate(layoutInflater)
 }
