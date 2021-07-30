@@ -137,6 +137,7 @@ class CardsActivity : BaseActivity() {
             dialog.title.text = getString(R.string.item_log_out)
             dialog.content.text  = getString(R.string.log_out_content)
             dialog.onCancelDismiss()
+            dialog.show()
             dialog.buttonOK.setOnClickListener(View.OnClickListener {
                 var intent = Intent(applicationContext, LogInActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
@@ -145,7 +146,6 @@ class CardsActivity : BaseActivity() {
                 prefs.edit().putBoolean("firstStart", false).apply()
                 finish()
             })
-            dialog.show()
         })
     }
     public fun onHowToVideo() {
