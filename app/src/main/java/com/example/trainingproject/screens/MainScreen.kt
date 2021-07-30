@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.core.view.ContentInfoCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.trainingproject.R
@@ -16,6 +17,7 @@ import com.example.trainingproject.components.DrawerMenuAdapter
 import com.example.trainingproject.components.mainGridViewAdapter
 import com.example.trainingproject.models.Menu
 import com.example.trainingproject.models.Point
+import com.example.trainingproject.models.PointResponse
 import com.google.android.material.navigation.NavigationView
 import com.squareup.picasso.Picasso
 import retrofit2.Call
@@ -135,7 +137,9 @@ class MainScreen() : BaseActivity() {
             dialog.content.text  = getString(R.string.log_out_content)
             dialog.onCancelDismiss()
             dialog.buttonOK.setOnClickListener(View.OnClickListener {
-                startActivity ( Intent(applicationContext, LogInActivity::class.java))
+                var intent = Intent(applicationContext, LogInActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity (intent)
                 prefs.edit().clear().commit()
                 prefs.edit().putBoolean("firstStart", false).apply()
                 finish()
@@ -150,14 +154,15 @@ class MainScreen() : BaseActivity() {
     }
     private fun onMyWallet() {
         imgWallet!!.setOnClickListener(View.OnClickListener {
-            startActivity(Intent(applicationContext, CardsActivity::class.java))
+            var intent = Intent(applicationContext, CardsActivity::class.java)
+            startActivity(intent)
         })
     }
 
     fun getPointAPI(token : String){
         RetrofitClient().instance.getPoint(token!!)
-            .enqueue(object : retrofit2.Callback<Point> {
-                override fun onResponse(call: Call<Point>, response: Response<Point>) {
+            .enqueue(object : retrofit2.Callback<PointResponse> {
+                override fun onResponse(call: Call<PointResponse>, response: Response<PointResponse>) {
                     if(response.code() == HttpURLConnection.HTTP_FORBIDDEN){
                         prefs.edit().clear()
                         prefs.edit().putBoolean("firstStart", false)
@@ -177,7 +182,7 @@ class MainScreen() : BaseActivity() {
                     }
                 }
 
-                override fun onFailure(call: Call<Point>, t: Throwable) {
+                override fun onFailure(call: Call<PointResponse>, t: Throwable) {
                     var dialog = BaseDialog(this@MainScreen)
                     dialog.setContentView()
                     dialog.title.text = getString(R.string.error)
