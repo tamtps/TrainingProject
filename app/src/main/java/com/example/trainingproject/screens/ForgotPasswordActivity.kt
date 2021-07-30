@@ -51,7 +51,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
         //DO SOMETHING HERE
         binding.selectCountry.setOnClickListener(View.OnClickListener {
             dialog.show()
-            Toast.makeText(applicationContext, "Getting data, please wait...", Toast.LENGTH_LONG).show()
+            Toast.makeText(applicationContext, getString(R.string.getting_data), Toast.LENGTH_LONG).show()
         })
 
         binding.btnContinue.setOnClickListener(View.OnClickListener {
@@ -60,7 +60,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 0 -> {
                     val phone = "${binding.txtCountryCodeSelect.text}${binding.inputTxtForgot.text}"
                     if(!isValidPhone(phone)){
-                        Toast.makeText(applicationContext, "Wrong phone format! Please try again", Toast.LENGTH_LONG).show()
+                        Toast.makeText(applicationContext, getString(R.string.wrong_phone), Toast.LENGTH_LONG).show()
                         valid = false
                     }
                     else {
@@ -69,7 +69,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 }
                 1 -> {
                     if(!isValidEmail(binding.inputTxtForgot.text.toString())){
-                        Toast.makeText(applicationContext, "Wrong email format! Please try again", Toast.LENGTH_LONG).show()
+                        Toast.makeText(applicationContext, getString(R.string.wrong_email), Toast.LENGTH_LONG).show()
                         valid = false
                     }
                     else {
@@ -181,6 +181,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
             }
             else {
                 Toast.makeText(this, "ERROR IN GETTING DATA", Toast.LENGTH_LONG).show()
+                //TODO: SHOW DIALOG MESSAGE
             }
         })
 
