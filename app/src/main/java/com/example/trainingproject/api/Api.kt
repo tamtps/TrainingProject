@@ -50,7 +50,7 @@ interface Api {
     @GET("point/get/point/level/167")
     fun getPoint(
         @Header("token") token: String
-    ): Call<Point>
+    ): Call<PointResponse>
 
     @FormUrlEncoded
     @POST("special/campaign/coupon/wallet/user/all")

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.trainingproject.R
 import com.example.trainingproject.api.RetrofitClient
 import com.example.trainingproject.bases.BaseActivity
+import com.example.trainingproject.bases.BaseDialog
 import com.example.trainingproject.components.HowToVideoAdapter
 import com.example.trainingproject.databinding.ActivityHowToVideoBinding
 import com.example.trainingproject.models.VideoResponse
@@ -73,7 +74,13 @@ class HowToVideoActivity : BaseActivity() {
                 }
 
                 override fun onFailure(call: Call<VideoResponse>, t: Throwable) {
-                    Toast.makeText(applicationContext, "Error" +t.message, Toast.LENGTH_LONG).show()
+                    var dialog = BaseDialog(applicationContext)
+                    dialog.setContentView()
+                    dialog.title.text = getString(R.string.error)
+                    dialog.content.text = t.message
+                    dialog.showCancelButton(false)
+                    dialog.onOKDismiss()
+                    dialog.show()
                 }
             })
     }

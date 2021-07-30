@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.core.view.ContentInfoCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.trainingproject.R
@@ -16,6 +17,7 @@ import com.example.trainingproject.components.DrawerMenuAdapter
 import com.example.trainingproject.components.mainGridViewAdapter
 import com.example.trainingproject.models.Menu
 import com.example.trainingproject.models.Point
+import com.example.trainingproject.models.PointResponse
 import com.google.android.material.navigation.NavigationView
 import com.squareup.picasso.Picasso
 import retrofit2.Call
@@ -100,16 +102,16 @@ class MainScreen() : BaseActivity() {
     public fun menuItem() : ArrayList<Menu>{
         var list : ArrayList <Menu> = ArrayList()
         list.add(Menu(
-            "Market",
+            getString(R.string.menu_market),
             R.drawable.icon_market,
             2,
-            listOf("Browse", "Your Connection", "Your Order")
+            listOf("Your Connection", "Your Order")
         ))
-        list.add(Menu("Top Up", R.drawable.icon_topup))
-        list.add(Menu("Connections", R.drawable.icon_connect))
-        list.add(Menu("Cart", R.drawable.ic_my_cart, 4, listOf()))
-        list.add(Menu("Public services", R.drawable.ic_public_services,1))
-        list.add(Menu("Pay bills", R.drawable.icon_bills))
+        list.add(Menu(getString(R.string.menu_top_up), R.drawable.icon_topup))
+        list.add(Menu(getString(R.string.menu_connections), R.drawable.icon_connect))
+        list.add(Menu(getString(R.string.menu_cart), R.drawable.ic_my_cart, 4, listOf()))
+        list.add(Menu(getString(R.string.menu_public_services), R.drawable.ic_public_services,1))
+        list.add(Menu(getString(R.string.menu_pay_bills), R.drawable.icon_bills))
         return list
     }
 
@@ -135,7 +137,9 @@ class MainScreen() : BaseActivity() {
             dialog.content.text  = getString(R.string.log_out_content)
             dialog.onCancelDismiss()
             dialog.buttonOK.setOnClickListener(View.OnClickListener {
-                startActivity ( Intent(applicationContext, LogInActivity::class.java))
+                var intent = Intent(applicationContext, LogInActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity (intent)
                 prefs.edit().clear().commit()
                 prefs.edit().putBoolean("firstStart", false).apply()
                 finish()
@@ -150,24 +154,37 @@ class MainScreen() : BaseActivity() {
     }
     private fun onMyWallet() {
         imgWallet!!.setOnClickListener(View.OnClickListener {
-            startActivity(Intent(applicationContext, CardsActivity::class.java))
+            var intent = Intent(applicationContext, CardsActivity::class.java)
+            startActivity(intent)
         })
     }
 
     fun getPointAPI(token : String){
         RetrofitClient().instance.getPoint(token!!)
-            .enqueue(object : retrofit2.Callback<Point> {
-                override fun onResponse(call: Call<Point>, response: Response<Point>) {
+            .enqueue(object : retrofit2.Callback<PointResponse> {
+                override fun onResponse(call: Call<PointResponse>, response: Response<PointResponse>) {
                     if(response.code() == HttpURLConnection.HTTP_FORBIDDEN){
                         prefs.edit().clear()
                         prefs.edit().putBoolean("firstStart", false)
                         prefs.edit().apply()
-                        Toast.makeText(applicationContext, "Token expired, please login again", Toast.LENGTH_LONG).show()
-                        startActivity (Intent(applicationContext, LogInActivity::class.java))
-                        finish()
+
+                        var dialog  = BaseDialog(this@MainScreen)
+                        dialog.setContentView()
+                        dialog.showCancelButton(false)
+                        dialog.title.text = getString(R.string.error)
+                        dialog.content.text = getString(R.string.login_again)
+                        dialog.setCanceledOnTouchOutside(false)
+                        dialog.buttonOK.setOnClickListener(View.OnClickListener {
+                            var intent = Intent(applicationContext, LogInActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                            startActivity(intent)
+                            finish()
+                        })
+                        dialog.show()
                     }
                     else if(response.isSuccessful){
                         Log.d("RESPONSE_POINT", response.toString())
+
                         var point: String = NumberFormat.getNumberInstance(Locale.US)
                             .format(response.body()!!.result[0].currentPoint)
                         txtPoint?.text = point
@@ -177,7 +194,7 @@ class MainScreen() : BaseActivity() {
                     }
                 }
 
-                override fun onFailure(call: Call<Point>, t: Throwable) {
+                override fun onFailure(call: Call<PointResponse>, t: Throwable) {
                     var dialog = BaseDialog(this@MainScreen)
                     dialog.setContentView()
                     dialog.title.text = getString(R.string.error)
