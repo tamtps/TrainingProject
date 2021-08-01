@@ -47,11 +47,11 @@ class LogInActivity : AppCompatActivity() {
                 }
                 else
                     LogIn(email, password)
-        })
+
+           })
     }
 
     private fun LogIn(email: String, password: String) {
-        //TODO: AUTHORIZATION HERE
         RetrofitClient().instance.userLogin(
             email,
             password,
@@ -83,8 +83,6 @@ class LogInActivity : AppCompatActivity() {
                     dialog.setContentView()
                     dialog.errorDialog(response.body()?.statusCode)
                 }
-
-                Log.e("loginResponse", response.body().toString())
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {

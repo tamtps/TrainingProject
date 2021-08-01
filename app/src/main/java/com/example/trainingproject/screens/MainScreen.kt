@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.widget.*
@@ -54,6 +55,7 @@ class MainScreen() : BaseActivity() {
         val version = prefs.getString("version", "")
         val name = prefs.getString("fname","") + " " + prefs.getString("lname","")
         val avatar = prefs.getString("avatar","")
+        val deviceId = prefs.getString("deviceId","")
 
         init()
         txtName!!.text = name
@@ -68,9 +70,9 @@ class MainScreen() : BaseActivity() {
         onAboutDrawer(version!!)
         onLogOut(prefs)
         onHowToVideo()
-        getPointAPI(token!!)
-
+        getPointAPI(token!!, deviceId!!)
     }
+
 
     fun onLeftIcon(){
         leftIcon.setOnClickListener(View.OnClickListener {
@@ -160,8 +162,8 @@ class MainScreen() : BaseActivity() {
         })
     }
 
-    fun getPointAPI(token : String){
-        RetrofitClient().instance.getPoint(token!!)
+    fun getPointAPI(token : String, devideId:String){
+        RetrofitClient().instance.getPoint(token!!, devideId)
             .enqueue(object : retrofit2.Callback<PointResponse> {
                 override fun onResponse(call: Call<PointResponse>, response: Response<PointResponse>) {
                     if(response.code() == HttpURLConnection.HTTP_FORBIDDEN){

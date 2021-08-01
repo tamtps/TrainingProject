@@ -1,9 +1,12 @@
 package com.example.trainingproject.api
 
+import android.content.SharedPreferences
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import android.provider.Settings
+import com.example.trainingproject.screens.SplashActivity
 
 class RetrofitClient {
     val interceptor = HttpLoggingInterceptor()
@@ -15,7 +18,6 @@ class RetrofitClient {
         val original = chain.request()
         val requestBuilder = original.newBuilder()
             .method(original.method, original.body)
-            .addHeader("deviceId", "ffffffff-bf45-43ae-ffff-ffffef05ac4a")
             .addHeader("appVersion", "1.3.0.17")
             .addHeader("app-platform", "Kanoo-Android")
             .addHeader("X-TENANT", "kanoo")

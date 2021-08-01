@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.Settings
 import android.view.Window
 import com.example.trainingproject.R
+import com.example.trainingproject.bases.BaseDialog
 
 class SplashActivity : AppCompatActivity() {
     lateinit var handler : Handler
@@ -18,16 +20,16 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         val prefs : SharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE)
-        val editPrefs = prefs.edit()
+        val editPrefs : SharedPreferences.Editor = prefs.edit()
         val logged = prefs.getBoolean("logged", false)
         val token = prefs.getString("token", "")
         val firstStart = prefs.getBoolean("firstStart",true)
+        editPrefs.putString("deviceId", Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID))
+            editPrefs.apply()
 
         handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
             if(firstStart){
-                editPrefs.putBoolean("firstStart", false)
-                editPrefs.apply()
                 val intent = Intent(this, WalkThroughActivity::class.java)
                 startActivity(intent)
             }
@@ -43,7 +45,8 @@ class SplashActivity : AppCompatActivity() {
             }
 
             finish()
-        },2)
+        },5000)
+
     }
 
 

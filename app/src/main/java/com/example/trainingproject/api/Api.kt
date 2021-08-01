@@ -25,6 +25,7 @@ interface Api {
     @POST("api/27/getAccounts")
     fun getWalletCard(
         @Header("token") token: String,
+        @Header("deviceId") deviceId: String,
         @Field("accountSpecification") accountSpecification: String,
         @Field("action") action: String,
         @Field("storeId") storeId: String,
@@ -35,6 +36,7 @@ interface Api {
     @POST("deals/getWalletDisplayByReceiverUserId")
     fun getGiftCard(
         @Header("token") token: String,
+        @Header("deviceId") deviceId: String,
         @Field("receiverUserId") receiverUserId: String,
         @Field("keyword") keyword: String,
         @Field("pageIndex") pageIndex: String,
@@ -44,18 +46,21 @@ interface Api {
 
     @GET("api/support?category=1")
     fun getVideo(
-        @Header("token") token: String
+        @Header("token") token: String,
+        @Header("deviceId") deviceId: String
     ): Call<VideoResponse>
 
     @GET("point/get/point/level/167")
     fun getPoint(
-        @Header("token") token: String
+        @Header("token") token: String,
+        @Header("deviceId") deviceId: String
     ): Call<PointResponse>
 
     @FormUrlEncoded
     @POST("special/campaign/coupon/wallet/user/all")
     fun getCoupon(
         @Header("token") token: String,
+        @Header("deviceId") deviceId: String,
         @Field("fkUser") fkUser: String,
         @Field("keyword") keyword: String?,
         @Field("filter") filter: String,

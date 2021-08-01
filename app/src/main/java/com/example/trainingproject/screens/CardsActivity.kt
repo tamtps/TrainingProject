@@ -51,6 +51,7 @@ class CardsActivity : BaseActivity() {
         val version = prefs.getString("version", "")
         val name = prefs.getString("fname","") + " " + prefs.getString("lname","")
         val avatar = prefs.getString("avatar","")
+        val deviceId = prefs.getString("deviceId","")
 
         init()
         txtName!!.text = name
@@ -70,7 +71,7 @@ class CardsActivity : BaseActivity() {
         onLogOut(prefs)
 
         onHowToVideo()
-        getPointAPI(token!!)
+        getPointAPI(token!!, deviceId!!)
     }
 
     fun init(){
@@ -154,8 +155,8 @@ class CardsActivity : BaseActivity() {
         })
     }
 
-    fun getPointAPI(token : String){
-        RetrofitClient().instance.getPoint(token!!)
+    fun getPointAPI(token : String, deviceId:String){
+        RetrofitClient().instance.getPoint(token!!, deviceId!!)
             .enqueue(object : retrofit2.Callback<PointResponse> {
                 override fun onResponse(call: Call<PointResponse>, response: Response<PointResponse>) {
                     var point : String = NumberFormat.getNumberInstance(Locale.US).format(response.body()!!.result[0].currentPoint)

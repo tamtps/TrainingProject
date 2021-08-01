@@ -8,6 +8,7 @@ import retrofit2.Call
 
 class CouponCardViewModel : BaseViewModel<CouponResponse, CouponCardViewModel>(CouponCardViewModel::class.java) {
     lateinit var token: String
+    lateinit var deviceId :String
     lateinit var fkUser : String
     lateinit var keyword: String
     lateinit var filter: String
@@ -15,6 +16,7 @@ class CouponCardViewModel : BaseViewModel<CouponResponse, CouponCardViewModel>(C
     lateinit var pageSize: String
 
     fun init(token: String,
+             deviceId :String,
              fkUser : String,
              keyword: String,
              filter: String,
@@ -22,6 +24,7 @@ class CouponCardViewModel : BaseViewModel<CouponResponse, CouponCardViewModel>(C
              pageSize: String
     ){
         this.token = token
+        this.deviceId = deviceId
         this.fkUser = fkUser
         this.keyword = keyword
         this.filter = filter
@@ -30,7 +33,7 @@ class CouponCardViewModel : BaseViewModel<CouponResponse, CouponCardViewModel>(C
     }
 
     override fun retrofitCall(): Call<CouponResponse> {
-        return RetrofitClient().instance.getCoupon(token, fkUser, keyword, filter, pageIndex, pageSize)
+        return RetrofitClient().instance.getCoupon(token, deviceId,fkUser, keyword, filter, pageIndex, pageSize)
     }
 
 }

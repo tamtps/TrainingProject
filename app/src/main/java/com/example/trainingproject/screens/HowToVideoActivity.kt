@@ -37,6 +37,7 @@ class HowToVideoActivity : BaseActivity() {
 
         val prefs : SharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE)
         val token: String? = prefs.getString("token", null)
+        val deviceId = prefs.getString("deviceId","")
 
         progressCircular = findViewById(R.id.progress_circular)
         listHowToVideos = findViewById(R.id.list_how_to_videos)
@@ -50,7 +51,7 @@ class HowToVideoActivity : BaseActivity() {
             finish()
         })
 
-        getVideoAPI(token!!)
+        getVideoAPI(token!!,deviceId!!)
     }
 
     override fun getBodyLayout(): Int {
@@ -59,8 +60,8 @@ class HowToVideoActivity : BaseActivity() {
 
     override fun hasDrawer(): Boolean {return false }
 
-    fun getVideoAPI(token:String){
-        RetrofitClient().instance.getVideo(token)
+    fun getVideoAPI(token:String, deviceId: String){
+        RetrofitClient().instance.getVideo(token,deviceId)
             .enqueue(object : Callback<VideoResponse>{
                 override fun onResponse(
                     call: Call<VideoResponse>,
