@@ -19,13 +19,12 @@ interface Api {
     ) : Call<LoginResponse>
 
     @GET("countries")
-    fun getCountries() : Call<CountryResponse>
+    fun getCountries() : Call<Response<Country>>
 
     @FormUrlEncoded
     @POST("api/27/getAccounts")
     fun getWalletCard(
         @Header("token") token: String,
-        @Header("deviceId") deviceId: String,
         @Field("accountSpecification") accountSpecification: String,
         @Field("action") action: String,
         @Field("storeId") storeId: String,
@@ -36,7 +35,6 @@ interface Api {
     @POST("deals/getWalletDisplayByReceiverUserId")
     fun getGiftCard(
         @Header("token") token: String,
-        @Header("deviceId") deviceId: String,
         @Field("receiverUserId") receiverUserId: String,
         @Field("keyword") keyword: String,
         @Field("pageIndex") pageIndex: String,
@@ -47,24 +45,21 @@ interface Api {
     @GET("api/support?category=1")
     fun getVideo(
         @Header("token") token: String,
-        @Header("deviceId") deviceId: String
     ): Call<VideoResponse>
 
     @GET("point/get/point/level/167")
     fun getPoint(
         @Header("token") token: String,
-        @Header("deviceId") deviceId: String
-    ): Call<PointResponse>
+    ): Call<Response<Point>>
 
     @FormUrlEncoded
     @POST("special/campaign/coupon/wallet/user/all")
     fun getCoupon(
         @Header("token") token: String,
-        @Header("deviceId") deviceId: String,
         @Field("fkUser") fkUser: String,
         @Field("keyword") keyword: String?,
         @Field("filter") filter: String,
         @Field("pageIndex") pageIndex: String,
         @Field("pageSize") pageSize: String,
-    ): Call<CouponResponse>
+    ): Call<Response<Coupon>>
 }

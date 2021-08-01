@@ -13,8 +13,6 @@ open class BaseDialog(context: Context) : Dialog(context) {
     lateinit var buttonOK : Button
     lateinit var buttonCancel : Button
 
-
-
     fun setContentView() {
         super.setContentView(R.layout.dialog_simple)
         title = findViewById(R.id.dialog_title)

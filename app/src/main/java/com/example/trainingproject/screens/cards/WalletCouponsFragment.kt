@@ -23,7 +23,7 @@ class WalletCouponsFragment : BaseFragment<FragmentWalletCouponsScreenBinding, C
         val prefs = this.context?.getSharedPreferences("prefs", MODE_PRIVATE)
         val token: String = prefs?.getString("token", "")!!
         val deviceId = prefs.getString("deviceId","")
-        viewModel.init(token, deviceId!!,"1368","","-1","1", "100")
+        viewModel.init(token, deviceId!!,"1368","","-1","1", "100", this.requireContext())
         viewModel.getListObserver().observe(viewLifecycleOwner, {
             if (it.result.isNotEmpty()) {
                 couponCardAdapter.setUpdatedData(it.result)

@@ -1,20 +1,45 @@
 package com.example.trainingproject.models
+//MODEL
+class Response<T>(
+     var clientMessage: String,
+     var countRecord: String,
+     var statusCode: String,
+     var status: Int,
+     var result: ArrayList<T>
+)
 
-abstract class Response {
-    abstract var clientMessage: String
-    abstract var countRecord: String
-    abstract var statusCode: String
-    abstract var status: Int
-}
 
+data class Point(
+    val totalPoint: Long,
+    val currentPoint: Long,
+    val levelUser: Int
+)
+
+data class Country(
+    val name: String,
+    val alpha2Code: String,
+    val callingCodes: String,
+    val flag: String,
+    val regex: String,
+    var favorite: Boolean,
+)
+
+data class Coupon(
+    val merchantName: String,
+    val expireDate: String,
+    val imageShow: String,
+    val percentOff: Int
+)
+
+///////////////////////////////////////
 data class LoginResponse(
-    override var clientMessage: String,
-    override var countRecord: String,
-    override var statusCode: String,
-    override var status: Int,
-    val result: LoginResult,
-    val trace: Trace
-) : Response()
+    var clientMessage: String,
+    var countRecord: String,
+    var statusCode: String,
+    var status: Int,
+    var result: LoginResult,
+    var trace: Trace
+)
 
 data class LoginResult(
     val accountInfo: AccountInfo,
@@ -40,44 +65,11 @@ data class Trace(
     val appVersion: String
 )
 
-data class PointResponse(
-    var result: List<Point>,
-    override var clientMessage: String,
-    override var countRecord: String,
-    override var statusCode: String,
-    override var status: Int
-) : Response()
 
-data class Point(
-    val totalPoint: Long,
-    val currentPoint: Long,
-    val levelUser: Int
-)
-
-data class VideoResponse(
-    override var clientMessage: String,
-    override var countRecord: String,
-    override var statusCode: String,
-    override var status: Int,
-    val result: VideoResult
-) : Response()
-
-data class VideoResult(
-    val content: ArrayList<Videos>
-)
-
-data class Videos(
-    val key: String,
-    val value: String
-)
-
+//////////////////////////////////////
 data class GiftCardResponse(
-    override var clientMessage: String,
-    override var countRecord: String,
-    override var statusCode: String,
-    override var status: Int,
     val result: TransactionDisplay
-) : Response()
+)
 
 data class TransactionDisplay(
     val transDisplay: ArrayList<TransactionDetail>
@@ -95,34 +87,45 @@ data class TransactionDetail(
     val cardNum: String,
 )
 
-data class CountryResponse(
-    override var clientMessage: String,
-    override var countRecord: String,
-    override var statusCode: String,
-    override var status: Int,
-    val result: ArrayList<CountryResult>
-) : Response()
-
-data class CountryResult(
-    val name: String,
-    val alpha2Code: String,
-    val callingCodes: String,
-    val flag: String,
-    val regex: String,
-    var favorite: Boolean,
+//////////////////////////////
+data class WalletCardResponse(
+    val accounts : ArrayList<Account>
 )
 
-data class CouponResponse(
-    override var clientMessage: String,
-    override var countRecord: String,
-    override var statusCode: String,
-    override var status: Int,
-    val result: ArrayList<Coupon>
-) : Response()
+data class Account(
+    val tokens: TokenDetail
+)
 
-data class Coupon(
-    val merchantName: String,
-    val expireDate: String,
-    val imageShow: String,
-    val percentOff: Int
+data class TokenDetail(
+    val tokenValue: String,
+    val accountType: String,
+    val tokenStatus: String,
+    val last4 : String,
+    val currency : String,
+    val accountStatus: String,
+    val kashKardType: String,
+    val firstName: String,
+    val lastName: String,
+    val country: String,
+    val cardType: String,
+    val balance: Double,
+    val defaultCard: Boolean,
+)
+
+/////////////////////////////////
+data class VideoResponse(
+    var clientMessage: String,
+    var countRecord: String,
+    var statusCode: String,
+    var status: Int,
+    var result: Content,
+)
+
+data class Content(
+    var content: ArrayList<Videos>
+)
+
+data class Videos(
+    val key: String,
+    val value: String
 )

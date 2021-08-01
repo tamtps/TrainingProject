@@ -1,19 +1,20 @@
 package com.example.trainingproject.viewmodels
 
+import android.content.Context
 import com.example.trainingproject.api.RetrofitClient
 import com.example.trainingproject.bases.BaseViewModel
 import com.example.trainingproject.models.*
 import retrofit2.Call
 
 
-class CouponCardViewModel : BaseViewModel<CouponResponse, CouponCardViewModel>(CouponCardViewModel::class.java) {
+class CouponCardViewModel : BaseViewModel<Response<Coupon>, CouponCardViewModel>(CouponCardViewModel::class.java) {
     lateinit var token: String
-    lateinit var deviceId :String
     lateinit var fkUser : String
     lateinit var keyword: String
     lateinit var filter: String
     lateinit var pageIndex: String
     lateinit var pageSize: String
+    lateinit var context: Context
 
     fun init(token: String,
              deviceId :String,
@@ -21,19 +22,20 @@ class CouponCardViewModel : BaseViewModel<CouponResponse, CouponCardViewModel>(C
              keyword: String,
              filter: String,
              pageIndex: String,
-             pageSize: String
+             pageSize: String,
+             context: Context
     ){
         this.token = token
-        this.deviceId = deviceId
         this.fkUser = fkUser
         this.keyword = keyword
         this.filter = filter
         this.pageIndex = pageIndex
         this.pageSize = pageSize
+        this.context = context
     }
 
-    override fun retrofitCall(): Call<CouponResponse> {
-        return RetrofitClient().instance.getCoupon(token, deviceId,fkUser, keyword, filter, pageIndex, pageSize)
+    override fun retrofitCall(): Call<Response<Coupon>> {
+        return RetrofitClient().instance.getCoupon(token, fkUser, keyword, filter, pageIndex, pageSize)
     }
 
 }

@@ -1,14 +1,14 @@
 package com.example.trainingproject.api
 
-import android.content.SharedPreferences
+import android.content.Context
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import android.provider.Settings
-import com.example.trainingproject.screens.SplashActivity
+import com.example.trainingproject.bases.MainApplication
 
-class RetrofitClient {
+class RetrofitClient() {
     val interceptor = HttpLoggingInterceptor()
 
     private val BASE_URL = "https://kanoo-gateway-staging.kardsys.com/visikard/"
@@ -18,6 +18,7 @@ class RetrofitClient {
         val original = chain.request()
         val requestBuilder = original.newBuilder()
             .method(original.method, original.body)
+            .addHeader("deviceId", Settings.Secure.getString( MainApplication.getApplicationContext().contentResolver, Settings.Secure.ANDROID_ID))
             .addHeader("appVersion", "1.3.0.17")
             .addHeader("app-platform", "Kanoo-Android")
             .addHeader("X-TENANT", "kanoo")
@@ -26,7 +27,7 @@ class RetrofitClient {
         val request = requestBuilder.build()
         chain.proceed(request)
     }
-//        .addInterceptor(interceptor.setLevel(HttpLoggingInterceptor.Level.BODY))
+        .addInterceptor(interceptor.setLevel(HttpLoggingInterceptor.Level.BODY))
 
     .build()
 

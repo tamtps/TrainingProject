@@ -19,11 +19,11 @@ import com.example.trainingproject.components.DrawerMenuAdapter
 import com.example.trainingproject.components.mainGridViewAdapter
 import com.example.trainingproject.models.Menu
 import com.example.trainingproject.models.Point
-import com.example.trainingproject.models.PointResponse
+import com.example.trainingproject.models.Response
+import com.example.trainingproject.models.Videos
 import com.google.android.material.navigation.NavigationView
 import com.squareup.picasso.Picasso
 import retrofit2.Call
-import retrofit2.Response
 import java.net.HttpURLConnection
 import java.text.NumberFormat
 import java.util.*
@@ -70,7 +70,7 @@ class MainScreen() : BaseActivity() {
         onAboutDrawer(version!!)
         onLogOut(prefs)
         onHowToVideo()
-        getPointAPI(token!!, deviceId!!)
+        getPointAPI(token!!)
     }
 
 
@@ -140,6 +140,7 @@ class MainScreen() : BaseActivity() {
             dialog.content.text  = getString(R.string.log_out_content)
             dialog.onCancelDismiss()
             dialog.buttonOK.setOnClickListener(View.OnClickListener {
+                dialog.dismiss()
                 var intent = Intent(applicationContext, LogInActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity (intent)
@@ -162,10 +163,10 @@ class MainScreen() : BaseActivity() {
         })
     }
 
-    fun getPointAPI(token : String, devideId:String){
-        RetrofitClient().instance.getPoint(token!!, devideId)
-            .enqueue(object : retrofit2.Callback<PointResponse> {
-                override fun onResponse(call: Call<PointResponse>, response: Response<PointResponse>) {
+    fun getPointAPI(token : String){
+        RetrofitClient().instance.getPoint(token!!)
+            .enqueue(object : retrofit2.Callback<Response<Point>> {
+                override fun onResponse(call: Call<Response<Point>>, response: retrofit2.Response<Response<Point>>) {
                     if(response.code() == HttpURLConnection.HTTP_FORBIDDEN){
                         prefs.edit().clear()
                         prefs.edit().putBoolean("firstStart", false)
@@ -193,10 +194,11 @@ class MainScreen() : BaseActivity() {
                     }
                 }
 
-                override fun onFailure(call: Call<PointResponse>, t: Throwable) {
+                override fun onFailure(call: Call<Response<Point>>, t: Throwable) {
                     var dialog = BaseDialog(this@MainScreen)
                     dialog.setContentView()
                     dialog.errorDialog(t.message)
+                    dialog.dismiss()
                 }
 
             })

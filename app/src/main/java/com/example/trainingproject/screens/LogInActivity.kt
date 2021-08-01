@@ -16,7 +16,6 @@ import com.example.trainingproject.databinding.ActivityLoginBinding
 import com.example.trainingproject.models.LoginResponse
 import retrofit2.Call
 import retrofit2.Callback
-import retrofit2.Response
 import java.net.HttpURLConnection
 
 
@@ -62,10 +61,10 @@ class LogInActivity : AppCompatActivity() {
             android.os.Build.VERSION.SDK_INT.toString(),
             BuildConfig.VERSION_NAME,
         ).enqueue(object : Callback<LoginResponse> {
-            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+            val prefs : SharedPreferences = applicationContext.getSharedPreferences("prefs", MODE_PRIVATE)
+            val editPref : SharedPreferences.Editor = prefs.edit()
+            override fun onResponse(call: Call<LoginResponse>, response: retrofit2.Response<LoginResponse>) {
                 if(response.body()?.status == HttpURLConnection.HTTP_OK){
-                    val prefs : SharedPreferences = applicationContext.getSharedPreferences("prefs", MODE_PRIVATE)
-                    val editPref : SharedPreferences.Editor = prefs.edit()
                     editPref.putString("token", response.body()!!.result.loginInformation.token)
                     editPref.putString("fname", response.body()?.result?.accountInfo?.fname)
                     editPref.putString("lname", response.body()?.result?.accountInfo?.lname)
@@ -80,6 +79,7 @@ class LogInActivity : AppCompatActivity() {
                 }
                 else{
                     var dialog = BaseDialog(this@LogInActivity)
+                    editPref.clear().apply()
                     dialog.setContentView()
                     dialog.errorDialog(response.body()?.statusCode)
                 }

@@ -27,7 +27,7 @@ class WalletCardFragment : BaseFragment<FragmentWalletCardScreenBinding, WalletC
         val prefs = this.context?.getSharedPreferences("prefs", MODE_PRIVATE)
         val token: String = prefs?.getString("token", "")!!
         val deviceId = prefs.getString("deviceId","")
-        viewModel.init(token, deviceId!!,"All", "", "", "")
+        viewModel.init(token,"All", "", "", "")
         viewModel.getListObserver().observe(viewLifecycleOwner, {
             if (it.accounts.isNotEmpty()) {
                 walletCardAdapter.setUpdatedData(it.accounts)

@@ -1,43 +1,36 @@
 package com.example.trainingproject.viewmodels
 
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.trainingproject.api.Api
+
 import com.example.trainingproject.api.RetrofitClient
-import com.example.trainingproject.models.CountryResponse
-import com.example.trainingproject.models.CountryResult
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.example.trainingproject.bases.BaseViewModel
+import com.example.trainingproject.models.Country
+import com.example.trainingproject.models.Response
 import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
-class CountryPickerViewModel : ViewModel() {
-    private var countryListLiveData : MutableLiveData<ArrayList<CountryResult>> = MutableLiveData()
 
-    fun getCountryListObserver() : MutableLiveData<ArrayList<CountryResult>> {
-        return countryListLiveData
-    }
+class CountryPickerViewModel : BaseViewModel<Response<Country>, CountryPickerViewModel>(CountryPickerViewModel::class.java) {
 
-    fun makeApiCall() {
-        viewModelScope.launch(Dispatchers.IO) {
-            RetrofitClient().instance.getCountries()
-                .enqueue(object : Callback<CountryResponse> {
-                    override fun onResponse(
-                        call: Call<CountryResponse>,
-                        response: Response<CountryResponse>
-                    ) {
-                        if (response.isSuccessful && !response.body()?.result.isNullOrEmpty())
-                            countryListLiveData.postValue(response.body()?.result)
-                    }
+//    fun makeApiCall() {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            RetrofitClient().instance.getCountries()
+//                .enqueue(object : Callback<CountryResponse> {
+//                    override fun onResponse(
+//                        call: Call<CountryResponse>,
+//                        response: Response<CountryResponse>
+//                    ) {
+//                        if (response.isSuccessful && !response.body()?.result.isNullOrEmpty())
+//                            countryListLiveData.postValue(response.body()?.result)
+//                    }
+//
+//                    override fun onFailure(call: Call<CountryResponse>, t: Throwable) {
+//                        t.message?.let { Log.e("View model error", it) }
+//                    }
+//
+//                })
+//        }
+//    }
 
-                    override fun onFailure(call: Call<CountryResponse>, t: Throwable) {
-                        t.message?.let { Log.e("View model error", it) }
-                    }
-
-                })
-        }
+    override fun retrofitCall(): Call<Response<Country>> {
+        return RetrofitClient().instance.getCountries()
     }
 }

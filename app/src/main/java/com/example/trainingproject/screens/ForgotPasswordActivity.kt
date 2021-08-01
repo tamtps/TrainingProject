@@ -168,11 +168,11 @@ class ForgotPasswordActivity : AppCompatActivity() {
 
         val viewModel = ViewModelProvider(this).get(CountryPickerViewModel::class.java)
         //Observer Live Data
-        viewModel.getCountryListObserver().observe(this, {
-            if(it.isNotEmpty()){
+        viewModel.getListObserver().observe(this, {
+            if(it.result.isNotEmpty()){
                 dialog.findViewById<ProgressBar>(R.id.progress_circular_country_picker).visibility = View.INVISIBLE
-                countryPickerAdapter.setUpdatedData(it)
-                it.forEach { country ->
+                countryPickerAdapter.setUpdatedData(it.result)
+                it.result.forEach { country ->
                     if (country.favorite) {
                         Picasso.get().load(country.flag).into(binding.imgFlagSelect)
                         binding.txtCountryCodeSelect.text = country.callingCodes
