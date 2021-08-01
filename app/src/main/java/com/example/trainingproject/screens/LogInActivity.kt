@@ -4,9 +4,11 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.example.trainingproject.BuildConfig
 import com.example.trainingproject.R
 import com.example.trainingproject.api.RetrofitClient
 import com.example.trainingproject.bases.BaseDialog
@@ -53,10 +55,12 @@ class LogInActivity : AppCompatActivity() {
         RetrofitClient().instance.userLogin(
             email,
             password,
-            "ffffffff-bf45-43ae-ffff-ffffef05ac4a",
+            Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID),
             "fELCd90Ftes%3AAPA91bHGdLvaGwrVds4gDsxdG7Fd6y2YMMGgX_q_yPnioSv1aygdvYgNdK5vViA0UtYvNY5ePox3PpVnnRa56PgDvqFrwjrnwU0AABodPkuMQWmAQmDgaOpTWLeCZaH7xG4TtwgpFNU9",
             "2",
             "androidvk",
+            android.os.Build.VERSION.SDK_INT.toString(),
+            BuildConfig.VERSION_NAME,
         ).enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if(response.body()?.status == HttpURLConnection.HTTP_OK){
@@ -85,6 +89,9 @@ class LogInActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 var dialog = BaseDialog(this@LogInActivity)
+                val prefs : SharedPreferences = applicationContext.getSharedPreferences("prefs", MODE_PRIVATE)
+                val editPref : SharedPreferences.Editor = prefs.edit()
+                editPref.clear().apply()
                 dialog.setContentView()
                 dialog.errorDialog(t.message)
             }

@@ -14,8 +14,8 @@ interface Api {
         @Field("deviceToken") deviceToken: String,
         @Field("appPlatform") appPlatform: String,
         @Field("keyStore") keyStore: String,
-        //@Field("osversion") osversion: String,
-        //@Field("appVersion") appVersion: String,
+        @Field("osversion") osversion: String,
+        @Field("appVersion") appVersion: String,
     ) : Call<LoginResponse>
 
     @GET("countries")

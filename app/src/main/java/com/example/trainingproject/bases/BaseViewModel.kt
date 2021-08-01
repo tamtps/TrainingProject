@@ -14,7 +14,7 @@ abstract class BaseViewModel<T, VM : ViewModel>(viewModelClass: Class<VM>) :
         return observingList
     }
 
-    protected abstract fun retrofitCall() : Call<T>
+    protected abstract fun retrofitCall() : Call<T> 
 
     open fun makeApiCall() {
         retrofitCall().enqueue(object: Callback<T>{
