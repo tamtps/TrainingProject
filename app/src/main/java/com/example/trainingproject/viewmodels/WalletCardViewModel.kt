@@ -7,17 +7,15 @@ import retrofit2.Call
 
 
 class WalletCardViewModel : BaseViewModel<WalletCardResponse, WalletCardViewModel>(WalletCardViewModel::class.java) {
-    lateinit var token: String
     lateinit var accountSpecification : String
     lateinit var action: String
     lateinit var storeId: String
     lateinit var excludeCards: String
 
-    fun init(token: String,
+    fun init(
              accountSpecification : String,
              action: String, storeId: String,
              excludeCards: String){
-        this.token = token
         this.accountSpecification = accountSpecification
         this.action = action
         this.storeId = storeId
@@ -25,7 +23,7 @@ class WalletCardViewModel : BaseViewModel<WalletCardResponse, WalletCardViewMode
     }
 
     override fun retrofitCall(): Call<WalletCardResponse> {
-        return RetrofitClient().walletCardInstance.getWalletCard(token, accountSpecification, action, storeId, excludeCards)
+        return RetrofitClient().walletCardInstance.getWalletCard(accountSpecification, action, storeId, excludeCards)
     }
 
 

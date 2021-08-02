@@ -13,7 +13,8 @@ import com.example.trainingproject.R
 import com.example.trainingproject.api.RetrofitClient
 import com.example.trainingproject.bases.BaseDialog
 import com.example.trainingproject.databinding.ActivityLoginBinding
-import com.example.trainingproject.models.LoginResponse
+import com.example.trainingproject.models.LoginResult
+import com.example.trainingproject.models.Response
 import retrofit2.Call
 import retrofit2.Callback
 import java.net.HttpURLConnection
@@ -60,17 +61,17 @@ class LogInActivity : AppCompatActivity() {
             "androidvk",
             android.os.Build.VERSION.SDK_INT.toString(),
             BuildConfig.VERSION_NAME,
-        ).enqueue(object : Callback<LoginResponse> {
+        ).enqueue(object : Callback<Response<LoginResult>> {
             val prefs : SharedPreferences = applicationContext.getSharedPreferences("prefs", MODE_PRIVATE)
             val editPref : SharedPreferences.Editor = prefs.edit()
-            override fun onResponse(call: Call<LoginResponse>, response: retrofit2.Response<LoginResponse>) {
+            override fun onResponse(call: Call<Response<LoginResult>>, response: retrofit2.Response<Response<LoginResult>>) {
                 if(response.body()?.status == HttpURLConnection.HTTP_OK){
                     editPref.putString("token", response.body()!!.result.loginInformation.token)
                     editPref.putString("fname", response.body()?.result?.accountInfo?.fname)
                     editPref.putString("lname", response.body()?.result?.accountInfo?.lname)
                     editPref.putString("avatar", response.body()?.result?.accountInfo?.flag)
                     editPref.putString("version", response.body()?.trace?.appVersion)
-
+                    editPref.putString("uid", response.body()!!.result.accountInfo.idUsers)
                     editPref.putBoolean("logged", true)
                     editPref.apply()
                     val intent = Intent(applicationContext, MainScreen::class.java)
@@ -85,7 +86,7 @@ class LogInActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+            override fun onFailure(call: Call<Response<LoginResult>>, t: Throwable) {
                 var dialog = BaseDialog(this@LogInActivity)
                 val prefs : SharedPreferences = applicationContext.getSharedPreferences("prefs", MODE_PRIVATE)
                 val editPref : SharedPreferences.Editor = prefs.edit()

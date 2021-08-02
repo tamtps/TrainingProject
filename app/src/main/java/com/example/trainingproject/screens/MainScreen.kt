@@ -30,19 +30,19 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class MainScreen() : BaseActivity() {
-    private lateinit var prefs : SharedPreferences
-    private var mainGridView : GridView?= null
-    var list :ArrayList<Menu> ?= null
-    var listViewDrawer : ListView?= null
-    private var itemAbout : TextView?= null
-    private var itemLogOut : TextView?=null
-    private var itemHowToVideo : TextView?=null
-    var txtLevel : TextView? = null
-    var txtPoint : TextView?= null
-    var txtDrawerPoint : TextView?= null
-    private var txtName : TextView?= null
-    private var imgWallet : ImageView?= null
-    private var imgAvatar  : ImageView?= null
+    private lateinit var prefs: SharedPreferences
+    private var mainGridView: GridView? = null
+    var list: ArrayList<Menu>? = null
+    var listViewDrawer: ListView? = null
+    private var itemAbout: TextView? = null
+    private var itemLogOut: TextView? = null
+    private var itemHowToVideo: TextView? = null
+    var txtLevel: TextView? = null
+    var txtPoint: TextView? = null
+    var txtDrawerPoint: TextView? = null
+    private var txtName: TextView? = null
+    private var imgWallet: ImageView? = null
+    private var imgAvatar: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,12 +51,10 @@ class MainScreen() : BaseActivity() {
         setDrawerView(R.layout.menu_drawer_mainscreen)
 
         prefs = getSharedPreferences("prefs", MODE_PRIVATE)
-        val token = prefs.getString("token","")
         val version = prefs.getString("version", "")
-        val name = prefs.getString("fname","") + " " + prefs.getString("lname","")
-        val avatar = prefs.getString("avatar","")
-        val deviceId = prefs.getString("deviceId","")
-
+        val name = prefs.getString("fname", "") + " " + prefs.getString("lname", "")
+        val avatar = prefs.getString("avatar", "")
+        val uid = prefs.getString("uid", "0")!!.toLong()
         init()
         txtName!!.text = name
         Picasso.get().load(avatar).into(imgAvatar)
@@ -70,11 +68,11 @@ class MainScreen() : BaseActivity() {
         onAboutDrawer(version!!)
         onLogOut(prefs)
         onHowToVideo()
-        getPointAPI(token!!)
+        getPointAPI(uid)
     }
 
 
-    fun onLeftIcon(){
+    fun onLeftIcon() {
         leftIcon.setOnClickListener(View.OnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
         })
@@ -88,11 +86,11 @@ class MainScreen() : BaseActivity() {
         return true
     }
 
-    fun init(){
+    fun init() {
         mainGridView = findViewById(R.id.mainGridView)
         listViewDrawer = findViewById(R.id.list_view_drawer)
         itemAbout = findViewById(R.id.item_about)
-        itemLogOut =findViewById(R.id.item_log_out)
+        itemLogOut = findViewById(R.id.item_log_out)
         itemHowToVideo = findViewById(R.id.item_how_to_videos)
         txtPoint = findViewById(R.id.txt_point)
         txtLevel = findViewById(R.id.txt_level)
@@ -102,48 +100,51 @@ class MainScreen() : BaseActivity() {
         imgAvatar = findViewById(R.id.img_avatar_menu)
     }
 
-    public fun menuItem() : ArrayList<Menu>{
-        var list : ArrayList <Menu> = ArrayList()
-        list.add(Menu(
-            getString(R.string.menu_market),
-            R.drawable.icon_market,
-            2,
-            listOf("Your Connection", "Your Order")
-        ))
+    public fun menuItem(): ArrayList<Menu> {
+        var list: ArrayList<Menu> = ArrayList()
+        list.add(
+            Menu(
+                getString(R.string.menu_market),
+                R.drawable.icon_market,
+                2,
+                listOf("Your Connection", "Your Order")
+            )
+        )
         list.add(Menu(getString(R.string.menu_top_up), R.drawable.icon_topup))
         list.add(Menu(getString(R.string.menu_connections), R.drawable.icon_connect))
         list.add(Menu(getString(R.string.menu_cart), R.drawable.ic_my_cart, 4, listOf()))
-        list.add(Menu(getString(R.string.menu_public_services), R.drawable.ic_public_services,1))
+        list.add(Menu(getString(R.string.menu_public_services), R.drawable.ic_public_services, 1))
         list.add(Menu(getString(R.string.menu_pay_bills), R.drawable.icon_bills))
         return list
     }
 
-    public fun onAboutDrawer(version : String){
+    public fun onAboutDrawer(version: String) {
         itemAbout!!.setOnClickListener(View.OnClickListener {
             drawerLayout.closeDrawer(GravityCompat.START)
-            var date : Date = Calendar.getInstance().time
-            var dialog = BaseDialog(MainScreen@this)
+            var date: Date = Calendar.getInstance().time
+            var dialog = BaseDialog(MainScreen@ this)
             dialog.setContentView()
             dialog.title.text = getString(R.string.item_about)
-            dialog.content.text = "Beta Version: "+ version + "\nDate: "+ date
+            dialog.content.text = "Beta Version: " + version + "\nDate: " + date
             dialog.showCancelButton(false)
             dialog.onOKDismiss()
             dialog.show()
         })
     }
-    public fun onLogOut(prefs : SharedPreferences){
+
+    public fun onLogOut(prefs: SharedPreferences) {
         itemLogOut!!.setOnClickListener(View.OnClickListener {
             drawerLayout.closeDrawer(GravityCompat.START)
-            var dialog = BaseDialog(MainScreen@this)
+            var dialog = BaseDialog(MainScreen@ this)
             dialog.setContentView()
             dialog.title.text = getString(R.string.item_log_out)
-            dialog.content.text  = getString(R.string.log_out_content)
+            dialog.content.text = getString(R.string.log_out_content)
             dialog.onCancelDismiss()
             dialog.buttonOK.setOnClickListener(View.OnClickListener {
                 dialog.dismiss()
                 var intent = Intent(applicationContext, LogInActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity (intent)
+                startActivity(intent)
                 prefs.edit().clear().commit()
                 prefs.edit().putBoolean("firstStart", false).apply()
                 finish()
@@ -151,11 +152,13 @@ class MainScreen() : BaseActivity() {
             dialog.show()
         })
     }
+
     public fun onHowToVideo() {
         itemHowToVideo!!.setOnClickListener(View.OnClickListener {
             startActivity(Intent(applicationContext, HowToVideoActivity::class.java))
         })
     }
+
     private fun onMyWallet() {
         imgWallet!!.setOnClickListener(View.OnClickListener {
             var intent = Intent(applicationContext, CardsActivity::class.java)
@@ -163,11 +166,14 @@ class MainScreen() : BaseActivity() {
         })
     }
 
-    fun getPointAPI(token : String){
-        RetrofitClient().instance.getPoint(token!!)
-            .enqueue(object : retrofit2.Callback<Response<Point>> {
-                override fun onResponse(call: Call<Response<Point>>, response: retrofit2.Response<Response<Point>>) {
-                    if(response.code() == HttpURLConnection.HTTP_FORBIDDEN){
+    fun getPointAPI(uid: Long) {
+        RetrofitClient().instance.getPoint(uid!!)
+            .enqueue(object : retrofit2.Callback<Response<ArrayList<Point>>> {
+                override fun onResponse(
+                    call: Call<Response<ArrayList<Point>>>,
+                    response: retrofit2.Response<Response<ArrayList<Point>>>
+                ) {
+                    if (response.code() == HttpURLConnection.HTTP_FORBIDDEN) {
                         prefs.edit().clear()
                         prefs.edit().putBoolean("firstStart", false)
                         prefs.edit().apply()
@@ -181,8 +187,7 @@ class MainScreen() : BaseActivity() {
                             startActivity(intent)
                             finish()
                         })
-                    }
-                    else if(response.isSuccessful){
+                    } else if (response.isSuccessful) {
                         Log.d("RESPONSE_POINT", response.toString())
 
                         var point: String = NumberFormat.getNumberInstance(Locale.US)
@@ -194,7 +199,7 @@ class MainScreen() : BaseActivity() {
                     }
                 }
 
-                override fun onFailure(call: Call<Response<Point>>, t: Throwable) {
+                override fun onFailure(call: Call<Response<ArrayList<Point>>>, t: Throwable) {
                     var dialog = BaseDialog(this@MainScreen)
                     dialog.setContentView()
                     dialog.errorDialog(t.message)

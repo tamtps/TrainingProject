@@ -5,9 +5,9 @@ class Response<T>(
      var countRecord: String,
      var statusCode: String,
      var status: Int,
-     var result: ArrayList<T>
+     var result: T,
+     var trace: Trace
 )
-
 
 data class Point(
     val totalPoint: Long,
@@ -31,15 +31,25 @@ data class Coupon(
     val percentOff: Int
 )
 
-///////////////////////////////////////
-data class LoginResponse(
-    var clientMessage: String,
-    var countRecord: String,
-    var statusCode: String,
-    var status: Int,
-    var result: LoginResult,
-    var trace: Trace
+data class TransactionDisplay(
+    val transDisplay: ArrayList<TransactionDetail>
 )
+
+data class TransactionDetail(
+    val idTransaction: Int,
+    val cert_value: String,
+    val imgCard: String,
+    val imgThumbnail: String,
+    val currency: String,
+    val merchantName: String,
+    val cardNameReceiver: String,
+    val cardNameSender: String,
+    val cardNum: String,
+)
+
+
+///////////////////////////////////////
+
 
 data class LoginResult(
     val accountInfo: AccountInfo,
@@ -66,26 +76,6 @@ data class Trace(
 )
 
 
-//////////////////////////////////////
-data class GiftCardResponse(
-    val result: TransactionDisplay
-)
-
-data class TransactionDisplay(
-    val transDisplay: ArrayList<TransactionDetail>
-)
-
-data class TransactionDetail(
-    val idTransaction: Int,
-    val cert_value: String,
-    val imgCard: String,
-    val imgThumbnail: String,
-    val currency: String,
-    val merchantName: String,
-    val cardNameReceiver: String,
-    val cardNameSender: String,
-    val cardNum: String,
-)
 
 //////////////////////////////
 data class WalletCardResponse(
@@ -113,13 +103,6 @@ data class TokenDetail(
 )
 
 /////////////////////////////////
-data class VideoResponse(
-    var clientMessage: String,
-    var countRecord: String,
-    var statusCode: String,
-    var status: Int,
-    var result: Content,
-)
 
 data class Content(
     var content: ArrayList<Videos>

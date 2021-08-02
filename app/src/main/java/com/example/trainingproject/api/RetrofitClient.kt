@@ -1,6 +1,7 @@
 package com.example.trainingproject.api
 
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -18,7 +19,18 @@ class RetrofitClient() {
         val original = chain.request()
         val requestBuilder = original.newBuilder()
             .method(original.method, original.body)
-            .addHeader("deviceId", Settings.Secure.getString( MainApplication.getApplicationContext().contentResolver, Settings.Secure.ANDROID_ID))
+            .addHeader(
+                "token",
+                MainApplication.getApplicationContext().getSharedPreferences("prefs", MODE_PRIVATE)
+                    .getString("token", "")!!
+            )
+            .addHeader(
+                "deviceId",
+                Settings.Secure.getString(
+                    MainApplication.getApplicationContext().contentResolver,
+                    Settings.Secure.ANDROID_ID
+                )
+            )
             .addHeader("appVersion", "1.3.0.17")
             .addHeader("app-platform", "Kanoo-Android")
             .addHeader("X-TENANT", "kanoo")
@@ -29,7 +41,7 @@ class RetrofitClient() {
     }
         .addInterceptor(interceptor.setLevel(HttpLoggingInterceptor.Level.BODY))
 
-    .build()
+        .build()
 
     val instance: Api by lazy {
         val retrofit = Retrofit.Builder()
@@ -41,7 +53,7 @@ class RetrofitClient() {
         retrofit.create(Api::class.java)
     }
 
-    val walletCardInstance : Api by lazy {
+    val walletCardInstance: Api by lazy {
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL2)
             .addConverterFactory(GsonConverterFactory.create())

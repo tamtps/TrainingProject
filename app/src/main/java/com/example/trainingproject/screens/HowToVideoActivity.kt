@@ -13,8 +13,8 @@ import com.example.trainingproject.api.RetrofitClient
 import com.example.trainingproject.bases.BaseActivity
 import com.example.trainingproject.bases.BaseDialog
 import com.example.trainingproject.components.HowToVideoAdapter
+import com.example.trainingproject.models.Content
 import com.example.trainingproject.models.Response
-import com.example.trainingproject.models.VideoResponse
 import com.example.trainingproject.models.Videos
 import retrofit2.Call
 import retrofit2.Callback
@@ -31,7 +31,6 @@ class HowToVideoActivity : BaseActivity() {
         rightIcon(R.drawable.btn_home_white)
 
         val prefs : SharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE)
-        val token: String? = prefs.getString("token", null)
         val deviceId = prefs.getString("deviceId","")
 
         progressCircular = findViewById(R.id.progress_circular)
@@ -46,7 +45,7 @@ class HowToVideoActivity : BaseActivity() {
             finish()
         })
 
-        getVideoAPI(token!!)
+        getVideoAPI("1")
     }
 
     override fun getBodyLayout(): Int {
@@ -55,12 +54,12 @@ class HowToVideoActivity : BaseActivity() {
 
     override fun hasDrawer(): Boolean {return false }
 
-    fun getVideoAPI(token:String){
-        RetrofitClient().instance.getVideo(token)
-            .enqueue(object : Callback<VideoResponse>{
+    fun getVideoAPI(category: String){
+        RetrofitClient().instance.getVideo(category)
+            .enqueue(object : Callback<Response<Content>>{
                 override fun onResponse(
-                    call: Call<VideoResponse>,
-                    response: retrofit2.Response<VideoResponse>
+                    call: Call<Response<Content>>,
+                    response: retrofit2.Response<Response<Content>>
                 ) {
                     progressCircular.visibility = View.INVISIBLE
                     list.addAll(response.body()!!.result.content)
@@ -69,7 +68,7 @@ class HowToVideoActivity : BaseActivity() {
                     listHowToVideos.addItemDecoration(DividerItemDecoration(applicationContext, LinearLayoutManager.VERTICAL))
                 }
 
-                override fun onFailure(call: Call<VideoResponse>, t: Throwable) {
+                override fun onFailure(call: Call<Response<Content>>, t: Throwable) {
                     var dialog = BaseDialog(this@HowToVideoActivity)
                     dialog.setContentView()
                     dialog.errorDialog(t.message)

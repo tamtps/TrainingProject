@@ -16,15 +16,15 @@ interface Api {
         @Field("keyStore") keyStore: String,
         @Field("osversion") osversion: String,
         @Field("appVersion") appVersion: String,
-    ) : Call<LoginResponse>
+    ) : Call<Response<LoginResult>>
 
     @GET("countries")
-    fun getCountries() : Call<Response<Country>>
+    fun getCountries() : Call<Response<ArrayList<Country>>>
 
     @FormUrlEncoded
     @POST("api/27/getAccounts")
     fun getWalletCard(
-        @Header("token") token: String,
+        //@Header("token") token: String,
         @Field("accountSpecification") accountSpecification: String,
         @Field("action") action: String,
         @Field("storeId") storeId: String,
@@ -34,32 +34,35 @@ interface Api {
     @FormUrlEncoded
     @POST("deals/getWalletDisplayByReceiverUserId")
     fun getGiftCard(
-        @Header("token") token: String,
+        //@Header("token") token: String,
         @Field("receiverUserId") receiverUserId: String,
         @Field("keyword") keyword: String,
         @Field("pageIndex") pageIndex: String,
         @Field("pageSize") pageSize: String,
         @Field("filter") filter: String,
-    ) : Call<GiftCardResponse>
+    ) : Call<Response<TransactionDisplay>>
 
-    @GET("api/support?category=1")
+
+    @GET("api/support")
     fun getVideo(
-        @Header("token") token: String,
-    ): Call<VideoResponse>
+        //@Header("token") token: String,
+        @Query("category") category: String
+    ): Call<Response<Content>>
 
-    @GET("point/get/point/level/167")
+    @GET("point/get/point/level/{uid}")
     fun getPoint(
-        @Header("token") token: String,
-    ): Call<Response<Point>>
+        //@Header("token") token: String,
+        @Path("uid") uid: Long,
+    ): Call<Response<ArrayList<Point>>>
 
     @FormUrlEncoded
     @POST("special/campaign/coupon/wallet/user/all")
     fun getCoupon(
-        @Header("token") token: String,
+        //  @Header("token") token: String,
         @Field("fkUser") fkUser: String,
         @Field("keyword") keyword: String?,
         @Field("filter") filter: String,
         @Field("pageIndex") pageIndex: String,
         @Field("pageSize") pageSize: String,
-    ): Call<Response<Coupon>>
+    ): Call<Response<ArrayList<Coupon>>>
 }

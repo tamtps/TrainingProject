@@ -20,8 +20,6 @@ class PointFragment : Fragment() {
     ): View? {
         _binding = FragmentPointScreenBinding.inflate(inflater, container, false)
         val view = binding.root
-        var prefs : SharedPreferences = requireActivity().getSharedPreferences("prefs", MODE_PRIVATE)
-        var token = prefs.getString("token",null)
         return view
     }
 

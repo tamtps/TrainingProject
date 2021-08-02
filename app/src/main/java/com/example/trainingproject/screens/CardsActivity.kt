@@ -37,7 +37,7 @@ class CardsActivity : BaseActivity() {
     var txtDrawerPoint: TextView? = null
     private var txtName: TextView? = null
     private var imgAvatar: ImageView? = null
-
+    private lateinit var uid: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -47,12 +47,10 @@ class CardsActivity : BaseActivity() {
         rightIcon(R.drawable.btn_home_white)
 
         prefs = getSharedPreferences("prefs", MODE_PRIVATE)
-        val token = prefs.getString("token", "")
         val version = prefs.getString("version", "")
         val name = prefs.getString("fname", "") + " " + prefs.getString("lname", "")
         val avatar = prefs.getString("avatar", "")
-        val deviceId = prefs.getString("deviceId", "")
-
+        val uid = prefs.getString("uid", "")
         init()
         txtName!!.text = name
         Picasso.get().load(avatar).into(imgAvatar)
@@ -71,7 +69,7 @@ class CardsActivity : BaseActivity() {
         onLogOut(prefs)
 
         onHowToVideo()
-        getPointAPI(token!!)
+        getPointAPI(uid!!.toLong())
     }
 
     fun init() {
@@ -160,14 +158,13 @@ class CardsActivity : BaseActivity() {
         })
     }
 
-    fun getPointAPI(token: String) {
-        RetrofitClient().instance.getPoint(token)
+    fun getPointAPI( uid: Long) {
+        RetrofitClient().instance.getPoint(uid)
             .enqueue(object :
-                retrofit2.Callback<Response<Point>> {
-
+                retrofit2.Callback<Response<ArrayList<Point>>> {
                 override fun onResponse(
-                    call: Call<com.example.trainingproject.models.Response<Point>>,
-                    response: retrofit2.Response<Response<Point>>
+                    call: Call<Response<ArrayList<Point>>>,
+                    response: retrofit2.Response<Response<ArrayList<Point>>>
                 ) {
                     val point: String = NumberFormat.getNumberInstance(Locale.US)
                         .format(response.body()!!.result[0].currentPoint)
@@ -178,10 +175,7 @@ class CardsActivity : BaseActivity() {
                         )
                 }
 
-                override fun onFailure(
-                    call: Call<com.example.trainingproject.models.Response<Point>>,
-                    t: Throwable
-                ) {
+                override fun onFailure(call: Call<Response<ArrayList<Point>>>, t: Throwable) {
                     var dialog = BaseDialog(this@CardsActivity)
                     dialog.setContentView()
                     dialog.errorDialog(t.message)
