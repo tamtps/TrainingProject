@@ -59,7 +59,7 @@ class CardsActivity : BaseActivity<ActivityCardsBinding>() {
         getPointAPI(uid!!.toLong())
     }
 
-    override fun getViewBinding() = ActivityCardsBinding.inflate(layoutInflater)
+    override fun getViewBinding() = ActivityCardsBinding.bind(binding.root)
     override fun getBodyLayout() = R.layout.activity_cards
     override fun hasDrawer() = true
 

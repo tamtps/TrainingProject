@@ -1,6 +1,7 @@
 package com.example.trainingproject.screens
 
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -70,7 +71,7 @@ class MainScreen() : BaseActivity<ActivityMainScreenBinding>() {
         bindingDrawer.txtName.text = prefs.getString("fname", "") + " " + prefs.getString("lname", "")
         Picasso.get().load(prefs.getString("avatar", "")).into(bindingDrawer.imgAvatarMenu)
 
-        onAboutDrawer(prefs.getString("version", "")!!)
+        onAboutDrawer(prefs.getString("version", "")!!, MainScreen@ this)
         onLogOut(prefs)
         onHowToVideo()
         onLeftIcon()
@@ -94,11 +95,11 @@ class MainScreen() : BaseActivity<ActivityMainScreenBinding>() {
         return list
     }
 
-    public fun onAboutDrawer(version: String) {
+    public fun onAboutDrawer(version: String, context: Context) {
         bindingDrawer.itemAbout!!.setOnClickListener(View.OnClickListener {
             binding.drawerLayout.closeDrawer(GravityCompat.START)
             var date: Date = Calendar.getInstance().time
-            var dialog = BaseDialog(MainScreen@ this)
+            var dialog = BaseDialog(context)
             dialog.setContentView()
             dialog.binding.dialogTitle.text = getString(R.string.item_about)
             dialog.binding.dialogContent.text = getString(R.string.beta_version) + version + "\n" + getString(R.string.date) + date

@@ -30,7 +30,9 @@ class HowToVideoActivity : BaseActivity<ActivityHowToVideoBinding>() {
         centerText(getString(R.string.appbar_how_to_video))
         rightIcon(R.drawable.btn_home_white)
 
-        binding.imgLeft.setOnClickListener(View.OnClickListener { finish() })
+        binding.imgLeft.setOnClickListener(View.OnClickListener {
+            finish()
+        })
 
         binding.imgRight.setOnClickListener(View.OnClickListener {
             startActivity(Intent(this, MainScreen::class.java))
@@ -40,9 +42,9 @@ class HowToVideoActivity : BaseActivity<ActivityHowToVideoBinding>() {
         getVideoAPI("1")
     }
 
-    override fun getViewBinding(): ActivityHowToVideoBinding = ActivityHowToVideoBinding.inflate(layoutInflater)
-    override fun getBodyLayout(): Int = R.layout.activity_how_to_video
-    override fun hasDrawer(): Boolean = false
+    override fun getBodyLayout() = R.layout.activity_how_to_video
+    override fun hasDrawer() = false
+    override fun getViewBinding() = ActivityHowToVideoBinding.bind(binding.root)
 
     fun getVideoAPI(category: String){
         RetrofitClient().instance.getVideo(category)
