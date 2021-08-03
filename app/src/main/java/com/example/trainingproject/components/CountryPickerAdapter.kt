@@ -18,9 +18,10 @@ import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CountryPickerAdapter(binding: ActivityForgotBinding, dialog : Dialog) : RecyclerView.Adapter<CountryPickerAdapter.MyView>(), Filterable {
+class CountryPickerAdapter(binding: ActivityForgotBinding, dialog: Dialog) :
+    RecyclerView.Adapter<CountryPickerAdapter.MyView>(), Filterable {
     private var dataSet = ArrayList<Country>()
-    private lateinit var dataSetAll : ArrayList<Country>
+    private lateinit var dataSetAll: ArrayList<Country>
     private var dia = dialog
     private var bind = binding
 
@@ -32,7 +33,8 @@ class CountryPickerAdapter(binding: ActivityForgotBinding, dialog : Dialog) : Re
 
     class MyView(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(data: Country) {
-            itemView.findViewById<TextView>(R.id.txtCountryName).text = "${data.name} (${data.alpha2Code})"
+            itemView.findViewById<TextView>(R.id.txtCountryName).text =
+                "${data.name} (${data.alpha2Code})"
             itemView.findViewById<TextView>(R.id.txtCountryNumber).text = data.callingCodes
             Picasso.get().load(data.flag)
                 .into(itemView.findViewById<CircleImageView>(R.id.imgCountryFlag))
@@ -47,14 +49,14 @@ class CountryPickerAdapter(binding: ActivityForgotBinding, dialog : Dialog) : Re
 
     override fun onBindViewHolder(holder: MyView, position: Int) {
         holder.bind(dataSet[position])
-        holder.itemView.setOnClickListener(object: View.OnClickListener {
+        holder.itemView.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 dataSet.forEach {
                     it.favorite = false
                 }
                 dataSet[position].favorite = true
-                    Picasso.get().load(dataSet[position].flag).into(bind.imgFlagSelect)
-                    bind.txtCountryCodeSelect.text = dataSet[position].callingCodes
+                Picasso.get().load(dataSet[position].flag).into(bind.imgFlagSelect)
+                bind.txtCountryCodeSelect.text = dataSet[position].callingCodes
 
                 notifyDataSetChanged()
                 dia.dismiss()
@@ -73,25 +75,24 @@ class CountryPickerAdapter(binding: ActivityForgotBinding, dialog : Dialog) : Re
 
     private var countryFilter = object : Filter() {
         override fun performFiltering(constraint: CharSequence?): FilterResults {
-            var list =  ArrayList<Country>()
-            if(constraint.toString().isEmpty()){
+            var list = ArrayList<Country>()
+            if (constraint.toString().isEmpty()) {
                 list.addAll(dataSetAll)
-            }
-            else {
-                for(country : Country in dataSetAll){
-                    if(country.name.toLowerCase(Locale.ROOT)
+            } else {
+                for (country: Country in dataSetAll) {
+                    if (country.name.toLowerCase(Locale.ROOT)
                             .contains(constraint.toString().toLowerCase(Locale.ROOT))
                         || country.alpha2Code.toLowerCase(Locale.ROOT)
                             .contains(constraint.toString().toLowerCase(Locale.ROOT))
                         || country.callingCodes.toLowerCase(Locale.ROOT)
                             .contains(constraint.toString().toLowerCase(Locale.ROOT))
-                    ){
+                    ) {
                         list.add(country)
                     }
                 }
             }
 
-            var result : FilterResults = FilterResults()
+            var result: FilterResults = FilterResults()
             result.values = list
 
             return result

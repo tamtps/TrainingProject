@@ -30,9 +30,6 @@ class HowToVideoActivity : BaseActivity() {
         centerText(getString(R.string.appbar_how_to_video))
         rightIcon(R.drawable.btn_home_white)
 
-        val prefs : SharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE)
-        val deviceId = prefs.getString("deviceId","")
-
         progressCircular = findViewById(R.id.progress_circular)
         listHowToVideos = findViewById(R.id.list_how_to_videos)
 
