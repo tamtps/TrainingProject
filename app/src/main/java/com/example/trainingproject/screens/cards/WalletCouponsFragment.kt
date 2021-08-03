@@ -19,8 +19,9 @@ class WalletCouponsFragment : BaseFragment<FragmentWalletCouponsScreenBinding, C
     lateinit var couponCardAdapter: WalletCouponAdapter
 
     override fun initViewModel() {
-
-        viewModel.init("1368","","-1","1", "100")
+        val prefs = this.context?.getSharedPreferences("prefs", MODE_PRIVATE)
+        val receiverUserId = prefs!!.getString("uid","")!!
+        viewModel.init(receiverUserId,"","-1","1", "100")
         viewModel.getListObserver().observe(viewLifecycleOwner, {
             if (it.result.isNotEmpty()) {
                 couponCardAdapter.setUpdatedData(it.result)

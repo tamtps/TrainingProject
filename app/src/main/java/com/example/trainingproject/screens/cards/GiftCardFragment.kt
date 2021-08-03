@@ -48,8 +48,8 @@ class GiftCardFragment : BaseFragment<FragmentGiftCardScreenBinding, GiftCardVie
 
     override fun initViewModel() {
         val prefs = this.context?.getSharedPreferences("prefs", MODE_PRIVATE)
-
-        viewModel.init("1368","","1","50", "0")
+        val receiverUserId = prefs!!.getString("uid","")!!
+        viewModel.init(receiverUserId,"","1","50", "0")
         viewModel.getListObserver().observe(viewLifecycleOwner, {
             if (it.result.transDisplay.isNotEmpty()) {
                 giftCardAdapter.setUpdatedData(it.result.transDisplay)

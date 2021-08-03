@@ -1,5 +1,6 @@
 package com.example.trainingproject.bases
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.viewbinding.ViewBinding
 import com.example.trainingproject.R
 import com.example.trainingproject.databinding.ActivityBaseBinding
 import com.example.trainingproject.databinding.MenuDrawerMainscreenBinding
+import com.example.trainingproject.screens.MainScreen
 
 abstract class BaseActivity<bodyBinding: ViewBinding> : AppCompatActivity() {
     lateinit var binding: ActivityBaseBinding
@@ -54,6 +56,9 @@ abstract class BaseActivity<bodyBinding: ViewBinding> : AppCompatActivity() {
     fun rightIcon(drawableIcon : Int){
         binding.imgRight.visibility = View.VISIBLE
         binding.imgRight.setImageResource(drawableIcon)
+        binding.imgRight.setOnClickListener(View.OnClickListener {
+            startActivity(Intent(this, MainScreen::class.java ))
+        })
     }
 
     fun centerImage(drawableIcon : Int){
