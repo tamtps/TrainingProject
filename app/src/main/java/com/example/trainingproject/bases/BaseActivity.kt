@@ -6,59 +6,64 @@ import android.view.View
 import android.view.ViewStub
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.viewbinding.ViewBinding
 import com.example.trainingproject.R
+import com.example.trainingproject.databinding.ActivityBaseBinding
+import com.example.trainingproject.databinding.MenuDrawerMainscreenBinding
 
-abstract class BaseActivity : AppCompatActivity() {
-    lateinit var leftIcon : ImageView
-    lateinit var rightIcon : ImageView
-    lateinit var centerImage : ImageView
-    lateinit var centerText : TextView
-    lateinit var drawerLayout: DrawerLayout
+abstract class BaseActivity<bodyBinding: ViewBinding> : AppCompatActivity() {
+    lateinit var binding: ActivityBaseBinding
+    lateinit var bindingBody : bodyBinding
+    lateinit var bindingDrawer: MenuDrawerMainscreenBinding
+
+
+    abstract fun hasDrawer() : Boolean
+    abstract fun getBodyLayout() : Int
+    abstract fun getViewBinding() : bodyBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_base)
+        binding = ActivityBaseBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        leftIcon = findViewById(R.id.img_left)
-        rightIcon = findViewById(R.id.img_right)
-        centerImage = findViewById(R.id.img_center)
-        centerText = findViewById(R.id.txt_center)
-        drawerLayout = findViewById(R.id.drawer_layout)
+        if (!hasDrawer()) binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        setBodyView()
+    }
 
-        if (!hasDrawer()) drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-
+    private fun setBodyView(){
         var bodyLayout : ViewStub = findViewById(R.id.body_layout)
         bodyLayout.layoutResource = getBodyLayout()
         bodyLayout.inflate()
+        bindingBody= getViewBinding()
     }
-
-    abstract fun getBodyLayout() : Int
-    abstract fun hasDrawer() : Boolean
 
     fun setDrawerView(layout : Int){
         var drawerView : ViewStub = findViewById(R.id.drawer)
         drawerView.layoutResource = layout
         drawerView.inflate()
+        bindingDrawer = MenuDrawerMainscreenBinding.bind(binding.root)
     }
 
     fun leftIcon(drawableIcon : Int){
-        leftIcon.visibility = View.VISIBLE
-        leftIcon.setImageResource(drawableIcon)
+        binding.imgLeft.visibility = View.VISIBLE
+        binding.imgLeft.setImageResource(drawableIcon)
     }
 
     fun rightIcon(drawableIcon : Int){
-        rightIcon.visibility = View.VISIBLE
-        rightIcon.setImageResource(drawableIcon)
+        binding.imgRight.visibility = View.VISIBLE
+        binding.imgRight.setImageResource(drawableIcon)
     }
 
     fun centerImage(drawableIcon : Int){
-        centerImage.visibility = View.VISIBLE
-        centerImage.setImageResource(drawableIcon)
+        binding.imgCenter.visibility = View.VISIBLE
+        binding.imgCenter.setImageResource(drawableIcon)
     }
 
     fun centerText(text : String){
-        centerText.visibility = View.VISIBLE
-        centerText.text = text
+        binding.txtCenter.visibility = View.VISIBLE
+        binding.txtCenter.text = text
     }
+
 }

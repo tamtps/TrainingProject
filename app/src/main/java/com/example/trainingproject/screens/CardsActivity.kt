@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.viewpager.widget.ViewPager
 import com.example.trainingproject.R
@@ -13,6 +14,7 @@ import com.example.trainingproject.bases.BaseActivity
 import com.example.trainingproject.bases.BaseDialog
 import com.example.trainingproject.components.DrawerMenuAdapter
 import com.example.trainingproject.components.SectionsPagerAdapter
+import com.example.trainingproject.databinding.ActivityCardsBinding
 import com.example.trainingproject.models.Menu
 import com.example.trainingproject.models.Point
 import com.example.trainingproject.models.Response
@@ -23,80 +25,48 @@ import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CardsActivity : BaseActivity() {
-    lateinit var viewPager: ViewPager
-    lateinit var tabs: TabLayout
-
+class CardsActivity : BaseActivity<ActivityCardsBinding>() {
     private lateinit var prefs: SharedPreferences
     var list: ArrayList<Menu>? = null
-    var listViewDrawer: ListView? = null
-    private var itemAbout: TextView? = null
-    private var itemLogOut: TextView? = null
-    private var itemHowToVideo: TextView? = null
-    var txtLevel: TextView? = null
-    var txtDrawerPoint: TextView? = null
-    private var txtName: TextView? = null
-    private var imgAvatar: ImageView? = null
-    private lateinit var uid: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setDrawerView(R.layout.menu_drawer_mainscreen)
         leftIcon(R.drawable.btn_hamburger_white)
         centerImage(R.drawable.kanoo_white_icon)
         rightIcon(R.drawable.btn_home_white)
+        setDrawerView(R.layout.menu_drawer_mainscreen)
 
         prefs = getSharedPreferences("prefs", MODE_PRIVATE)
         val version = prefs.getString("version", "")
         val name = prefs.getString("fname", "") + " " + prefs.getString("lname", "")
         val avatar = prefs.getString("avatar", "")
         val uid = prefs.getString("uid", "")
-        init()
-        txtName!!.text = name
-        Picasso.get().load(avatar).into(imgAvatar)
+
+        bindingDrawer.txtName!!.text = name
+        Picasso.get().load(avatar).into(bindingDrawer.imgAvatarMenu)
         list = ArrayList()
         list = menuItem()
-        listViewDrawer?.adapter = DrawerMenuAdapter(applicationContext, list!!)
+        bindingDrawer.listViewDrawer?.adapter = DrawerMenuAdapter(applicationContext, list!!)
 
         val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
-        viewPager.adapter = sectionsPagerAdapter
-        tabs.setupWithViewPager(viewPager)
-
+        bindingBody.viewPager.adapter = sectionsPagerAdapter
+        bindingBody.tabs.setupWithViewPager(bindingBody.viewPager)
 
         onLeftIcon()
         onAboutDrawer(version!!)
-
         onLogOut(prefs)
-
         onHowToVideo()
         getPointAPI(uid!!.toLong())
     }
 
-    fun init() {
-        viewPager = findViewById(R.id.view_pager)
-        tabs = findViewById(R.id.tabs)
-        listViewDrawer = findViewById(R.id.list_view_drawer)
-        itemAbout = findViewById(R.id.item_about)
-        itemLogOut = findViewById(R.id.item_log_out)
-        itemHowToVideo = findViewById(R.id.item_how_to_videos)
-        txtLevel = findViewById(R.id.txt_level)
-        txtDrawerPoint = findViewById(R.id.txt_drawer_point)
-        txtName = findViewById(R.id.txt_name)
-        imgAvatar = findViewById(R.id.img_avatar_menu)
-    }
+    override fun getViewBinding() = ActivityCardsBinding.bind(binding.root)
+    override fun getBodyLayout() = R.layout.activity_cards
+    override fun hasDrawer() = true
 
     fun onLeftIcon() {
-        leftIcon.setOnClickListener(View.OnClickListener {
-            drawerLayout.openDrawer(GravityCompat.START)
+        binding.imgLeft.setOnClickListener(View.OnClickListener {
+            binding.drawerLayout.openDrawer(GravityCompat.START)
         })
-    }
-
-    override fun getBodyLayout(): Int {
-        return R.layout.activity_cards
-    }
-
-    override fun hasDrawer(): Boolean {
-        return true
     }
 
     public fun menuItem(): ArrayList<Menu> {
@@ -118,14 +88,13 @@ class CardsActivity : BaseActivity() {
     }
 
     public fun onAboutDrawer(version: String) {
-        itemAbout!!.setOnClickListener(View.OnClickListener {
-            drawerLayout.closeDrawer(GravityCompat.START)
+        bindingDrawer.itemAbout!!.setOnClickListener(View.OnClickListener {
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
             var date: Date = Calendar.getInstance().time
             var dialog = BaseDialog(CardsActivity@ this)
             dialog.setContentView()
-            dialog.title.text = getString(R.string.item_about)
-            dialog.content.text =
-                getString(R.string.beta_version) + version + "\n" + getString(R.string.date) + date
+            dialog.binding.dialogTitle.text = getString(R.string.item_about)
+            dialog.binding.dialogContent.text = getString(R.string.beta_version) + version + "\n" + getString(R.string.date) + date
             dialog.showCancelButton(false)
             dialog.onOKDismiss()
             dialog.show()
@@ -133,27 +102,28 @@ class CardsActivity : BaseActivity() {
     }
 
     public fun onLogOut(prefs: SharedPreferences) {
-        itemLogOut!!.setOnClickListener(View.OnClickListener {
-            drawerLayout.closeDrawer(GravityCompat.START)
+        bindingDrawer.itemLogOut!!.setOnClickListener(View.OnClickListener {
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
             var dialog = BaseDialog(CardsActivity@ this)
             dialog.setContentView()
-            dialog.title.text = getString(R.string.item_log_out)
-            dialog.content.text = getString(R.string.log_out_content)
+            dialog.binding.dialogTitle.text = getString(R.string.item_log_out)
+            dialog.binding.dialogContent.text = getString(R.string.log_out_content)
             dialog.onCancelDismiss()
-            dialog.show()
-            dialog.buttonOK.setOnClickListener(View.OnClickListener {
+            dialog.binding.btnYes.setOnClickListener(View.OnClickListener {
+                dialog.dismiss()
                 var intent = Intent(applicationContext, LogInActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
                 prefs.edit().clear().commit()
                 prefs.edit().putBoolean("firstStart", false).apply()
                 finish()
             })
+            dialog.show()
         })
     }
 
     public fun onHowToVideo() {
-        itemHowToVideo!!.setOnClickListener(View.OnClickListener {
+        bindingDrawer.itemHowToVideos!!.setOnClickListener(View.OnClickListener {
             startActivity(Intent(applicationContext, HowToVideoActivity::class.java))
         })
     }
@@ -168,8 +138,8 @@ class CardsActivity : BaseActivity() {
                 ) {
                     val point: String = NumberFormat.getNumberInstance(Locale.US)
                         .format(response.body()!!.result[0].currentPoint)
-                    txtDrawerPoint!!.text = point + getString(R.string.points)
-                    txtLevel!!.text =
+                    bindingDrawer.txtDrawerPoint!!.text = point + getString(R.string.points)
+                    bindingDrawer.txtLevel!!.text =
                         getString(R.string.level) + response.body()!!.result[0].levelUser.toString() + getString(
                             R.string.verified
                         )
@@ -183,5 +153,4 @@ class CardsActivity : BaseActivity() {
 
             })
     }
-
 }

@@ -1,6 +1,7 @@
 package com.example.trainingproject.screens
 
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -17,6 +18,7 @@ import com.example.trainingproject.bases.BaseActivity
 import com.example.trainingproject.bases.BaseDialog
 import com.example.trainingproject.components.DrawerMenuAdapter
 import com.example.trainingproject.components.mainGridViewAdapter
+import com.example.trainingproject.databinding.ActivityMainScreenBinding
 import com.example.trainingproject.models.Menu
 import com.example.trainingproject.models.Point
 import com.example.trainingproject.models.Response
@@ -29,20 +31,9 @@ import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MainScreen() : BaseActivity() {
+class MainScreen() : BaseActivity<ActivityMainScreenBinding>() {
     private lateinit var prefs: SharedPreferences
-    private var mainGridView: GridView? = null
     var list: ArrayList<Menu>? = null
-    var listViewDrawer: ListView? = null
-    private var itemAbout: TextView? = null
-    private var itemLogOut: TextView? = null
-    private var itemHowToVideo: TextView? = null
-    var txtLevel: TextView? = null
-    var txtPoint: TextView? = null
-    var txtDrawerPoint: TextView? = null
-    private var txtName: TextView? = null
-    private var imgWallet: ImageView? = null
-    private var imgAvatar: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,53 +42,39 @@ class MainScreen() : BaseActivity() {
         setDrawerView(R.layout.menu_drawer_mainscreen)
 
         prefs = getSharedPreferences("prefs", MODE_PRIVATE)
-        val version = prefs.getString("version", "")
-        val name = prefs.getString("fname", "") + " " + prefs.getString("lname", "")
-        val avatar = prefs.getString("avatar", "")
         val uid = prefs.getString("uid", "0")!!.toLong()
-        init()
-        txtName!!.text = name
-        Picasso.get().load(avatar).into(imgAvatar)
-        list = ArrayList()
-        list = menuItem()
-        mainGridView?.adapter = mainGridViewAdapter(applicationContext, list!!)
-        listViewDrawer?.adapter = DrawerMenuAdapter(applicationContext, list!!)
 
-        onLeftIcon()
+        setMenu()
+        setDrawer(prefs)
         onMyWallet()
-        onAboutDrawer(version!!)
-        onLogOut(prefs)
-        onHowToVideo()
         getPointAPI(uid)
     }
 
+    override fun getViewBinding(): ActivityMainScreenBinding = ActivityMainScreenBinding.bind(binding.root)
+    override fun getBodyLayout(): Int = R.layout.activity_main_screen
+    override fun hasDrawer(): Boolean = true
 
     fun onLeftIcon() {
-        leftIcon.setOnClickListener(View.OnClickListener {
-            drawerLayout.openDrawer(GravityCompat.START)
+        binding.imgLeft.setOnClickListener(View.OnClickListener {
+            binding.drawerLayout.openDrawer(GravityCompat.START)
         })
     }
 
-    override fun getBodyLayout(): Int {
-        return R.layout.activity_main_screen
+    fun setMenu(){
+        list = ArrayList()
+        list = menuItem()
+        bindingBody.mainGridView?.adapter = mainGridViewAdapter(applicationContext, list!!)
+        bindingDrawer.listViewDrawer?.adapter = DrawerMenuAdapter(applicationContext, list!!)
     }
 
-    override fun hasDrawer(): Boolean {
-        return true
-    }
+    fun setDrawer(prefs: SharedPreferences){
+        bindingDrawer.txtName.text = prefs.getString("fname", "") + " " + prefs.getString("lname", "")
+        Picasso.get().load(prefs.getString("avatar", "")).into(bindingDrawer.imgAvatarMenu)
 
-    fun init() {
-        mainGridView = findViewById(R.id.mainGridView)
-        listViewDrawer = findViewById(R.id.list_view_drawer)
-        itemAbout = findViewById(R.id.item_about)
-        itemLogOut = findViewById(R.id.item_log_out)
-        itemHowToVideo = findViewById(R.id.item_how_to_videos)
-        txtPoint = findViewById(R.id.txt_point)
-        txtLevel = findViewById(R.id.txt_level)
-        txtDrawerPoint = findViewById(R.id.txt_drawer_point)
-        txtName = findViewById(R.id.txt_name)
-        imgWallet = findViewById(R.id.img_wallet)
-        imgAvatar = findViewById(R.id.img_avatar_menu)
+        onAboutDrawer(prefs.getString("version", "")!!, MainScreen@ this)
+        onLogOut(prefs)
+        onHowToVideo()
+        onLeftIcon()
     }
 
     public fun menuItem(): ArrayList<Menu> {
@@ -118,14 +95,14 @@ class MainScreen() : BaseActivity() {
         return list
     }
 
-    public fun onAboutDrawer(version: String) {
-        itemAbout!!.setOnClickListener(View.OnClickListener {
-            drawerLayout.closeDrawer(GravityCompat.START)
+    public fun onAboutDrawer(version: String, context: Context) {
+        bindingDrawer.itemAbout!!.setOnClickListener(View.OnClickListener {
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
             var date: Date = Calendar.getInstance().time
-            var dialog = BaseDialog(MainScreen@ this)
+            var dialog = BaseDialog(context)
             dialog.setContentView()
-            dialog.title.text = getString(R.string.item_about)
-            dialog.content.text = "Beta Version: " + version + "\nDate: " + date
+            dialog.binding.dialogTitle.text = getString(R.string.item_about)
+            dialog.binding.dialogContent.text = getString(R.string.beta_version) + version + "\n" + getString(R.string.date) + date
             dialog.showCancelButton(false)
             dialog.onOKDismiss()
             dialog.show()
@@ -133,14 +110,14 @@ class MainScreen() : BaseActivity() {
     }
 
     public fun onLogOut(prefs: SharedPreferences) {
-        itemLogOut!!.setOnClickListener(View.OnClickListener {
-            drawerLayout.closeDrawer(GravityCompat.START)
+        bindingDrawer.itemLogOut!!.setOnClickListener(View.OnClickListener {
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
             var dialog = BaseDialog(MainScreen@ this)
             dialog.setContentView()
-            dialog.title.text = getString(R.string.item_log_out)
-            dialog.content.text = getString(R.string.log_out_content)
+            dialog.binding.dialogTitle.text = getString(R.string.item_log_out)
+            dialog.binding.dialogContent.text = getString(R.string.log_out_content)
             dialog.onCancelDismiss()
-            dialog.buttonOK.setOnClickListener(View.OnClickListener {
+            dialog.binding.btnYes.setOnClickListener(View.OnClickListener {
                 dialog.dismiss()
                 var intent = Intent(applicationContext, LogInActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -154,13 +131,13 @@ class MainScreen() : BaseActivity() {
     }
 
     public fun onHowToVideo() {
-        itemHowToVideo!!.setOnClickListener(View.OnClickListener {
+        bindingDrawer.itemHowToVideos!!.setOnClickListener(View.OnClickListener {
             startActivity(Intent(applicationContext, HowToVideoActivity::class.java))
         })
     }
 
     private fun onMyWallet() {
-        imgWallet!!.setOnClickListener(View.OnClickListener {
+        bindingBody.imgWallet!!.setOnClickListener(View.OnClickListener {
             var intent = Intent(applicationContext, CardsActivity::class.java)
             startActivity(intent)
         })
@@ -181,7 +158,7 @@ class MainScreen() : BaseActivity() {
                         var dialog = BaseDialog(this@MainScreen)
                         dialog.setContentView()
                         dialog.errorDialog(getString(R.string.login_again))
-                        dialog.buttonOK.setOnClickListener(View.OnClickListener {
+                        dialog.binding.btnYes.setOnClickListener(View.OnClickListener {
                             var intent = Intent(applicationContext, LogInActivity::class.java)
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                             startActivity(intent)
@@ -192,10 +169,12 @@ class MainScreen() : BaseActivity() {
 
                         var point: String = NumberFormat.getNumberInstance(Locale.US)
                             .format(response.body()!!.result[0].currentPoint)
-                        txtPoint?.text = point
-                        txtDrawerPoint!!.text = point + " Points"
-                        txtLevel!!.text =
-                            "Level " + response.body()!!.result[0].levelUser.toString() + " Verified"
+                        bindingBody.txtPoint?.text = point
+                        bindingDrawer.txtDrawerPoint!!.text = point +" "+ getString(R.string.points)
+                        bindingDrawer.txtLevel!!.text =
+                            getString(R.string.level) +" "+ response.body()!!.result[0].levelUser.toString() +" "+ getString(
+                                R.string.verified
+                            )
                     }
                 }
 
@@ -208,6 +187,8 @@ class MainScreen() : BaseActivity() {
 
             })
     }
+
+
 
 
 }
