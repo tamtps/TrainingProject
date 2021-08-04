@@ -33,9 +33,14 @@ class LogInActivity : AppCompatActivity() {
             startActivity(intent)
         })
 
+        var email = ""
+        var password = ""
+
         binding.btnLogIn.setOnClickListener(View.OnClickListener {
-            val email = "filestringhoang01@gmail.com"
-            val password = "qwerty1"
+//            "filestringhoang01@gmail.com"
+            email = binding.txtEmailLogin.text.toString()
+//            "qwerty1"
+            password= binding.txtPwdLogin.text.toString()
             if(email.isEmpty()){
                 binding.txtEmailLogin.setError(getString(R.string.email_required))
                 binding.txtEmailLogin.requestFocus()
@@ -82,7 +87,7 @@ class LogInActivity : AppCompatActivity() {
                     var dialog = BaseDialog(this@LogInActivity)
                     editPref.clear().apply()
                     dialog.setContentView()
-                    dialog.errorDialog(response.body()?.statusCode)
+                    dialog.errorDialog(getString(R.string.error_email_pass))
                 }
             }
 

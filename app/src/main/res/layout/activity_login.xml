@@ -39,6 +39,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txtEmailLogin"
+                android:text="filestringhoang01@gmail.com"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -90,6 +91,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txtPwdLogin"
+                android:text="qwerty1"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
