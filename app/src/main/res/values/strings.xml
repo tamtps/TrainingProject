@@ -6,6 +6,7 @@
     <string name="item_about">About</string>
     <string name="error">Error</string>
     <string name="invalid_phone">Please enter a valid phone number.</string>
+    <string name="error_email_pass">Wrong email or password</string>
     <string name="item_log_out">Log Out</string>
     <string name="log_out_content">Are you sure you want to Log Out?</string>
     <string name="receive_user_id">1368</string>
@@ -37,8 +38,8 @@
     <string name="menu_public_services">Public services</string>
     <string name="menu_pay_bills">Pay bills</string>
     <string name="login_again">Token expired, please login again</string>
-    <string name="beta_version">Beta version: </string>
-    <string name="date">Date: </string>
+    <string name="beta_version">Beta version:\u0020</string>
+    <string name="date">Date:\u0020</string>
     <string name="points">Points</string>
     <string name="level">Level</string>
     <string name="verified">Verified</string>

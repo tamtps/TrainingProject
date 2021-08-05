@@ -8,6 +8,13 @@
     <dimen name="text_size_very_big">35sp</dimen>
     <dimen name="text_size_giant">50sp</dimen>
 
+    <dimen name="text_dialog_title">19sp</dimen>
+    <dimen name="text_dialog_content">16sp</dimen>
+    <dimen name="text_dialog_button">12sp</dimen>
+    <dimen name="padding_dialog1">15dp</dimen>
+    <dimen name="padding_dialog2">18dp</dimen>
+    <dimen name="padding_dialog3">22dp</dimen>
+
     <dimen name="padding_size_tiny">5dp</dimen>
     <dimen name="padding_size_very_small">10dp</dimen>
     <dimen name="padding_size_small">15dp</dimen>
@@ -15,9 +22,10 @@
     <dimen name="padding_size_big">25sp</dimen>
     <dimen name="padding_size_very_big">30sp</dimen>
     <dimen name="padding_size_giant">40sp</dimen>
+
     <dimen name="imageview_size">50dp</dimen>
     <dimen name="imageview_tiny">7dp</dimen>
-    <dimen name="imageview_nofi">22dp</dimen>
+    <dimen name="imageview_nofi">15dp</dimen>
     <dimen name="imageview_medium">60dp</dimen>
 
     <dimen name="activity_horizontal_margin">16dp</dimen>
@@ -25,11 +33,21 @@
     <dimen name="appbar_padding">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
-    <dimen name="search_bar_height">48dp</dimen>
-    <dimen name="imageview_appbar">30dp</dimen>
+    <dimen name="search_bar_height">40dp</dimen>
+    <dimen name="imageview_appbar">20dp</dimen>
     <dimen name="wallet_card_height">250dp</dimen>
-    <dimen name="background_item_height">80dp</dimen>
+    <dimen name="background_item_height">60dp</dimen>
     <dimen name="imageview_coupon">200dp</dimen>
     <dimen name="coupon_wh">250dp</dimen>
-    <dimen name="text_box_height">60dp</dimen>
+
+    <dimen name="corner_tiny">3dp</dimen>
+    <dimen name="corner_very_small">6dp</dimen>
+    <dimen name="corner_small">9dp</dimen>
+    <dimen name="corner_medium">12dp</dimen>
+    <dimen name="corner_big">15dp</dimen>
+    <dimen name="corner_very_big">20dp</dimen>
+
+    <dimen name="imageview_grid_menu">35dp</dimen>
+    <dimen name="appbar_height">60dp</dimen>
+
 </resources>

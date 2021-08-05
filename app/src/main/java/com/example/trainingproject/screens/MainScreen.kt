@@ -1,15 +1,14 @@
 package com.example.trainingproject.screens
 
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
-import android.provider.Settings
-import android.util.Log
+import android.view.Gravity
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
-import androidx.core.view.ContentInfoCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.trainingproject.R
@@ -22,7 +21,6 @@ import com.example.trainingproject.databinding.ActivityMainScreenBinding
 import com.example.trainingproject.models.Menu
 import com.example.trainingproject.models.Point
 import com.example.trainingproject.models.Response
-import com.example.trainingproject.models.Videos
 import com.google.android.material.navigation.NavigationView
 import com.squareup.picasso.Picasso
 import retrofit2.Call
@@ -42,42 +40,43 @@ class MainScreen() : BaseActivity<ActivityMainScreenBinding>() {
         setDrawerView(R.layout.menu_drawer_mainscreen)
 
         prefs = getSharedPreferences("prefs", MODE_PRIVATE)
-        val uid = prefs.getString("uid", "0")!!.toLong()
 
         setMenu()
         setDrawer(prefs)
         onMyWallet()
-        getPointAPI(uid)
+        getPointAPI(prefs.getString("uid", "0")!!.toLong())
     }
 
-    override fun getViewBinding(): ActivityMainScreenBinding = ActivityMainScreenBinding.bind(binding.root)
+
+    override fun getViewBinding(): ActivityMainScreenBinding =  ActivityMainScreenBinding.bind(binding.root)
     override fun getBodyLayout(): Int = R.layout.activity_main_screen
     override fun hasDrawer(): Boolean = true
 
-    fun onLeftIcon() {
+    private fun onLeftIcon() {
         binding.imgLeft.setOnClickListener(View.OnClickListener {
             binding.drawerLayout.openDrawer(GravityCompat.START)
         })
     }
 
-    fun setMenu(){
+    private fun setMenu() {
         list = ArrayList()
         list = menuItem()
-        bindingBody.mainGridView?.adapter = mainGridViewAdapter(applicationContext, list!!)
+        bindingBody.gridviewMain?.adapter = mainGridViewAdapter(applicationContext, list!!)
         bindingDrawer.listViewDrawer?.adapter = DrawerMenuAdapter(applicationContext, list!!)
     }
 
-    fun setDrawer(prefs: SharedPreferences){
-        bindingDrawer.txtName.text = prefs.getString("fname", "") + " " + prefs.getString("lname", "")
+    private fun setDrawer(prefs: SharedPreferences) {
+        bindingDrawer.txtName.text =
+            prefs.getString("fname", "") + " " + prefs.getString("lname", "")
         Picasso.get().load(prefs.getString("avatar", "")).into(bindingDrawer.imgAvatarMenu)
 
-        onAboutDrawer(prefs.getString("version", "")!!, MainScreen@ this)
+        onAboutDrawer(prefs.getString("version", "")!!)
         onLogOut(prefs)
         onHowToVideo()
         onLeftIcon()
     }
 
-    public fun menuItem(): ArrayList<Menu> {
+    private fun menuItem(): ArrayList<Menu> {
         var list: ArrayList<Menu> = ArrayList()
         list.add(
             Menu(
@@ -95,23 +94,22 @@ class MainScreen() : BaseActivity<ActivityMainScreenBinding>() {
         return list
     }
 
-    public fun onAboutDrawer(version: String, context: Context) {
+    private fun onAboutDrawer(version: String) {
         bindingDrawer.itemAbout!!.setOnClickListener(View.OnClickListener {
-            binding.drawerLayout.closeDrawer(GravityCompat.START)
             var date: Date = Calendar.getInstance().time
-            var dialog = BaseDialog(context)
+            var dialog = BaseDialog(MainScreen@this)
             dialog.setContentView()
             dialog.binding.dialogTitle.text = getString(R.string.item_about)
-            dialog.binding.dialogContent.text = getString(R.string.beta_version) + version + "\n" + getString(R.string.date) + date
+            dialog.binding.dialogContent.text =
+                getString(R.string.beta_version) + version + "\n" + getString(R.string.date) + date
             dialog.showCancelButton(false)
             dialog.onOKDismiss()
             dialog.show()
         })
     }
 
-    public fun onLogOut(prefs: SharedPreferences) {
+    private fun onLogOut(prefs: SharedPreferences) {
         bindingDrawer.itemLogOut!!.setOnClickListener(View.OnClickListener {
-            binding.drawerLayout.closeDrawer(GravityCompat.START)
             var dialog = BaseDialog(MainScreen@ this)
             dialog.setContentView()
             dialog.binding.dialogTitle.text = getString(R.string.item_log_out)
@@ -130,7 +128,7 @@ class MainScreen() : BaseActivity<ActivityMainScreenBinding>() {
         })
     }
 
-    public fun onHowToVideo() {
+    private fun onHowToVideo() {
         bindingDrawer.itemHowToVideos!!.setOnClickListener(View.OnClickListener {
             startActivity(Intent(applicationContext, HowToVideoActivity::class.java))
         })
@@ -158,6 +156,7 @@ class MainScreen() : BaseActivity<ActivityMainScreenBinding>() {
                         var dialog = BaseDialog(this@MainScreen)
                         dialog.setContentView()
                         dialog.errorDialog(getString(R.string.login_again))
+                        dialog.setCanceledOnTouchOutside(false)
                         dialog.binding.btnYes.setOnClickListener(View.OnClickListener {
                             var intent = Intent(applicationContext, LogInActivity::class.java)
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
@@ -165,14 +164,13 @@ class MainScreen() : BaseActivity<ActivityMainScreenBinding>() {
                             finish()
                         })
                     } else if (response.isSuccessful) {
-                        Log.d("RESPONSE_POINT", response.toString())
-
                         var point: String = NumberFormat.getNumberInstance(Locale.US)
                             .format(response.body()!!.result[0].currentPoint)
                         bindingBody.txtPoint?.text = point
-                        bindingDrawer.txtDrawerPoint!!.text = point +" "+ getString(R.string.points)
+                        bindingDrawer.txtDrawerPoint!!.text =
+                            point + " " + getString(R.string.points)
                         bindingDrawer.txtLevel!!.text =
-                            getString(R.string.level) +" "+ response.body()!!.result[0].levelUser.toString() +" "+ getString(
+                            getString(R.string.level) + " " + response.body()!!.result[0].levelUser.toString() + " " + getString(
                                 R.string.verified
                             )
                     }
@@ -187,8 +185,4 @@ class MainScreen() : BaseActivity<ActivityMainScreenBinding>() {
 
             })
     }
-
-
-
-
 }

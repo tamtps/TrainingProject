@@ -1,12 +1,14 @@
 package com.example.trainingproject.bases
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.ViewStub
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewbinding.ViewBinding
@@ -46,6 +48,9 @@ abstract class BaseActivity<bodyBinding: ViewBinding> : AppCompatActivity() {
         drawerView.layoutResource = layout
         drawerView.inflate()
         bindingDrawer = MenuDrawerMainscreenBinding.bind(binding.root)
+        binding.drawerLayout.addDrawerListener(customDrawer())
+        binding.drawerLayout.setScrimColor(Color.TRANSPARENT)
+        binding.drawerLayout.elevation=-400f
     }
 
     fun leftIcon(drawableIcon : Int){
@@ -69,6 +74,28 @@ abstract class BaseActivity<bodyBinding: ViewBinding> : AppCompatActivity() {
     fun centerText(text : String){
         binding.txtCenter.visibility = View.VISIBLE
         binding.txtCenter.text = text
+    }
+
+    override fun onBackPressed() {
+        if(hasDrawer() && binding.drawerLayout?.isDrawerOpen(GravityCompat.START)){
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+        }else super.onBackPressed()
+    }
+
+    inner class customDrawer : DrawerLayout.DrawerListener{
+        override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+            val slideX = drawerView.width * slideOffset
+            binding.layoutMain.setTranslationX(slideX)
+        }
+
+        override fun onDrawerOpened(drawerView: View) {
+        }
+
+        override fun onDrawerClosed(drawerView: View) {
+        }
+
+        override fun onDrawerStateChanged(newState: Int) {
+        }
     }
 
 }
