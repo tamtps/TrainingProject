@@ -3,11 +3,10 @@ package com.example.trainingproject.components
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.example.trainingproject.R
+import com.example.trainingproject.bases.MainApplication
 import com.example.trainingproject.models.Account
 import java.util.*
 import kotlin.collections.ArrayList
@@ -53,20 +52,35 @@ class WalletCardAdapter() :
         }
     }
 
+    override fun getItemViewType(position: Int): Int {
+        if(position==dataSet.size) return R.layout.new_wallet_card
+        else return R.layout.wallet_card_item
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.wallet_card_item, parent, false)
+        lateinit var view : View
+        if(viewType == R.layout.wallet_card_item){
+            view =
+                LayoutInflater.from(parent.context).inflate(R.layout.wallet_card_item, parent, false)
+        }
+        else if(viewType == R.layout.new_wallet_card)
+            view = LayoutInflater.from(parent.context).inflate(R.layout.new_wallet_card, parent, false)
 
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        if(position == dataSet.size) {
+            holder.itemView.findViewById<ImageButton>(R.id.btnAddWalletCard).setOnClickListener {
+                Toast.makeText(MainApplication.getApplicationContext() ,"Clicked", Toast.LENGTH_LONG).show()
+            }
+        }
+        else
         holder.bind(dataSet[position])
     }
 
     override fun getItemCount(): Int {
-        return dataSet.size
+        return dataSet.size+1
     }
 
     override fun getFilter(): Filter {
@@ -104,6 +118,7 @@ class WalletCardAdapter() :
             dataSet.addAll(results?.values as ArrayList<Account>)
             notifyDataSetChanged()
         }
+
 
     }
 }

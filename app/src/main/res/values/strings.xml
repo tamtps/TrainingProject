@@ -5,6 +5,7 @@
     <string name="sign_in">Sign In</string>
     <string name="item_about">About</string>
     <string name="error">Error</string>
+    <string name="invalid_phone">Please enter a valid phone number.</string>
     <string name="item_log_out">Log Out</string>
     <string name="log_out_content">Are you sure you want to Log Out?</string>
     <string name="receive_user_id">1368</string>
@@ -46,7 +47,9 @@
     <string name="wrong_email">Wrong email format! Please try again</string>
     <string name="email_required">Email required!</string>
     <string name="password_required">Password required!</string>
-
+    <string name="phone_not_registered">This phone number is not registered with Kanoo, please correct it or create a new account</string>
     <string name="error_getting_data">ERROR IN GETTING DATA</string>
-
+    <string name="email_not_registered">This email address is not registered with Kanoo, please correct it or create a new account</string>
+    <string name="phone_number_recovery_instruction">Enter your phone number above to recover your password. You will be sent a SMS with OTP and instructions on how to reset your password.</string>
+    <string name="email_recovery_instruction">Enter your email above to reset your password. You will be sent an email with a link and instructions on how to reset your password</string>
 </resources>

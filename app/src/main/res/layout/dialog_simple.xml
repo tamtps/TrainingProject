@@ -3,47 +3,53 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <TextView
         android:id="@+id/dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fontFamily="@font/gilroy_bold"
+        android:padding="@dimen/text_size_small"
         android:text="Dialog_title"
+        android:textColor="@color/black"
         android:textSize="@dimen/text_size_small"
         android:textStyle="bold"
-        android:textColor="@color/black"
-        android:padding="@dimen/text_size_medium"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/dialog_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fontFamily="@font/gilroy_medium"
+        android:paddingHorizontal="@dimen/text_size_medium"
+        android:paddingBottom="@dimen/text_size_small"
         android:text="Dialog_content"
         android:textSize="@dimen/text_size_very_small"
-        android:paddingHorizontal="@dimen/text_size_medium"
-        android:paddingBottom="@dimen/padding_size_very_big"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/dialog_title"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dialog_title" />
+
     <Button
         android:id="@+id/btn_yes"
-        android:text="OK"
-        android:textSize="@dimen/text_size_tiny"
-        android:textColor="@color/teal_200"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
+        android:text="OK"
+        android:textColor="@color/teal_200"
+        android:textSize="@dimen/text_size_very_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dialog_content"/>
+        app:layout_constraintTop_toBottomOf="@id/dialog_content" />
+
     <Button
         android:id="@+id/btn_no"
-        android:text="Cancel"
-        android:textSize="@dimen/text_size_tiny"
-        android:textColor="@color/teal_200"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
+        android:text="Cancel"
+        android:textColor="@color/teal_200"
+        android:textSize="@dimen/text_size_very_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@id/btn_yes"
-        app:layout_constraintTop_toBottomOf="@id/dialog_content"/>
+        app:layout_constraintTop_toBottomOf="@id/dialog_content" />
 </androidx.constraintlayout.widget.ConstraintLayout>

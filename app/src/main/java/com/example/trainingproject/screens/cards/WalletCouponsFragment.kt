@@ -23,6 +23,9 @@ class WalletCouponsFragment : BaseFragment<FragmentWalletCouponsScreenBinding, C
         val receiverUserId = prefs!!.getString("uid","")!!
         viewModel.init(receiverUserId,"","-1","1", "100")
         viewModel.getListObserver().observe(viewLifecycleOwner, {
+            couponCardAdapter = WalletCouponAdapter()
+            binding.listCoupon.layoutManager = LinearLayoutManager(binding.root.context)
+            binding.listCoupon.adapter = couponCardAdapter
             if (it.result.isNotEmpty()) {
                 couponCardAdapter.setUpdatedData(it.result)
                 binding.progressCircularCoupon.visibility = View.INVISIBLE
@@ -34,15 +37,6 @@ class WalletCouponsFragment : BaseFragment<FragmentWalletCouponsScreenBinding, C
         })
 
         viewModel.makeApiCall()
-    }
-
-    override fun initAdapter() {
-        couponCardAdapter = WalletCouponAdapter()
-    }
-
-    override fun bindingComponent() {
-        binding.listCoupon.layoutManager = LinearLayoutManager(binding.root.context)
-        binding.listCoupon.adapter = couponCardAdapter
     }
 
     override fun bindingSearchBar() {

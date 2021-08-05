@@ -20,8 +20,6 @@ abstract class BaseFragment<VB: ViewBinding, VM : ViewModel> : Fragment(){
 
 
     abstract fun initViewModel()
-    abstract fun initAdapter()
-    abstract fun bindingComponent()
     abstract fun bindingSearchBar()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,9 +38,7 @@ abstract class BaseFragment<VB: ViewBinding, VM : ViewModel> : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initAdapter()
         initViewModel()
-        bindingComponent()
         bindingSearchBar()
     }
 

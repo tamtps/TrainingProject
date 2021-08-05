@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="100dp"
             android:fontFamily="@font/gilroy_medium"
-            android:paddingStart="30dp"
+            android:paddingStart="@dimen/padding_size_very_big"
             android:text="Method"
             android:textColor="#FFFFFF"
             android:textSize="16sp" />
@@ -36,15 +36,15 @@
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
-            android:layout_height="60dp">
+            android:layout_height="@dimen/text_box_height"
+            app:endIconDrawable="@drawable/ic_arrow_drop_down">
 
             <AutoCompleteTextView
                 android:id="@+id/txtMethodForgot"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="5dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/padding_size_very_big"
                 android:layout_marginEnd="30dp"
                 android:layout_weight="1"
                 android:background="#FFFFFF"
@@ -62,11 +62,11 @@
 
             <TextView
                 android:id="@+id/txtMethodInput"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/gilroy_medium"
-                android:paddingStart="30dp"
+                android:paddingStart="@dimen/padding_size_very_big"
                 android:text="Phone number"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
@@ -75,49 +75,44 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="@dimen/text_box_height"
+            android:layout_weight="0"
             android:orientation="horizontal">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/padding_size_very_big"
+
+                android:layout_marginEnd="@dimen/padding_size_very_big"
+                android:background="#FFFFFF"
                 android:orientation="horizontal">
 
-                <AutoCompleteTextView
-                    android:id="@+id/inputTxtForgot"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="5dp"
-
-                    android:layout_marginEnd="30dp"
-                    android:background="#FFFFFF"
-                    android:fontFamily="@font/gilroy_medium"
-                    android:inputType="numberDecimal"
-                    android:paddingStart="350px"
-                    android:paddingBottom="5dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
                 android:id="@+id/selectCountry"
-                android:layout_width="120dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
                 android:layout_weight="2"
                 android:gravity="center|start"
                 android:orientation="horizontal"
-                android:padding="5dp">
+                android:padding="5dp"
+                android:paddingStart="15dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imgFlagSelect"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_weight="7"
+                    android:layout_weight="0"
+                    android:visibility="visible"
                     tools:src="@drawable/flag_bahamas" />
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/imgArrowDown"
                     android:layout_width="10dp"
                     android:layout_height="10dp"
                     android:layout_marginLeft="3dp"
@@ -127,10 +122,26 @@
                 <TextView
                     android:id="@+id/txtCountryCodeSelect"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
+                    android:layout_height="60dp"
+                    android:layout_weight="0"
+                    android:fontFamily="@font/gilroy_semibold"
                     android:gravity="center_vertical"
-                    android:text="+1" />
+                    android:text="+1"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/text_size_small" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputTxtForgot"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#FFFFFF"
+                    android:fontFamily="@font/gilroy_semibold"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/text_size_small"
+                    tools:ignore="SpeakableTextPresentCheck" />
 
             </LinearLayout>
 
@@ -142,17 +153,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <me.biubiubiu.justifytext.library.JustifyTextView
+                android:id="@+id/txtInstruction"
+                android:layout_width="0dp"
+                android:layout_height="49dp"
+                android:layout_marginStart="30sp"
                 android:layout_marginTop="40dp"
-                android:textAlignment="gravity"
-                android:fontFamily="@font/gilroy_light_italic"
-                android:gravity="center_horizontal"
-                android:paddingStart="30dp"
-                android:paddingEnd="50dp"
-                android:text="Enter your phone number above to recover your password. You will be sent a SMS with OTP and instructions on how to reset your password."
+                android:layout_marginEnd="30sp"
+                android:fontFamily="@font/gilroy_semibold"
+                android:gravity="center_vertical"
+                android:text="@string/phone_number_recovery_instruction"
                 android:textColor="#FFFFFF"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"

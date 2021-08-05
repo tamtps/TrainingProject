@@ -26,9 +26,14 @@ class WalletCardFragment : BaseFragment<FragmentWalletCardScreenBinding, WalletC
     override fun initViewModel() {
         viewModel.init("All", "", "", "")
         viewModel.getListObserver().observe(viewLifecycleOwner, {
+            walletCardAdapter = WalletCardAdapter()
+            binding.recWalletCard.layoutManager = LinearLayoutManager(binding.root.context)
+            binding.recWalletCard.adapter = walletCardAdapter
             if (it.accounts.isNotEmpty()) {
-                walletCardAdapter.setUpdatedData(it.accounts)
                 binding.progressCircularWalletCard.visibility = View.INVISIBLE
+
+                walletCardAdapter.setUpdatedData(it.accounts)
+
             } else {
                 var dialog = BaseDialog(requireContext())
                 dialog.setContentView()
@@ -39,14 +44,6 @@ class WalletCardFragment : BaseFragment<FragmentWalletCardScreenBinding, WalletC
         viewModel.makeApiCall()
     }
 
-    override fun initAdapter() {
-        walletCardAdapter = WalletCardAdapter()
-    }
-
-    override fun bindingComponent() {
-        binding.recWalletCard.layoutManager = LinearLayoutManager(binding.root.context)
-        binding.recWalletCard.adapter = walletCardAdapter
-    }
 
     override fun bindingSearchBar() {
         binding.searchBar.addTextChangedListener(object : TextWatcher {
@@ -68,4 +65,6 @@ class WalletCardFragment : BaseFragment<FragmentWalletCardScreenBinding, WalletC
     override fun getViewModelClass(): Class<WalletCardViewModel> = WalletCardViewModel::class.java
 
     override fun getViewBinding(): FragmentWalletCardScreenBinding = FragmentWalletCardScreenBinding.inflate(layoutInflater)
+
+
 }

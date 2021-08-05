@@ -37,17 +37,18 @@
         <ImageView
             android:id="@+id/icon_search_gift"
             android:layout_width="@dimen/search_bar_height"
-            android:layout_height="@dimen/search_bar_height"
+            android:layout_height="wrap_content"
             android:padding="@dimen/padding_size_very_small"
             android:src="@drawable/icon_search" />
 
         <EditText
             android:id="@+id/searchCountry"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/search_bar_height"
+            android:layout_height="match_parent"
             android:autofillHints="Search Gift Card"
             android:background="@null"
-            android:hint="Search Gift Card"
+            android:fontFamily="@font/gilroy_medium"
+            android:hint="Search..."
             android:inputType="textFilter|text" />
     </LinearLayout>
 
