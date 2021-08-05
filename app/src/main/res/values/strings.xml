@@ -37,8 +37,8 @@
     <string name="menu_public_services">Public services</string>
     <string name="menu_pay_bills">Pay bills</string>
     <string name="login_again">Token expired, please login again</string>
-    <string name="beta_version">Beta version: </string>
-    <string name="date">Date: </string>
+    <string name="beta_version">Beta version:\u0020</string>
+    <string name="date">Date:\u0020</string>
     <string name="points">Points</string>
     <string name="level">Level</string>
     <string name="verified">Verified</string>

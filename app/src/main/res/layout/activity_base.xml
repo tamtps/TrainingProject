@@ -14,21 +14,6 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
-        <com.google.android.material.navigation.NavigationView
-            android:id="@+id/navigation_view"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            android:layout_gravity="start"
-            android:paddingVertical="40dp">
-
-            <ViewStub
-                android:id="@+id/drawer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        </com.google.android.material.navigation.NavigationView>
-
 
 
         <RelativeLayout
@@ -44,7 +29,7 @@
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/tool_bar"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/appbar_height"
                     android:background="@drawable/bg_header">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -80,7 +65,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/imageview_appbar"
                             android:src="@drawable/kanoo_white_icon"
-                            android:layout_marginVertical="15dp"
                             android:visibility="invisible"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -108,5 +92,22 @@
                 android:layout_height="match_parent"
                 android:layout_below="@id/app_bar"/>
         </RelativeLayout>
+
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/navigation_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:layout_gravity="start"
+            android:paddingVertical="40dp">
+
+            <ViewStub
+                android:id="@+id/drawer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.navigation.NavigationView>
+
     </androidx.drawerlayout.widget.DrawerLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

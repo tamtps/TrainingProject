@@ -5,97 +5,101 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:paddingHorizontal="@dimen/padding_size_small"
     tools:context=".screens.MainScreen">
-<LinearLayout
-
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="243dp">
-        <ImageView
-            android:id="@+id/img_wallet"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/my_wallet_icon" />
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="-15dp">
+            <ImageView
+                android:id="@+id/img_wallet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/my_wallet_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:fontFamily="@font/gilroy_medium"
-                android:gravity="center"
                 android:text="My Wallet"
                 android:textColor="@color/white"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                app:layout_constraintTop_toTopOf="@id/img_wallet"
+                app:layout_constraintBottom_toBottomOf="@id/img_wallet"
+                app:layout_constraintLeft_toLeftOf="@id/img_wallet"
+                app:layout_constraintRight_toRightOf="@id/img_wallet"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:gravity="bottom|center"
                 android:paddingBottom="30dp"
                 android:text="Tips For Your Cards, Coupons, Punch Cards and Points"
                 android:textColor="@color/white"
-                android:textSize="10sp" />
-        </RelativeLayout>
-    </RelativeLayout>
+                android:textSize="10sp"
+                app:layout_constraintLeft_toLeftOf="@id/img_wallet"
+                app:layout_constraintRight_toRightOf="@id/img_wallet"
+                app:layout_constraintBottom_toBottomOf="@id/img_wallet"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <GridView
-        android:id="@+id/gridview_main"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:numColumns="4"
-        android:horizontalSpacing="@dimen/padding_size_tiny"
-        android:verticalSpacing="@dimen/padding_size_tiny"
-        />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_point"
-        android:paddingHorizontal="@dimen/padding_size_medium"
-        android:paddingVertical="@dimen/padding_size_small"
-        android:layout_margin="@dimen/padding_size_medium">
-
-        <TextView
-            android:id="@+id/txt_my_kanoo_point"
-            android:text="@string/txt_my_kanoo_point"
-            android:textSize="@dimen/text_size_very_small"
-            android:textColor="@color/white"
-            android:fontFamily="@font/gilroy_regular"
-            android:layout_width="wrap_content"
+        <GridView
+            android:id="@+id/gridview_main"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"/>
+            android:numColumns="4"
+            android:horizontalSpacing="@dimen/padding_size_tiny"
+            android:verticalSpacing="@dimen/padding_size_tiny" />
 
-        <TextView
-            android:id="@+id/txt_point"
-            android:text=""
-            android:textSize="@dimen/text_size_very_big"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:fontFamily="@font/gilroy_regular"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/txt_my_kanoo_point"
-            app:layout_constraintLeft_toLeftOf="parent"/>
+            android:background="@drawable/bg_point"
+            android:paddingLeft="@dimen/padding_size_big"
+            android:paddingRight="@dimen/padding_size_very_small"
+            android:paddingVertical="@dimen/padding_size_very_small"
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:text="@string/txt_view_detail"
-            android:textSize="@dimen/text_size_tiny"
-            android:textColor="@color/white"
-            android:fontFamily="@font/gilroy_regular"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/text_size_medium"
-            android:background="?attr/selectableItemBackground"
-            android:drawableRight="@drawable/btn_forward"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            android:layout_marginVertical="@dimen/corner_very_small">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</LinearLayout>
+            <TextView
+                android:id="@+id/txt_my_kanoo_point"
+                android:text="@string/txt_my_kanoo_point"
+                android:textSize="@dimen/text_size_tiny"
+                android:textColor="@color/white"
+                android:fontFamily="@font/gilroy_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <TextView
+                android:id="@+id/txt_point"
+                android:text=""
+                android:textSize="@dimen/text_size_small"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:fontFamily="@font/gilroy_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/txt_my_kanoo_point"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:text="@string/txt_view_detail"
+                android:textSize="@dimen/text_size_tiny"
+                android:textColor="@color/white"
+                android:fontFamily="@font/gilroy_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/text_size_medium"
+                android:background="?attr/selectableItemBackground"
+                android:drawableRight="@drawable/btn_forward"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -29,30 +29,9 @@ import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MainScreen() : BaseActivity<ActivityMainScreenBinding>(), NavigationView.OnNavigationItemSelectedListener {
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        return false
-    }
-
+class MainScreen() : BaseActivity<ActivityMainScreenBinding>() {
     private lateinit var prefs: SharedPreferences
     var list: ArrayList<Menu>? = null
-
-    inner class custom : DrawerLayout.DrawerListener{
-        override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
-            val slideX = drawerView.width * slideOffset
-            binding.layoutMain.setTranslationX(slideX)
-        }
-
-        override fun onDrawerOpened(drawerView: View) {
-            binding.layoutMain.setTranslationX(drawerView.width*1f)
-        }
-
-        override fun onDrawerClosed(drawerView: View) {
-        }
-
-        override fun onDrawerStateChanged(newState: Int) {
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,11 +41,6 @@ class MainScreen() : BaseActivity<ActivityMainScreenBinding>(), NavigationView.O
 
         prefs = getSharedPreferences("prefs", MODE_PRIVATE)
 
-        binding.drawerLayout.addDrawerListener(custom())
-        binding.drawerLayout.setScrimColor(Color.TRANSPARENT)
-        binding.layoutMain.bringToFront()
-        binding.layoutMain.invalidate()
-
         setMenu()
         setDrawer(prefs)
         onMyWallet()
@@ -75,7 +49,6 @@ class MainScreen() : BaseActivity<ActivityMainScreenBinding>(), NavigationView.O
 
 
     override fun getViewBinding(): ActivityMainScreenBinding =  ActivityMainScreenBinding.bind(binding.root)
-
     override fun getBodyLayout(): Int = R.layout.activity_main_screen
     override fun hasDrawer(): Boolean = true
 
@@ -83,13 +56,6 @@ class MainScreen() : BaseActivity<ActivityMainScreenBinding>(), NavigationView.O
         binding.imgLeft.setOnClickListener(View.OnClickListener {
             binding.drawerLayout.openDrawer(GravityCompat.START)
         })
-    }
-
-    override fun onBackPressed() {
-        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)){
-            binding.drawerLayout.closeDrawer(GravityCompat.START)
-        }else
-        super.onBackPressed()
     }
 
     private fun setMenu() {
@@ -104,7 +70,7 @@ class MainScreen() : BaseActivity<ActivityMainScreenBinding>(), NavigationView.O
             prefs.getString("fname", "") + " " + prefs.getString("lname", "")
         Picasso.get().load(prefs.getString("avatar", "")).into(bindingDrawer.imgAvatarMenu)
 
-        onAboutDrawer(prefs.getString("version", "")!!, MainScreen@ this)
+        onAboutDrawer(prefs.getString("version", "")!!)
         onLogOut(prefs)
         onHowToVideo()
         onLeftIcon()
@@ -128,11 +94,10 @@ class MainScreen() : BaseActivity<ActivityMainScreenBinding>(), NavigationView.O
         return list
     }
 
-    private fun onAboutDrawer(version: String, context: Context) {
+    private fun onAboutDrawer(version: String) {
         bindingDrawer.itemAbout!!.setOnClickListener(View.OnClickListener {
-            binding.drawerLayout.closeDrawer(GravityCompat.START)
             var date: Date = Calendar.getInstance().time
-            var dialog = BaseDialog(context)
+            var dialog = BaseDialog(MainScreen@this)
             dialog.setContentView()
             dialog.binding.dialogTitle.text = getString(R.string.item_about)
             dialog.binding.dialogContent.text =
@@ -145,7 +110,6 @@ class MainScreen() : BaseActivity<ActivityMainScreenBinding>(), NavigationView.O
 
     private fun onLogOut(prefs: SharedPreferences) {
         bindingDrawer.itemLogOut!!.setOnClickListener(View.OnClickListener {
-            binding.drawerLayout.closeDrawer(GravityCompat.START)
             var dialog = BaseDialog(MainScreen@ this)
             dialog.setContentView()
             dialog.binding.dialogTitle.text = getString(R.string.item_log_out)
