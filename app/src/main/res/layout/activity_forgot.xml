@@ -81,7 +81,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/text_box_height"
                 android:layout_marginStart="@dimen/padding_size_very_big"
 
                 android:layout_marginEnd="@dimen/padding_size_very_big"
@@ -156,12 +156,13 @@
             <me.biubiubiu.justifytext.library.JustifyTextView
                 android:id="@+id/txtInstruction"
                 android:layout_width="0dp"
-                android:layout_height="49dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="30sp"
                 android:layout_marginTop="40dp"
                 android:layout_marginEnd="30sp"
+                android:autoText="false"
                 android:fontFamily="@font/gilroy_semibold"
-                android:gravity="center_vertical"
+                android:singleLine="false"
                 android:text="@string/phone_number_recovery_instruction"
                 android:textColor="#FFFFFF"
                 android:textSize="14sp"

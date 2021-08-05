@@ -52,5 +52,5 @@
     <string name="error_getting_data">ERROR IN GETTING DATA</string>
     <string name="email_not_registered">This email address is not registered with Kanoo, please correct it or create a new account</string>
     <string name="phone_number_recovery_instruction">Enter your phone number above to recover your password. You will be sent a SMS with OTP and instructions on how to reset your password.</string>
-    <string name="email_recovery_instruction">Enter your email above to reset your password. You will be sent an email with a link and instructions on how to reset your password</string>
+    <string name="email_recovery_instruction">Enter your email above to reset your password. You will be sent an email with a link and instructions on how to reset your password. Please check your email.</string>
 </resources>
