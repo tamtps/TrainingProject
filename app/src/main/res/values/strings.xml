@@ -1,15 +1,17 @@
 <resources>
-    <string name="app_name">TrainingProject</string>
+    <string name="app_name" translatable="false">TrainingProject</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="has_account">Already have an account?</string>
     <string name="sign_in">Sign In</string>
     <string name="item_about">About</string>
     <string name="error">Error</string>
-    <string name="error_email_pass">Wrong email or password</string>
+    <string name="invalid_phone">Please enter a valid phone number.</string>
+    <string name="email_not_registered">This email address is not registered with Kanoo, please correct it or create a new account</string>
+    <string name="phone_not_registered">This phone number is not registered with Kanoo, please correct it or create a new account</string>
+    <string name="error_email_pass">Wrong email or password. Please try again</string>
     <string name="item_log_out">Log Out</string>
     <string name="log_out_content">Are you sure you want to Log Out?</string>
     <string name="receive_user_id">1368</string>
-
     <string-array name="method">
         <item>
             Use phone number
@@ -50,5 +52,7 @@
 
     <string name="error_getting_data">ERROR IN GETTING DATA</string>
     <string name="terms_condition">Terms and Conditions</string>
+    <string name="email_recovery_instruction">Enter your email above to reset your password. You will be sent an email with a link and instructions on how to reset your password.\n</string>
+    <string name="phone_number_recovery_instruction">Enter your phone number above to recover your password. You will be sent a SMS with OTP and instructions on how to reset your password.\n</string>
 
-</resources>
+    </resources>

@@ -69,9 +69,7 @@ class LogInActivity : AppCompatActivity() {
         var password = ""
 
         binding.btnLogIn.setOnClickListener(View.OnClickListener {
-//            "filestringhoang01@gmail.com"
             email = binding.txtEmailLogin.text.toString()
-//            "qwerty1"
             password= binding.txtPwdLogin.text.toString()
             if(email.isEmpty()){
                 binding.txtEmailLogin.setError(getString(R.string.email_required))

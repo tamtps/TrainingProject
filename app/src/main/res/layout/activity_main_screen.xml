@@ -13,37 +13,44 @@
         android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="-15dp">
+            >
+
             <ImageView
                 android:id="@+id/img_wallet"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/my_wallet_icon"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/gilroy_medium"
+                android:gravity="center"
                 android:text="My Wallet"
                 android:textColor="@color/white"
                 android:textSize="24sp"
-                app:layout_constraintTop_toTopOf="@id/img_wallet"
                 app:layout_constraintBottom_toBottomOf="@id/img_wallet"
                 app:layout_constraintLeft_toLeftOf="@id/img_wallet"
-                app:layout_constraintRight_toRightOf="@id/img_wallet"/>
+                app:layout_constraintRight_toRightOf="@id/img_wallet"
+                app:layout_constraintTop_toTopOf="@id/img_wallet" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:paddingBottom="30dp"
                 android:text="Tips For Your Cards, Coupons, Punch Cards and Points"
                 android:textColor="@color/white"
                 android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="@id/img_wallet"
                 app:layout_constraintLeft_toLeftOf="@id/img_wallet"
-                app:layout_constraintRight_toRightOf="@id/img_wallet"
-                app:layout_constraintBottom_toBottomOf="@id/img_wallet"/>
+                app:layout_constraintRight_toRightOf="@id/img_wallet" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <GridView

@@ -108,7 +108,7 @@ abstract class BaseActivity<bodyBinding: ViewBinding> : AppCompatActivity() {
     }
 
     fun onAbout(context: Context){
-        prefs = context.getSharedPreferences("version", MODE_PRIVATE)
+        var prefs = context.getSharedPreferences("version", MODE_PRIVATE)
         var date: Date = Calendar.getInstance().time
         var dialog = BaseDialog(context)
         dialog.setContentView()
@@ -121,19 +121,22 @@ abstract class BaseActivity<bodyBinding: ViewBinding> : AppCompatActivity() {
     }
 
     fun onLogOut(context: Context) {
-        prefs = context.getSharedPreferences("version", MODE_PRIVATE)
+        var prefs = context.getSharedPreferences("prefs", MODE_PRIVATE)
+        val editPref : SharedPreferences.Editor = prefs.edit()
         var dialog = BaseDialog(context)
         dialog.setContentView()
         dialog.binding.dialogTitle.text = context.getString(R.string.item_log_out)
         dialog.binding.dialogContent.text = context.getString(R.string.log_out_content)
         dialog.onCancelDismiss()
         dialog.binding.btnYes.setOnClickListener(View.OnClickListener {
+            editPref.clear()
+            editPref.putBoolean("firstStart", false)
+            editPref.apply()
             dialog.dismiss()
             var intent = Intent(context.applicationContext, LogInActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
             context.startActivity(intent)
-            prefs.edit().clear().commit()
-            prefs.edit().putBoolean("firstStart", false).apply()
+
             finish()
         })
         dialog.show()

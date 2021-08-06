@@ -2,6 +2,7 @@ package com.example.trainingproject.screens
 
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Canvas
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -138,9 +139,11 @@ class ForgotPasswordActivity : AppCompatActivity() {
         val recView = dialog.findViewById<RecyclerView>(R.id.recViewCountry)
             recView.layoutManager = LinearLayoutManager(applicationContext)
             recView.adapter = countryPickerAdapter
-            val decoration =
-                DividerItemDecoration(applicationContext, LinearLayoutManager.HORIZONTAL)
-            recView.addItemDecoration(decoration)
+            recView.addItemDecoration(object : DividerItemDecoration(applicationContext, LinearLayoutManager.HORIZONTAL){
+                override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
+
+                }
+            })
 
         dialog.findViewById<ImageButton>(R.id.btnCloseDialog)
             .setOnClickListener(View.OnClickListener {
@@ -216,6 +219,6 @@ class ForgotPasswordActivity : AppCompatActivity() {
     }
 
     fun isValidPhone(phone: String) : Boolean {
-        return !TextUtils.isEmpty(phone) && phone.matches(regex.toRegex())
+        return !TextUtils.isEmpty(phone) && android.util.Patterns.PHONE.matcher(phone).matches()
     }
 }

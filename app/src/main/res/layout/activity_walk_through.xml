@@ -28,6 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginTop="30dp"
+            android:fontFamily="@font/gilroy_medium"
             android:text="@string/has_account"
             android:textColor="@color/white"
             android:textSize="13sp" />
@@ -37,6 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginBottom="20dp"
+            android:fontFamily="@font/gilroy_medium"
             android:text="@string/sign_in"
             android:textColor="@color/white"
             android:textSize="35sp" />
