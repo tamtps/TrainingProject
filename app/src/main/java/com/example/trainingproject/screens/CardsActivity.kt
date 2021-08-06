@@ -26,106 +26,39 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class CardsActivity : BaseActivity<ActivityCardsBinding>() {
-    private lateinit var prefs: SharedPreferences
     var list: ArrayList<Menu>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        leftIcon(R.drawable.btn_hamburger_white)
         centerImage(R.drawable.kanoo_white_icon)
         rightIcon(R.drawable.btn_home_white)
-        setDrawerView(R.layout.menu_drawer_mainscreen)
 
-        prefs = getSharedPreferences("prefs", MODE_PRIVATE)
-        val version = prefs.getString("version", "")
-        val name = prefs.getString("fname", "") + " " + prefs.getString("lname", "")
-        val avatar = prefs.getString("avatar", "")
+        bindingDrawer.txtName!!.text = prefs.getString("fname", "") + " " + prefs.getString("lname", "")
+        Picasso.get().load(prefs.getString("avatar", "")).into(bindingDrawer.imgAvatarMenu)
+
+        setTabs()
         val uid = prefs.getString("uid", "")
-
-        bindingDrawer.txtName!!.text = name
-        Picasso.get().load(avatar).into(bindingDrawer.imgAvatarMenu)
-        list = ArrayList()
-        list = menuItem()
-        bindingDrawer.listViewDrawer?.adapter = DrawerMenuAdapter(applicationContext, list!!)
-
-        val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
-        bindingBody.viewPager.adapter = sectionsPagerAdapter
-        bindingBody.tabs.setupWithViewPager(bindingBody.viewPager)
-
-        onLeftIcon()
-        onAboutDrawer(version!!)
-        onLogOut(prefs)
-        onHowToVideo()
         getPointAPI(uid!!.toLong())
+        onRightIcon()
     }
 
     override fun getViewBinding() = ActivityCardsBinding.bind(binding.root)
     override fun getBodyLayout() = R.layout.activity_cards
     override fun hasDrawer() = true
 
-    fun onLeftIcon() {
-        binding.imgLeft.setOnClickListener(View.OnClickListener {
-            binding.drawerLayout.openDrawer(GravityCompat.START)
+    fun onRightIcon(){
+        binding.imgRight.setOnClickListener(View.OnClickListener {
+            var intent = Intent(applicationContext, MainScreen::class.java)
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(intent)
+            finish()
         })
     }
 
-    public fun menuItem(): ArrayList<Menu> {
-        var list: ArrayList<Menu> = ArrayList()
-        list.add(
-            Menu(
-                getString(R.string.menu_market),
-                R.drawable.icon_market,
-                2,
-                listOf("Your Connection", "Your Order")
-            )
-        )
-        list.add(Menu(getString(R.string.menu_top_up), R.drawable.icon_topup))
-        list.add(Menu(getString(R.string.menu_connections), R.drawable.icon_connect))
-        list.add(Menu(getString(R.string.menu_cart), R.drawable.ic_my_cart, 4, listOf()))
-        list.add(Menu(getString(R.string.menu_public_services), R.drawable.ic_public_services, 1))
-        list.add(Menu(getString(R.string.menu_pay_bills), R.drawable.icon_bills))
-        return list
-    }
-
-    public fun onAboutDrawer(version: String) {
-        bindingDrawer.itemAbout!!.setOnClickListener(View.OnClickListener {
-            binding.drawerLayout.closeDrawer(GravityCompat.START)
-            var date: Date = Calendar.getInstance().time
-            var dialog = BaseDialog(CardsActivity@ this)
-            dialog.setContentView()
-            dialog.binding.dialogTitle.text = getString(R.string.item_about)
-            dialog.binding.dialogContent.text = getString(R.string.beta_version) + version + "\n" + getString(R.string.date) + date
-            dialog.showCancelButton(false)
-            dialog.onOKDismiss()
-            dialog.show()
-        })
-    }
-
-    public fun onLogOut(prefs: SharedPreferences) {
-        bindingDrawer.itemLogOut!!.setOnClickListener(View.OnClickListener {
-            binding.drawerLayout.closeDrawer(GravityCompat.START)
-            var dialog = BaseDialog(CardsActivity@ this)
-            dialog.setContentView()
-            dialog.binding.dialogTitle.text = getString(R.string.item_log_out)
-            dialog.binding.dialogContent.text = getString(R.string.log_out_content)
-            dialog.onCancelDismiss()
-            dialog.binding.btnYes.setOnClickListener(View.OnClickListener {
-                dialog.dismiss()
-                var intent = Intent(applicationContext, LogInActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-                prefs.edit().clear().commit()
-                prefs.edit().putBoolean("firstStart", false).apply()
-                finish()
-            })
-            dialog.show()
-        })
-    }
-
-    public fun onHowToVideo() {
-        bindingDrawer.itemHowToVideos!!.setOnClickListener(View.OnClickListener {
-            startActivity(Intent(applicationContext, HowToVideoActivity::class.java))
-        })
+    private fun setTabs(){
+        val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
+        bindingBody.viewPager.adapter = sectionsPagerAdapter
+        bindingBody.tabs.setupWithViewPager(bindingBody.viewPager)
     }
 
     fun getPointAPI( uid: Long) {

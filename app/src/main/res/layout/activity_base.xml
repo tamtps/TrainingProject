@@ -13,9 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
-
-
-
         <RelativeLayout
             android:id="@+id/layout_main"
             android:layout_width="match_parent"
@@ -63,7 +60,7 @@
                         <ImageView
                             android:id="@+id/img_center"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/imageview_appbar"
+                            android:layout_height="@dimen/imageview_appbar_center"
                             android:src="@drawable/kanoo_white_icon"
                             android:visibility="invisible"
                             app:layout_constraintTop_toTopOf="parent"
@@ -74,8 +71,8 @@
 
                         <ImageView
                             android:id="@+id/img_right"
-                            android:layout_width="@dimen/imageview_appbar"
-                            android:layout_height="@dimen/imageview_appbar"
+                            android:layout_width="@dimen/imageview_appbar_right"
+                            android:layout_height="@dimen/imageview_appbar_right"
                             android:visibility="invisible"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -99,15 +96,27 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            android:layout_gravity="start"
-            android:paddingVertical="40dp">
+            android:layout_gravity="start">
 
-            <ViewStub
-                android:id="@+id/drawer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
+                <RelativeLayout
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:translationZ="90dp"
+                    android:background="@drawable/bg_drawer_shadow"/>
+
+                <ViewStub
+                    android:id="@+id/drawer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.navigation.NavigationView>
-
     </androidx.drawerlayout.widget.DrawerLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

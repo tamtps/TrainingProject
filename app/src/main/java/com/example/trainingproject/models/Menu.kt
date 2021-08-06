@@ -4,27 +4,29 @@ import android.app.Activity
 import com.example.trainingproject.screens.MainScreen
 
 class Menu {
-    var name : String
+    var name : String = ""
     var icon : Int = 0
-    var notification : Int =0
-    var list : List<String> = listOf()
-    var activity : Class<*> = MainScreen::class.java
+    var notification : Int = 0
+    var list : List<Menu> = listOf()
+    var activity : Class<*> ?= null
+
+    constructor(name: String){
+        this.name = name
+    }
+
+
 
     constructor(name: String, icon: Int) {
         this.name = name
         this.icon = icon
     }
 
-
-
-    constructor(name: String, icon: Int, notification: Int, list: List<String>) {
+    constructor(name: String, icon: Int, notification: Int, list: List<Menu>) {
         this.name = name
         this.icon = icon
         this.notification = notification
         this.list = list
     }
-
-
 
     constructor(name: String, icon: Int, notification: Int) {
         this.name = name
@@ -32,7 +34,7 @@ class Menu {
         this.notification = notification
     }
 
-    constructor(name: String, icon: Int, list: List<String>) {
+    constructor(name: String, icon: Int, list: List<Menu>) {
         this.name = name
         this.icon = icon
         this.list = list
@@ -42,7 +44,7 @@ class Menu {
         name: String,
         icon: Int,
         notification: Int,
-        list: List<String>,
+        list: List<Menu>,
         activity: Class<*>
     ) {
         this.name = name
@@ -52,5 +54,13 @@ class Menu {
         this.activity = activity
     }
 
+    constructor(name: String, list: List<Menu>) {
+        this.name = name
+        this.list = list
+    }
 
+    constructor(name: String, activity: Class<*>) {
+        this.name = name
+        this.activity = activity
+    }
 }

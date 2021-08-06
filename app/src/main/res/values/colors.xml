@@ -15,4 +15,8 @@
     <color name="blue_light">#005B85</color>
     <color name="text_shadow">#7F000000</color>
     <color name="orange">#FF5722</color>
+
+
+    <color name="item_choice">#C3C1C1</color>
+    <color name="border_avatar">#AFAFAF</color>
 </resources>

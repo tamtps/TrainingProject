@@ -30,108 +30,44 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class MainScreen() : BaseActivity<ActivityMainScreenBinding>() {
-    private lateinit var prefs: SharedPreferences
     var list: ArrayList<Menu>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        leftIcon(R.drawable.btn_hamburger_white)
         centerImage(R.drawable.kanoo_white_icon)
-        setDrawerView(R.layout.menu_drawer_mainscreen)
-
-        prefs = getSharedPreferences("prefs", MODE_PRIVATE)
+        rightIcon(R.drawable.icon_pay)
 
         setMenu()
-        setDrawer(prefs)
+        setDrawer()
         onMyWallet()
         getPointAPI(prefs.getString("uid", "0")!!.toLong())
     }
-
 
     override fun getViewBinding(): ActivityMainScreenBinding =  ActivityMainScreenBinding.bind(binding.root)
     override fun getBodyLayout(): Int = R.layout.activity_main_screen
     override fun hasDrawer(): Boolean = true
 
-    private fun onLeftIcon() {
-        binding.imgLeft.setOnClickListener(View.OnClickListener {
-            binding.drawerLayout.openDrawer(GravityCompat.START)
-        })
-    }
-
     private fun setMenu() {
         list = ArrayList()
         list = menuItem()
         bindingBody.gridviewMain?.adapter = mainGridViewAdapter(applicationContext, list!!)
-        bindingDrawer.listViewDrawer?.adapter = DrawerMenuAdapter(applicationContext, list!!)
     }
 
-    private fun setDrawer(prefs: SharedPreferences) {
+    private fun setDrawer() {
         bindingDrawer.txtName.text =
             prefs.getString("fname", "") + " " + prefs.getString("lname", "")
         Picasso.get().load(prefs.getString("avatar", "")).into(bindingDrawer.imgAvatarMenu)
-
-        onAboutDrawer(prefs.getString("version", "")!!)
-        onLogOut(prefs)
-        onHowToVideo()
-        onLeftIcon()
     }
 
     private fun menuItem(): ArrayList<Menu> {
         var list: ArrayList<Menu> = ArrayList()
-        list.add(
-            Menu(
-                getString(R.string.menu_market),
-                R.drawable.icon_market,
-                2,
-                listOf("Your Connection", "Your Order")
-            )
-        )
+        list.add(Menu(getString(R.string.menu_market), R.drawable.icon_market,2))
         list.add(Menu(getString(R.string.menu_top_up), R.drawable.icon_topup))
         list.add(Menu(getString(R.string.menu_connections), R.drawable.icon_connect))
         list.add(Menu(getString(R.string.menu_cart), R.drawable.ic_my_cart, 4, listOf()))
         list.add(Menu(getString(R.string.menu_public_services), R.drawable.ic_public_services, 1))
         list.add(Menu(getString(R.string.menu_pay_bills), R.drawable.icon_bills))
         return list
-    }
-
-    private fun onAboutDrawer(version: String) {
-        bindingDrawer.itemAbout!!.setOnClickListener(View.OnClickListener {
-            var date: Date = Calendar.getInstance().time
-            var dialog = BaseDialog(MainScreen@this)
-            dialog.setContentView()
-            dialog.binding.dialogTitle.text = getString(R.string.item_about)
-            dialog.binding.dialogContent.text =
-                getString(R.string.beta_version) + version + "\n" + getString(R.string.date) + date
-            dialog.showCancelButton(false)
-            dialog.onOKDismiss()
-            dialog.show()
-        })
-    }
-
-    private fun onLogOut(prefs: SharedPreferences) {
-        bindingDrawer.itemLogOut!!.setOnClickListener(View.OnClickListener {
-            var dialog = BaseDialog(MainScreen@ this)
-            dialog.setContentView()
-            dialog.binding.dialogTitle.text = getString(R.string.item_log_out)
-            dialog.binding.dialogContent.text = getString(R.string.log_out_content)
-            dialog.onCancelDismiss()
-            dialog.binding.btnYes.setOnClickListener(View.OnClickListener {
-                dialog.dismiss()
-                var intent = Intent(applicationContext, LogInActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-                prefs.edit().clear().commit()
-                prefs.edit().putBoolean("firstStart", false).apply()
-                finish()
-            })
-            dialog.show()
-        })
-    }
-
-    private fun onHowToVideo() {
-        bindingDrawer.itemHowToVideos!!.setOnClickListener(View.OnClickListener {
-            startActivity(Intent(applicationContext, HowToVideoActivity::class.java))
-        })
     }
 
     private fun onMyWallet() {

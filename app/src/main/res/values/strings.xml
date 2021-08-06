@@ -49,5 +49,6 @@
     <string name="password_required">Password required!</string>
 
     <string name="error_getting_data">ERROR IN GETTING DATA</string>
+    <string name="terms_condition">Terms and Conditions</string>
 
 </resources>

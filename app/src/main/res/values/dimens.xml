@@ -18,23 +18,21 @@
     <dimen name="padding_size_tiny">5dp</dimen>
     <dimen name="padding_size_very_small">10dp</dimen>
     <dimen name="padding_size_small">15dp</dimen>
-    <dimen name="padding_size_medium">20sp</dimen>
-    <dimen name="padding_size_big">25sp</dimen>
-    <dimen name="padding_size_very_big">30sp</dimen>
-    <dimen name="padding_size_giant">40sp</dimen>
+    <dimen name="padding_size_medium">20dp</dimen>
+    <dimen name="padding_size_big">25dp</dimen>
+    <dimen name="padding_size_very_big">30dp</dimen>
+    <dimen name="padding_size_giant">40dp</dimen>
+    <dimen name="padding_size_ulti_giant">100dp</dimen>
 
     <dimen name="imageview_size">50dp</dimen>
     <dimen name="imageview_tiny">7dp</dimen>
     <dimen name="imageview_nofi">15dp</dimen>
-    <dimen name="imageview_medium">60dp</dimen>
+    <dimen name="imageview_medium">90dp</dimen>
 
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="appbar_padding">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="appbar_padding_top">8dp</dimen>
     <dimen name="search_bar_height">40dp</dimen>
-    <dimen name="imageview_appbar">20dp</dimen>
     <dimen name="wallet_card_height">250dp</dimen>
     <dimen name="background_item_height">60dp</dimen>
     <dimen name="imageview_coupon">200dp</dimen>
@@ -49,5 +47,23 @@
 
     <dimen name="imageview_grid_menu">35dp</dimen>
     <dimen name="appbar_height">60dp</dimen>
+    <dimen name="imageview_appbar_center">27dp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
+    <dimen name="appbar_padding">16dp</dimen>
+    <dimen name="imageview_appbar">20dp</dimen>
+
+    <dimen name="text_drawer_menu">21sp</dimen>
+    <dimen name="padding_hor_menu">20dp</dimen>
+    <dimen name="padding_ver_menu">10dp</dimen>
+
+    <dimen name="text_drawer_submenu">17sp</dimen>
+    <dimen name="padding_hor_submenu">35dp</dimen>
+    <dimen name="padding_hor_submenu_add">20dp</dimen>
+    <dimen name="padding_ver_submenu">9dp</dimen>
+
+    <dimen name="heigh_drawer_performance">25dp</dimen>
+    <dimen name="width_drawer_performance">40dp</dimen>
+    <dimen name="space_drawer_performance">13dp</dimen>
+    <dimen name="imageview_appbar_right">32dp</dimen>
 
 </resources>
