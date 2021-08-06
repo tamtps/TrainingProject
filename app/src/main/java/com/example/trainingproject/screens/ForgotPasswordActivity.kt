@@ -2,6 +2,7 @@ package com.example.trainingproject.screens
 
 import android.app.Dialog
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -31,7 +32,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
     private lateinit var countryPickerAdapter : CountryPickerAdapter
     private var methodType : Int = 0
     private lateinit var regex : String
-
+    private lateinit var methods : Array<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityForgotBinding.inflate(layoutInflater)
@@ -43,8 +44,10 @@ class ForgotPasswordActivity : AppCompatActivity() {
     }
 
     fun bindingComponent(){
+
+
         //TODO: Set methods dropdown
-        val methods = resources.getStringArray(R.array.method)
+        methods = resources.getStringArray(R.array.method)
         val arrayAdapter = ArrayAdapter(applicationContext, R.layout.dropdown_item, methods)
         binding.txtMethodForgot.setAdapter(arrayAdapter)
 
@@ -52,7 +55,6 @@ class ForgotPasswordActivity : AppCompatActivity() {
         //DO SOMETHING HERE
         binding.selectCountry.setOnClickListener(View.OnClickListener {
             dialog.show()
-            Toast.makeText(applicationContext, getString(R.string.getting_data), Toast.LENGTH_LONG).show()
         })
 
         binding.btnContinue.setOnClickListener(View.OnClickListener {
@@ -61,20 +63,33 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 0 -> {
                     val phone = "${binding.txtCountryCodeSelect.text}${binding.inputTxtForgot.text}"
                     if(!isValidPhone(phone)){
-                        Toast.makeText(applicationContext, getString(R.string.wrong_phone), Toast.LENGTH_LONG).show()
+                        var dialog = BaseDialog(this)
+                        dialog.setContentView()
+                        dialog.errorDialog(getString(R.string.invalid_phone))
                         valid = false
                     }
                     else {
                         valid = true
+                        var dialog = BaseDialog(this)
+                        dialog.setContentView()
+                        dialog.errorDialog(getString(R.string.phone_not_registered))
+                        valid = false
                     }
                 }
                 1 -> {
                     if(!isValidEmail(binding.inputTxtForgot.text.toString())){
-                        Toast.makeText(applicationContext, getString(R.string.wrong_email), Toast.LENGTH_LONG).show()
+
+                        var dialog = BaseDialog(this)
+                        dialog.setContentView()
+                        dialog.errorDialog(getString(R.string.wrong_email))
                         valid = false
                     }
                     else {
                         valid = true
+                        var dialog = BaseDialog(this)
+                        dialog.setContentView()
+                        dialog.errorDialog(getString(R.string.email_not_registered))
+                        valid = false
                     }
                 }
 
@@ -94,17 +109,23 @@ class ForgotPasswordActivity : AppCompatActivity() {
             ) {
                 when (position) {
                     0 -> {
-                        binding.selectCountry.isVisible = true
-                        binding.inputTxtForgot.setPadding(350, 0, 0, 5)
-                        binding.inputTxtForgot.inputType = InputType.TYPE_NUMBER_FLAG_DECIMAL
+                        binding.inputTxtForgot.inputType = InputType.TYPE_CLASS_NUMBER
                         binding.txtMethodInput.setText("Phone number")
+                        binding.inputTxtForgot.setText("")
+                        binding.imgFlagSelect.visibility = View.VISIBLE
+                        binding.imgArrowDown.visibility = View.VISIBLE
+                        binding.txtCountryCodeSelect.visibility = View.VISIBLE
+                        binding.txtInstruction.setText(R.string.phone_number_recovery_instruction)
                         methodType = 0
                     }
                     1 -> {
-                        binding.selectCountry.isVisible = false
-                        binding.inputTxtForgot.setPadding(50, 0, 0, 5)
                         binding.inputTxtForgot.inputType = InputType.TYPE_CLASS_TEXT
                         binding.txtMethodInput.setText("Email")
+                        binding.inputTxtForgot.setText("")
+                        binding.imgFlagSelect.visibility = View.GONE
+                        binding.imgArrowDown.visibility = View.GONE
+                        binding.txtCountryCodeSelect.visibility = View.GONE
+                        binding.txtInstruction.setText(R.string.email_recovery_instruction)
                         methodType = 1
                     }
 
@@ -118,7 +139,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
             recView.layoutManager = LinearLayoutManager(applicationContext)
             recView.adapter = countryPickerAdapter
             val decoration =
-                DividerItemDecoration(applicationContext, DividerItemDecoration.VERTICAL)
+                DividerItemDecoration(applicationContext, LinearLayoutManager.HORIZONTAL)
             recView.addItemDecoration(decoration)
 
         dialog.findViewById<ImageButton>(R.id.btnCloseDialog)

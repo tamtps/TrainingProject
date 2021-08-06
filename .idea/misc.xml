@@ -3,12 +3,28 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/drawable/dotted.xml" value="0.26666666666666666" />
+        <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/drawable/item_coupon_decoration.xml" value="0.26666666666666666" />
+        <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/drawable/round_shape.xml" value="0.26666666666666666" />
+        <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/drawable/show_hide_password_selector.xml" value="0.23796296296296296" />
         <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/layout/activity_base.xml" value="0.14628623188405798" />
         <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/layout/activity_cards.xml" value="0.14628623188405798" />
+        <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/layout/activity_forgot.xml" value="0.4" />
+        <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/layout/activity_main_screen.xml" value="0.14628623188405798" />
+        <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/layout/country_code_item.xml" value="0.264" />
+        <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/layout/country_picker_dialog.xml" value="0.4" />
+        <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/layout/dialog_simple.xml" value="0.4" />
         <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/layout/fragment_cards.xml" value="0.14628623188405798" />
+        <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/layout/fragment_gift_card_screen.xml" value="0.20425724637681159" />
+        <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/layout/fragment_point_screen.xml" value="0.12360688956433637" />
+        <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/layout/fragment_wallet_card_screen.xml" value="0.20425724637681159" />
+        <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/layout/gift_card_item.xml" value="0.4" />
         <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/layout/item_drawer_menu_main.xml" value="0.12360688956433637" />
+        <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/layout/item_wallet_card.xml" value="0.20425724637681159" />
         <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/layout/menu_drawer_mainscreen.xml" value="0.14628623188405798" />
+        <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/layout/new_wallet_card.xml" value="0.4" />
+        <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/layout/wallet_card_item.xml" value="0.4" />
       </map>
     </option>
   </component>

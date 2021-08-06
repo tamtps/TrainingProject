@@ -41,9 +41,11 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recWalletCard"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
     </LinearLayout>
+
+
 
     <ProgressBar
         android:id="@+id/progress_circular_wallet_card"

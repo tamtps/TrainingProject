@@ -21,15 +21,6 @@ class GiftCardFragment : BaseFragment<FragmentGiftCardScreenBinding, GiftCardVie
     override var useSharedViewModel: Boolean = true
     lateinit var giftCardAdapter: GiftCardAdapter
 
-    override fun initAdapter() {
-        giftCardAdapter = GiftCardAdapter()
-    }
-
-    override fun bindingComponent() {
-        binding.recGiftCard.layoutManager = LinearLayoutManager(binding.root.context)
-        binding.recGiftCard.adapter = giftCardAdapter
-    }
-
     override fun bindingSearchBar() {
         binding.searchBarGift.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -51,6 +42,9 @@ class GiftCardFragment : BaseFragment<FragmentGiftCardScreenBinding, GiftCardVie
         val receiverUserId = prefs!!.getString("uid","")!!
         viewModel.init(receiverUserId,"","1","50", "0")
         viewModel.getListObserver().observe(viewLifecycleOwner, {
+            giftCardAdapter = GiftCardAdapter()
+            binding.recGiftCard.layoutManager = LinearLayoutManager(binding.root.context)
+            binding.recGiftCard.adapter = giftCardAdapter
             if (it.result.transDisplay.isNotEmpty()) {
                 giftCardAdapter.setUpdatedData(it.result.transDisplay)
                 binding.progressCircularGiftCard.visibility = View.INVISIBLE

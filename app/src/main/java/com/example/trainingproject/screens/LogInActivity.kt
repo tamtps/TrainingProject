@@ -5,6 +5,8 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -22,12 +24,42 @@ import java.net.HttpURLConnection
 
 class LogInActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
+    private var showPassword : Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        binding.txtPwdLogin.setOnFocusChangeListener { v, hasFocus ->
+            run {
+                if (hasFocus)
+                    binding.txtPwdLogin.setHint("")
+                else binding.txtPwdLogin.setHint("Password")
+            }
+        }
 
+        binding.txtEmailLogin.setOnFocusChangeListener { v, hasFocus ->
+            run {
+                if (hasFocus)
+                    binding.txtEmailLogin.setHint("")
+                else binding.txtEmailLogin.setHint("Email")
+            }
+        }
+        binding.txtBeta.text = "Beta version: ${BuildConfig.VERSION_NAME}"
+        binding.imgShowPwd.setOnClickListener {
+            showPassword = !showPassword
+            when (showPassword) {
+                false -> {
+                    binding.imgShowPwd.setImageResource(R.drawable.eye_show)
+                    binding.txtPwdLogin.transformationMethod = PasswordTransformationMethod.getInstance()
+
+                }
+                true -> {
+                    binding.imgShowPwd.setImageResource(R.drawable.eye_hide)
+                    binding.txtPwdLogin.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                }
+            }
+        }
         binding.txtForgot.setOnClickListener({
             val intent = Intent(this, ForgotPasswordActivity::class.java)
             startActivity(intent)
