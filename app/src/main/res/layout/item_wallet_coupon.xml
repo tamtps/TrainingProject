@@ -12,6 +12,7 @@
         android:id="@+id/image_show"
         android:layout_width="match_parent"
         android:layout_height="@dimen/imageview_coupon"
+        android:scaleType="centerCrop"
         app:layout_constraintTop_toTopOf="parent"
         android:src="@drawable/bg_header"/>
 
@@ -43,36 +44,8 @@
         app:layout_constraintLeft_toLeftOf="parent"/>
 
     <TextView
-        android:id="@+id/txt1"
-        android:text="%"
-        android:textSize="@dimen/text_size_very_big"
-        android:fontFamily="@font/gilroy_extrabold"
-        android:textStyle="bold"
-        android:textColor="@color/orange"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/padding_size_medium"
-        app:layout_constraintTop_toBottomOf="@id/image_show"
-        app:layout_constraintRight_toRightOf="parent"/>
-
-    <TextView
-        android:id="@+id/txt2"
-        android:text="OFF"
-        android:textSize="@dimen/text_size_very_small"
-        android:fontFamily="@font/gilroy_extrabold"
-        android:textStyle="bold"
-        android:textColor="@color/orange"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/padding_size_medium"
-        android:layout_marginBottom="@dimen/padding_size_medium"
-        app:layout_constraintTop_toBottomOf="@id/txt1"
-        app:layout_constraintRight_toRightOf="parent" />
-
-
-    <TextView
         android:id="@+id/percent_off"
-        android:text=""
+        android:text="70"
         android:textSize="@dimen/text_size_giant"
         android:fontFamily="@font/gilroy_extrabold"
         android:textStyle="bold"
@@ -80,7 +53,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/image_show"
-        app:layout_constraintRight_toLeftOf="@id/txt1"
+        app:layout_constraintRight_toLeftOf="@id/img_percent_off"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ImageView
+        android:id="@+id/img_percent_off"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/text_size_very_big"
+        android:src="@drawable/percentageoff_orange"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image_show"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

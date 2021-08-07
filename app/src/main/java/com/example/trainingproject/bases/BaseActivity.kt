@@ -134,7 +134,7 @@ abstract class BaseActivity<bodyBinding: ViewBinding> : AppCompatActivity() {
             editPref.apply()
             dialog.dismiss()
             var intent = Intent(context.applicationContext, LogInActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             context.startActivity(intent)
 
             finish()

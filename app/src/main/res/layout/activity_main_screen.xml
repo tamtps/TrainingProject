@@ -5,7 +5,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:paddingHorizontal="@dimen/padding_size_small"
     tools:context=".screens.MainScreen">
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,42 +14,38 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            >
-
+            android:paddingHorizontal="@dimen/padding_size_tiny">
             <ImageView
                 android:id="@+id/img_wallet"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/my_wallet_icon"
+                android:scaleType="fitCenter"
+                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"/>
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/gilroy_medium"
-                android:gravity="center"
                 android:text="My Wallet"
                 android:textColor="@color/white"
                 android:textSize="24sp"
+                app:layout_constraintTop_toTopOf="@id/img_wallet"
                 app:layout_constraintBottom_toBottomOf="@id/img_wallet"
                 app:layout_constraintLeft_toLeftOf="@id/img_wallet"
-                app:layout_constraintRight_toRightOf="@id/img_wallet"
-                app:layout_constraintTop_toTopOf="@id/img_wallet" />
-
+                app:layout_constraintRight_toRightOf="@id/img_wallet"/>
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
                 android:paddingBottom="30dp"
-                android:text="Tips For Your Cards, Coupons, Punch Cards and Points"
+                android:text="@string/wallet_bottom"
                 android:textColor="@color/white"
                 android:textSize="10sp"
-                app:layout_constraintBottom_toBottomOf="@id/img_wallet"
                 app:layout_constraintLeft_toLeftOf="@id/img_wallet"
-                app:layout_constraintRight_toRightOf="@id/img_wallet" />
+                app:layout_constraintRight_toRightOf="@id/img_wallet"
+                app:layout_constraintBottom_toBottomOf="@id/img_wallet"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <GridView
@@ -59,7 +54,8 @@
             android:layout_height="wrap_content"
             android:numColumns="4"
             android:horizontalSpacing="@dimen/padding_size_tiny"
-            android:verticalSpacing="@dimen/padding_size_tiny" />
+            android:verticalSpacing="@dimen/padding_size_tiny"
+            android:layout_marginHorizontal="@dimen/padding_size_small" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -68,7 +64,7 @@
             android:paddingLeft="@dimen/padding_size_big"
             android:paddingRight="@dimen/padding_size_very_small"
             android:paddingVertical="@dimen/padding_size_very_small"
-
+            android:layout_marginHorizontal="@dimen/padding_size_small"
             android:layout_marginVertical="@dimen/corner_very_small">
 
             <TextView
@@ -116,4 +112,14 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progress_circular"
+        android:indeterminateTint="@color/app_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

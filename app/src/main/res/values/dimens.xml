@@ -66,4 +66,5 @@
     <dimen name="space_drawer_performance">13dp</dimen>
     <dimen name="imageview_appbar_right">32dp</dimen>
     <dimen name="text_box_height">60dp</dimen>
+    <dimen name="padding_cards">15dp</dimen>
 </resources>

@@ -73,6 +73,7 @@
                             android:id="@+id/img_right"
                             android:layout_width="@dimen/imageview_appbar_right"
                             android:layout_height="@dimen/imageview_appbar_right"
+                            android:scaleType="centerCrop"
                             android:visibility="invisible"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"

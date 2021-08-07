@@ -5,9 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
-import android.view.Gravity
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.widget.*
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -37,11 +35,16 @@ class MainScreen() : BaseActivity<ActivityMainScreenBinding>() {
         centerImage(R.drawable.kanoo_white_icon)
         rightIcon(R.drawable.icon_pay)
 
+        //disable touch when loading data
+        window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
         setMenu()
         setDrawer()
         onMyWallet()
         getPointAPI(prefs.getString("uid", "0")!!.toLong())
     }
+
+
 
     override fun getViewBinding(): ActivityMainScreenBinding =  ActivityMainScreenBinding.bind(binding.root)
     override fun getBodyLayout(): Int = R.layout.activity_main_screen
@@ -89,6 +92,10 @@ class MainScreen() : BaseActivity<ActivityMainScreenBinding>() {
                         prefs.edit().putBoolean("firstStart", false)
                         prefs.edit().apply()
 
+                        //enable touch when load data success
+                        bindingBody.progressCircular.visibility = View.INVISIBLE
+                        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
                         var dialog = BaseDialog(this@MainScreen)
                         dialog.setContentView()
                         dialog.errorDialog(getString(R.string.login_again))
@@ -100,6 +107,10 @@ class MainScreen() : BaseActivity<ActivityMainScreenBinding>() {
                             finish()
                         })
                     } else if (response.isSuccessful) {
+                        //enable touch when load data success
+                        bindingBody.progressCircular.visibility = View.INVISIBLE
+                        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
                         var point: String = NumberFormat.getNumberInstance(Locale.US)
                             .format(response.body()!!.result[0].currentPoint)
                         bindingBody.txtPoint?.text = point

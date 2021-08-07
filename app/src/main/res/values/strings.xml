@@ -54,5 +54,6 @@
     <string name="terms_condition">Terms and Conditions</string>
     <string name="email_recovery_instruction">Enter your email above to reset your password. You will be sent an email with a link and instructions on how to reset your password.\n</string>
     <string name="phone_number_recovery_instruction">Enter your phone number above to recover your password. You will be sent a SMS with OTP and instructions on how to reset your password.\n</string>
+    <string name="wallet_bottom">Tips For Your Cards, Coupons, Punch Cards and Points</string>
 
-    </resources>
+</resources>
