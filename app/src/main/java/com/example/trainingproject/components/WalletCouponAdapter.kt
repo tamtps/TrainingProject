@@ -35,7 +35,7 @@ class WalletCouponAdapter() :
             itemView.findViewById<TextView>(R.id.expire_date).text = "Valid Until: "+ data.expireDate.substring(0,10)
 
             val percentOff = itemView.findViewById<TextView>(R.id.percent_off)
-            val img_percenoff = itemView.findViewById<TextView>(R.id.img_percent_off)
+            val img_percenoff = itemView.findViewById<ImageView>(R.id.img_percent_off)
             if (data.percentOff == 0){
                 percentOff.visibility = View.INVISIBLE
                 img_percenoff.visibility = View.INVISIBLE

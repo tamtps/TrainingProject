@@ -16,14 +16,14 @@ import com.example.trainingproject.viewmodels.CouponCardViewModel
 
 
 class WalletCouponsFragment : BaseFragment<FragmentWalletCouponsScreenBinding, CouponCardViewModel>(){
-    lateinit var couponCardAdapter: WalletCouponAdapter
+    var couponCardAdapter : WalletCouponAdapter = WalletCouponAdapter()
 
     override fun initViewModel() {
         val prefs = this.context?.getSharedPreferences("prefs", MODE_PRIVATE)
         val receiverUserId = prefs!!.getString("uid","")!!
         viewModel.init(receiverUserId,"","-1","1", "100")
         viewModel.getListObserver().observe(viewLifecycleOwner, {
-            couponCardAdapter = WalletCouponAdapter()
+
             binding.listCoupon.layoutManager = LinearLayoutManager(binding.root.context)
             binding.listCoupon.adapter = couponCardAdapter
             if (it.result.isNotEmpty()) {

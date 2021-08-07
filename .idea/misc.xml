@@ -3,8 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/drawable/bg_drawer_shadow.xml" value="0.14375" />
         <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/drawable/dotted.xml" value="0.26666666666666666" />
         <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/drawable/item_coupon_decoration.xml" value="0.26666666666666666" />
+        <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/drawable/round_image.xml" value="0.14375" />
         <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/drawable/round_shape.xml" value="0.26666666666666666" />
         <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/drawable/show_hide_password_selector.xml" value="0.23796296296296296" />
         <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/layout/activity_base.xml" value="0.14628623188405798" />
@@ -26,6 +28,7 @@
         <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/layout/item_drawer_submenu.xml" value="0.536" />
         <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/layout/item_gridview_menu_main.xml" value="0.1621376811594203" />
         <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/layout/item_wallet_card.xml" value="0.20425724637681159" />
+        <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/layout/item_wallet_coupon.xml" value="0.12760416666666666" />
         <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/layout/menu_drawer_mainscreen.xml" value="0.14628623188405798" />
         <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/layout/new_wallet_card.xml" value="0.4" />
         <entry key="..\:/Android Project/Kotlin/TrainingProject/app/src/main/res/layout/wallet_card_item.xml" value="0.4" />
