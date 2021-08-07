@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/wallet_card_height"
         android:paddingHorizontal="@dimen/padding_wallet_card_horizontal"
-        android:paddingVertical="@dimen/padding_card_vertical">
+        android:paddingVertical="25sp">
 
         <TextView
             android:id="@+id/txtCardType"
