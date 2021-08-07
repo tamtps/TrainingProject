@@ -46,8 +46,6 @@
 
     </LinearLayout>
 
-
-
     <ProgressBar
         android:id="@+id/progress_circular_wallet_card"
         android:layout_width="wrap_content"

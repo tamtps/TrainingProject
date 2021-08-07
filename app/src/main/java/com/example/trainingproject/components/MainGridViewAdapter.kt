@@ -40,11 +40,7 @@ class mainGridViewAdapter (var context: Context, var arrayList: ArrayList<Menu>)
         }
 
         view.setOnClickListener(View.OnClickListener {
-            if (menu.activity!=MainScreen::class.java){
-                val intent = Intent(context, menu.activity)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                startActivity(context, intent, null)
-            }
+            //set menu click
         })
 
         return view

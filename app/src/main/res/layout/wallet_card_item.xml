@@ -1,38 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/wallet_card_height"
-    android:paddingHorizontal="@dimen/padding_cards"
-    >
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
 
     <ImageView
-        android:id="@+id/imgWalletCard"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/wallet_card_height"
-        android:cropToPadding="true"
-        app:srcCompat="@drawable/card_lime_front" />
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/card_lime_front"/>
 
     <TextView
         android:id="@+id/txtBalance"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/gilroy_medium"
-        android:gravity="center_horizontal|center_vertical"
-        android:shadowColor="@color/text_shadow"
-        android:shadowDx="1"
-        android:shadowDy="1"
-        android:shadowRadius="2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         android:text="BALANCE"
         android:textAllCaps="true"
         android:textColor="#FFFFFF"
         android:textSize="24sp" />
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/wallet_card_height"
-        android:paddingHorizontal="@dimen/padding_wallet_card_horizontal"
-        android:paddingVertical="@dimen/padding_card_vertical">
 
         <TextView
             android:id="@+id/txtCardType"
@@ -43,7 +35,11 @@
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             android:text="CardType"
+            android:paddingHorizontal="@dimen/padding_wallet_card_horizontal"
+            android:paddingVertical="@dimen/padding_size_small"
             android:textColor="@color/white"
             android:textSize="16sp" />
 
@@ -58,7 +54,11 @@
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             android:text="Owner"
+            android:paddingHorizontal="@dimen/padding_wallet_card_horizontal"
+            android:paddingVertical="@dimen/padding_size_small"
             android:textColor="@color/white"
             android:textSize="16sp" />
 
@@ -74,6 +74,10 @@
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:paddingHorizontal="@dimen/padding_wallet_card_horizontal"
+            android:paddingBottom="@dimen/padding_size_small"
             android:text="Level 1 | Verified"
             android:textAlignment="textEnd"
             android:textColor="@color/white"
@@ -90,11 +94,10 @@
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="2"
+            app:layout_constraintBottom_toTopOf="@id/txtGiftBalance"
+            app:layout_constraintRight_toRightOf="parent"
+            android:paddingRight="@dimen/padding_wallet_card_horizontal"
             android:text="1234"
             android:textAlignment="textEnd"
             android:textColor="@color/white"
-            android:textSize="14sp" />
-
-    </RelativeLayout>
-
-</RelativeLayout>
+            android:textSize="14sp" /></androidx.constraintlayout.widget.ConstraintLayout>

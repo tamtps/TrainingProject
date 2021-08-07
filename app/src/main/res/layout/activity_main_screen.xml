@@ -21,7 +21,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/my_wallet_icon"
                 android:scaleType="fitCenter"
-                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"/>
@@ -29,9 +29,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/gilroy_medium"
-                android:text="My Wallet"
+                android:text="@string/my_wallet"
                 android:textColor="@color/white"
-                android:textSize="24sp"
+                android:textSize="@dimen/text_my_wallet"
                 app:layout_constraintTop_toTopOf="@id/img_wallet"
                 app:layout_constraintBottom_toBottomOf="@id/img_wallet"
                 app:layout_constraintLeft_toLeftOf="@id/img_wallet"
@@ -39,10 +39,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="30dp"
+                android:paddingBottom="40dp"
                 android:text="@string/wallet_bottom"
                 android:textColor="@color/white"
-                android:textSize="10sp"
+                android:textSize="@dimen/text_wallet_bottom"
                 app:layout_constraintLeft_toLeftOf="@id/img_wallet"
                 app:layout_constraintRight_toRightOf="@id/img_wallet"
                 app:layout_constraintBottom_toBottomOf="@id/img_wallet"/>
@@ -55,6 +55,7 @@
             android:numColumns="4"
             android:horizontalSpacing="@dimen/padding_size_tiny"
             android:verticalSpacing="@dimen/padding_size_tiny"
+            android:layout_marginTop="-15dp"
             android:layout_marginHorizontal="@dimen/padding_size_small" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
