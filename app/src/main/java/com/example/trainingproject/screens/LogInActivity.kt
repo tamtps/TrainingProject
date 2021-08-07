@@ -9,6 +9,7 @@ import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import com.example.trainingproject.BuildConfig
 import com.example.trainingproject.R
@@ -80,9 +81,11 @@ class LogInActivity : AppCompatActivity() {
                     binding.txtPwdLogin.setError(getString(R.string.password_required))
                     binding.txtPwdLogin.requestFocus()
                 }
-                else
+                else {
+                    binding.progressCircular.visibility = View.VISIBLE
+                    window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                     LogIn(email, password)
-
+                }
            })
     }
 
@@ -109,11 +112,15 @@ class LogInActivity : AppCompatActivity() {
                     editPref.putString("uid", response.body()!!.result.accountInfo.idUsers)
                     editPref.putBoolean("logged", true)
                     editPref.apply()
+                    binding.progressCircular.visibility= View.INVISIBLE
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                     val intent = Intent(applicationContext, MainScreen::class.java)
                     startActivity(intent)
                     finish()
                 }
                 else{
+                    binding.progressCircular.visibility= View.INVISIBLE
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                     var dialog = BaseDialog(this@LogInActivity)
                     editPref.clear().apply()
                     dialog.setContentView()

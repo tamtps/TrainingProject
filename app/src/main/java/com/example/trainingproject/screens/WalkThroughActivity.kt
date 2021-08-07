@@ -45,6 +45,7 @@ class WalkThroughActivity : AppCompatActivity() {
 
     private fun onSignIn() {
         editPrefs = prefs.edit()
+        editPrefs.putBoolean("firstStart", false)
         val token = prefs.getString("token", "")
         val logged = prefs.getBoolean("logged", false)
 
