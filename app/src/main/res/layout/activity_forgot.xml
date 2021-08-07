@@ -37,7 +37,9 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="@dimen/text_box_height"
-            app:endIconDrawable="@drawable/ic_arrow_drop_down">
+            app:endIconDrawable="@drawable/ic_arrow_drop_down"
+            app:endIconMode="dropdown_menu"
+            app:endIconTintMode="multiply">
 
             <AutoCompleteTextView
                 android:id="@+id/txtMethodForgot"
@@ -57,7 +59,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginVertical="5dp"
             android:orientation="horizontal">
 
             <TextView

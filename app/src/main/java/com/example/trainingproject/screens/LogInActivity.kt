@@ -91,8 +91,8 @@ class LogInActivity : AppCompatActivity() {
 
     private fun LogIn(email: String, password: String) {
         RetrofitClient().instance.userLogin(
-            email,
-            password,
+            email.trim(),
+            password.trim(),
             Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID),
             "fELCd90Ftes%3AAPA91bHGdLvaGwrVds4gDsxdG7Fd6y2YMMGgX_q_yPnioSv1aygdvYgNdK5vViA0UtYvNY5ePox3PpVnnRa56PgDvqFrwjrnwU0AABodPkuMQWmAQmDgaOpTWLeCZaH7xG4TtwgpFNU9",
             "2",
