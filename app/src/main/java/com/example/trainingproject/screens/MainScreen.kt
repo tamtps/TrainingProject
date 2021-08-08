@@ -45,7 +45,6 @@ class MainScreen() : BaseActivity<ActivityMainScreenBinding>() {
     }
 
 
-
     override fun getViewBinding(): ActivityMainScreenBinding =  ActivityMainScreenBinding.bind(binding.root)
     override fun getBodyLayout(): Int = R.layout.activity_main_screen
     override fun hasDrawer(): Boolean = true
